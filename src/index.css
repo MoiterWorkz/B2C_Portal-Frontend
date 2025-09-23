@@ -3,4 +3,41 @@
 :root {
   --primary-color: #fad489;
   --card-hover-shadow: 0 20px 40px #fad48926, 0 8px 16px #fad4891a;
+  --primary-backgroundcolor: #1a1a1a;
+  --primary-border-color: #fad489;
+  --card-background-color: #2a2a2a;
+  --hover: #cc8839
+}
+
+.bg-primary-background {
+  background-color: var(--primary-backgroundcolor);
+}
+
+.primary-input{
+  background-color: #3a3a3a;
+  border: 2px solid color-mix(in oklab, var(--primary-border-color) 30%, transparent);
+  
+
+}
+
+.Small-Heading {
+  font-size: 16px;
+}
+
+.small-text {
+  font-size: 12px;
+}
+
+.card-bg {
+  background-color: var(--card-background-color);
+}
+
+.card-bg:hover {
+  /* box-shadow: var(--hover); */
+  border: 1px solid color-mix(in oklab, var(--primary-border-color) 30%, transparent);
+  box-shadow: 0 0 20px #fad489, 0 0 10px #cc8839;
+}
+
+.border-primary-bottom {
+  border-bottom: 1px solid color-mix(in oklab, var(--primary-border-color) 30%, transparent)
 }

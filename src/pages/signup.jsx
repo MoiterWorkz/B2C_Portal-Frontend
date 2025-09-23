@@ -1,7 +1,12 @@
 import React from "react";
+import PanVerification from "../hooks/SignupHooks/PanVerification"
 
 const Signup = () => {
-  return <div>Signup</div>;
+  return (
+    <div>
+      <PanVerification />
+    </div>
+  );
 };
 
 export default Signup;
