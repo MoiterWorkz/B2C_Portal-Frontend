@@ -29,7 +29,7 @@ export default function Contact() {
   return (
     <div className="w-full h-full flex flex-col justify-center">
       <div className="pt-12 pb-12 px-4 sm:px-6 lg:px-8 t">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-5xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             {/* Brand */}
             <div className="space-y-4">
@@ -126,7 +126,7 @@ export default function Contact() {
               </h4>
               <div className="space-y-3">
                 {contactDetails.map(({ icon: Icon, text }, idx) => (
-                  <div key={idx} className="flex items-center gap-3">
+                  <div key={idx} className="flex items-center gap-3 subheading2-size backgroundfont-hover">
                     <Icon className="h-4 w-4 text-primary" />
                     <span className="subheading2-size">{text}</span>
                   </div>
@@ -136,7 +136,7 @@ export default function Contact() {
           </div>
 
           {/* Bottom */}
-          <div className="border-t border-primary/20 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+          <div className="border-top mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-muted-foreground text-sm">
               © 2025 Moiterworkz. All rights reserved.
             </p>
@@ -145,7 +145,7 @@ export default function Contact() {
                 (link, idx) => (
                   <button
                     key={idx}
-                    className="text-muted-foreground hover:text-primary transition-colors"
+                    className="subheading2-size backgroundfont-hover"
                   >
                     {link}
                   </button>

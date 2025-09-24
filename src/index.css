@@ -214,3 +214,29 @@
 .backgroundfont-hover:hover {
   color: var(--primary-color);
 }
+.border-top{
+  border-top: var(--thin-border);
+}
+.sign-in-button{
+  background-color: var(--primary-backgroundcolor);
+  font-size: var(--font-small) ;
+      white-space: nowrap;
+      font-weight: 500;
+      border: var(--thin-border);
+}
+.sign-in-button:hover{
+  background-color: var(--smallbutton-inside-hover-backgound);
+
+}
+.sign-up-button{
+  background-color: var(--primary-color);
+  font-size: var(--font-small) ;
+      white-space: nowrap;
+      font-weight: 500;
+      border: var(--thin-border);
+      color: var(--font-black);
+}
+.sign-up-button:hover{
+  background-color: var(--button-hover);
+
+}

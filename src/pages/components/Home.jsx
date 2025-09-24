@@ -1,19 +1,27 @@
 // HomePage.jsx
 import React from "react";
 import { ArrowRight, Play } from "lucide-react";
+import { motion } from "framer-motion"; // ✅ Import Framer Motion
 import Mobile from "./Mobile";
+
 const stats = [
   { value: "10M+", label: "Active Users" },
   { value: "₹500Cr+", label: "Transactions" },
-  // Example extra item
 ];
+
 const HomePage = () => {
   return (
     <div className="pt-12 pb-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* Left Side */}
-          <div className="space-y-8">
+          {/* Left Side with animation */}
+          <motion.div
+            className="space-y-8"
+            initial={{ opacity: 0, x: -100 }} // start left
+            whileInView={{ opacity: 1, x: 0 }} // animate to center
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            viewport={{ once: true }} // animate once per scroll
+          >
             <div className="space-y-4">
               {/* Badge */}
               <span
@@ -106,12 +114,18 @@ const HomePage = () => {
                 </div>
               ))}
             </div>
-          </div>
+          </motion.div>
 
-          {/* Right Side - Hero Image */}
-          <div className="flex justify-center">
+          {/* Right Side with animation */}
+          <motion.div
+            className="flex justify-center"
+            initial={{ opacity: 0, x: 100 }} // start right
+            whileInView={{ opacity: 1, x: 0 }} // animate to center
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            viewport={{ once: true }}
+          >
             <Mobile />
-          </div>
+          </motion.div>
         </div>
       </div>
     </div>

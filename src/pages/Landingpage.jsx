@@ -52,58 +52,70 @@ const LandingPage = () => {
 
   return (
     <div className="bg-primary-background text-white min-h-screen">
-      {/* Navbar */}
-      <header className="fixed top-0 left-0 w-full bg-primary-background border-b border-primary-bottom z-50 shadow-md h-20">
-        <div className="max-w-7xl mx-auto flex justify-between items-center h-full px-4">
-          <div className="text-xl font-bold">
-            Moiterworkz
-            <span className="text-yellow-300 text-sm block">
-              Digital Payments
-            </span>
-          </div>
+      
+     <header className="fixed top-0 left-0 w-full bg-primary-background border-b border-primary-bottom z-50 shadow-md h-16">
+  <div className="max-w-7xl mx-auto flex justify-between items-center h-full px-6">
+    
+    {/* Logo + Title */}
+    <div className="flex items-center space-x-2">
+      <img
+        src="/logo.png"
+        alt="Moiterworkz Logo"
+        className="h-8 w-8 object-contain"
+      />
+      <div>
+        <h1 className="text-lg font-semibold text-white leading-tight">
+          Moiterworkz
+        </h1>
+        <span className="text-yellow-400 text-xs">Digital Payments</span>
+      </div>
+    </div>
 
-          <nav className="flex space-x-6">
-            {sections.map((section) => (
-              <button
-                key={section.id}
-                onClick={() => handleScroll(section.id)}
-                className="hover:text-yellow-300 transition-colors"
-              >
-                {section.label}
-              </button>
-            ))}
-          </nav>
+    {/* Navigation */}
+    <nav className="flex space-x-6">
+      {sections.map((section) => (
+        <button
+          key={section.id}
+          onClick={() => handleScroll(section.id)}
+          className="subheading2-size "
+        >
+          {section.label}
+        </button>
+      ))}
+    </nav>
 
-          <div className="flex space-x-2">
-            <button className="border border-white px-4 py-1 rounded hover:bg-white hover:text-black transition">
-              Sign In
-            </button>
-            <button
-              onClick={() => navigate("/Sign-Up")}
-              className="bg-yellow-300 text-black px-4 py-1 rounded hover:opacity-90 transition"
-            >
-              Sign Up
-            </button>
-          </div>
-        </div>
-      </header>
+    {/* Auth Buttons */}
+    <div className="flex space-x-3">
+      <button className="px-4 py-1 rounded border sign-in-button transition">
+        Sign In
+      </button>
+      <button
+        onClick={() => navigate('/Sign-Up')}
+        className="px-4 py-1 rounded sign-up-button transition"
+      >
+        Sign Up
+      </button>
+    </div>
+  </div>
+</header>
+
 
       {/* Sections */}
-      <main className="pt-20">
-        {sections.map((section, idx) => (
-          <section
-            key={section.id}
-            id={section.id}
-            className={`flex items-center justify-center ${
-              idx === 0 ? "min-h-screen" : "min-h-screen"
-            }`}
-          >
-            <div className="w-full h-full flex items-center justify-center">
-              {section.component}
-            </div>
-          </section>
-        ))}
-      </main>
+     <main className="pt-20">
+  {sections.map((section, idx) => (
+    <section
+      key={section.id}
+      id={section.id}
+      className={`${idx === 0 ? "min-h-screen" : "py-5"} flex items-center justify-center`}
+    >
+      <div className="w-full flex items-center justify-center">
+        {section.component}
+      </div>
+    </section>
+  ))}
+</main>
+
+
     </div>
   );
 };

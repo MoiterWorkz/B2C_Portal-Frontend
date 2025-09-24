@@ -1,13 +1,20 @@
 import React from "react";
 import { ArrowRight, CircleCheckBig } from "lucide-react";
+import { motion } from "framer-motion"; // ✅ Import Framer Motion
 
 export default function PaymentExperience() {
   return (
     <div className="w-full h-full flex flex-col justify-center my-gradient">
-      <div className="pt-12 pb-12 px-4 sm:px-6 lg:px-8 t">
-        <div className="max-w-4xl mx-auto text-center space-y-8 ">
+      <div className="pt-12 pb-12 px-4 sm:px-6 lg:px-8">
+        <motion.div
+          className="max-w-5xl mx-auto text-center space-y-8"
+          initial={{ opacity: 0, y: 60 }}   // start slightly below
+          whileInView={{ opacity: 1, y: 0 }} // move up when in view
+          viewport={{ amount: 0.2 }}
+          transition={{ duration: 0.8 }}
+        >
           {/* Header */}
-          <div className="space-y-4" style={{ lineHeight: "50px" }}>
+          <div className="space-y-4">
             <h2
               className="font-bold home-font text-foreground"
               style={{ color: "var(--primary-font-color)" }}
@@ -43,30 +50,21 @@ export default function PaymentExperience() {
               Already Have an Account?
             </button>
           </div>
+        </motion.div>
 
-          {/* Features */}
-          <div className="flex items-center justify-center gap-8 pt-8 text-sm text-muted-foreground">
-            <div className="flex items-center gap-2">
-              <CircleCheckBig
-                className="w-4 h-4 "
-                color="var(--positive-color)"
-              />
-              <span className="subheading1-size ">No Setup Fees</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <CircleCheckBig
-                className="w-4 h-4 "
-                color="var(--positive-color)"
-              />
-              <span className="subheading1-size ">Free Forever</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <CircleCheckBig
-                className="w-4 h-4 "
-                color="var(--positive-color)"
-              />
-              <span className="subheading1-size ">24/7 Support</span>
-            </div>
+        {/* Features - no animation */}
+        <div className="flex items-center justify-center gap-8 pt-8 text-sm text-muted-foreground">
+          <div className="flex items-center gap-2">
+            <CircleCheckBig className="w-4 h-4" color="var(--positive-color)" />
+            <span className="subheading1-size">No Setup Fees</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <CircleCheckBig className="w-4 h-4" color="var(--positive-color)" />
+            <span className="subheading1-size">Free Forever</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <CircleCheckBig className="w-4 h-4" color="var(--positive-color)" />
+            <span className="subheading1-size">24/7 Support</span>
           </div>
         </div>
       </div>

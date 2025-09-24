@@ -1,5 +1,6 @@
 import React from "react";
 import { Star } from "lucide-react";
+import { motion } from "framer-motion"; // ✅ Import Framer Motion
 
 const reviews = [
   {
@@ -67,9 +68,15 @@ const TestimonialCard = ({ name, role, emoji, text }) => (
 export default function CustomerReview() {
   return (
     <div className="pt-12 pb-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-5xl mx-auto">
         {/* Header */}
-        <div className="text-center space-y-4 mb-16">
+        <motion.div
+          className="text-center space-y-4 mb-16"
+          initial={{ opacity: 0, y: 60 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ amount: 0.2 }}
+          transition={{ duration: 0.6 }}
+        >
           <span className="inline-flex items-center justify-center rounded-md border px-2 py-0.5 w-fit font-semibold smallbutton">
             💬 Customer Love
           </span>
@@ -78,10 +85,7 @@ export default function CustomerReview() {
             style={{ color: "var(--primary-font-color)" }}
           >
             What Our Users{" "}
-            <span
-              className="home-font"
-              style={{ color: "var(--primary-color)" }}
-            >
+            <span className="home-font" style={{ color: "var(--primary-color)" }}>
               Say About Us
             </span>
           </h2>
@@ -89,12 +93,20 @@ export default function CustomerReview() {
             Join millions of satisfied customers who have made Moiterworkz their
             go-to payment app.
           </p>
-        </div>
+        </motion.div>
 
         {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 ">
-          {reviews.map((review, index) => (
-            <TestimonialCard key={index} {...review} />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {reviews.map((review, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 60 }} // start lower
+              whileInView={{ opacity: 1, y: 0 }} // move to normal position
+              viewport={{ amount: 0.2 }}
+              transition={{ duration: 0.6, delay: idx * 0.2 }} // stagger
+            >
+              <TestimonialCard {...review} />
+            </motion.div>
           ))}
         </div>
       </div>
