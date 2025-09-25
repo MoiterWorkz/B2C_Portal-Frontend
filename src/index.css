@@ -16,6 +16,7 @@
   --positive-background: #00c9511a;
   --accent-color: #494233;
   --dark-accent-color: #35332e;
+  --user-icon-background-color: #404040;
 
   /* Backgrounds */
   --button-hover: color-mix(in oklab, #fad489 90%, transparent);
@@ -47,6 +48,12 @@
   --circle-border: 3.40282e38px;
   --thin-border: 1px solid
     color-mix(in oklab, var(--primary-color) 20%, transparent);
+  /* side bar */
+  --sidebar-active-text: #1a1a1a;
+  --sidebar-active-bg: #fad4891f;
+  --sidebar-active-border: #fad48959;
+  --sidebar-active-shadow: 0 6px 16px #fad48926, 0 2px 8px #fad4891a,
+    inset 0 1px #fad48940;
 
   /* Font sizes */
   --smaller-font: 10.5px;
@@ -214,29 +221,119 @@
 .backgroundfont-hover:hover {
   color: var(--primary-color);
 }
-.border-top{
+.border-top {
   border-top: var(--thin-border);
 }
-.sign-in-button{
+.border-bottom {
+  border-bottom: var(--thin-border);
+}
+.border-right {
+  border-right: var(--thin-border);
+}
+.sign-in-button {
   background-color: var(--primary-backgroundcolor);
-  font-size: var(--font-small) ;
-      white-space: nowrap;
-      font-weight: 500;
-      border: var(--thin-border);
+  font-size: var(--font-small);
+  white-space: nowrap;
+  font-weight: 500;
+  border: var(--thin-border);
 }
-.sign-in-button:hover{
+.sign-in-button:hover {
   background-color: var(--smallbutton-inside-hover-backgound);
-
 }
-.sign-up-button{
+.sign-up-button {
   background-color: var(--primary-color);
-  font-size: var(--font-small) ;
-      white-space: nowrap;
-      font-weight: 500;
-      border: var(--thin-border);
-      color: var(--font-black);
+  font-size: var(--font-small);
+  white-space: nowrap;
+  font-weight: 500;
+  border: var(--thin-border);
+  color: var(--font-black);
 }
-.sign-up-button:hover{
+.sign-up-button:hover {
   background-color: var(--button-hover);
+}
+.Language-button {
+  background-color: var(--transparent-color);
+  font-size: var(--font-small);
+  white-space: nowrap;
+  font-weight: 500;
+  border: var(--transparent-color);
+  transition: all 0.3s ease-in-out; /* Smooth transition for hover effects */
+}
 
+.Language-button:hover {
+  background-color: var(--smallbutton-inside-hover-backgound);
+  box-shadow: 0 0 0px var(--smallbutton-inside-hover-backgound),
+    0 0 24px var(--smallbutton-inside-hover-backgound);
+  transform: scale(1); /* Slight zoom */
+  border: var(--thin-border);
+}
+
+.icon-color {
+  color: var(--primary-color);
+}
+.white-letter-color {
+  color: var(--primary-font-color);
+}
+.small-letter-greycolor {
+  color: var(--subheading-color);
+}
+/* Base button */
+.sidebar-item {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  /* justify-content: space-between; */
+  gap: calc(var(--spacing) * 3);
+  border-radius: var(--radius-lg);
+  padding-inline: calc(var(--spacing) * 3);
+  padding-block: calc(var(--spacing) * 2);
+  @apply text-[10.5px] sm:text-[12.5px];
+}
+
+/* Active button */
+.sidebar-item-active {
+  color: var(--font-black);
+  background: var(--primary-color);
+  color: var(--sidebar-active-text) !important;
+}
+
+/* Inactive button */
+.sidebar-item-inactive {
+  background-color: var(--transparent-color);
+  color: var(--primary-font-color);
+}
+.sidebar-item-inactive:hover {
+  color: var(--font-black);
+  background: var(--sidebar-active-bg);
+  border-color: var(--sidebar-active-border);
+  transform: scale(1.02) translateX(2px);
+  box-shadow: var(--sidebar-active-shadow);
+  color: var(--sidebar-active-text) !important;
+}
+
+/* Icon inside sidebar */
+
+.sidebar-icon-active {
+  color: var(--font-black);
+}
+
+.sidebar-icon-inactive:hover {
+  color: var(--font-black);
+}
+/* Dropdown container */
+.sidebar-dropdown {
+  @apply ml-8 mt-1 space-y-1;
+}
+
+.sidebar-item-active:hover {
+  background: var(--sidebar-active-bg);
+  border-color: var(--sidebar-active-border);
+  transform: scale(1.02) translateX(2px);
+  box-shadow: var(--sidebar-active-shadow);
+  color: var(--sidebar-active-text) !important;
+}
+
+/* Optional: smooth transition for icons inside */
+.sidebar-item-active {
+  transition: all 0.3s ease;
 }
