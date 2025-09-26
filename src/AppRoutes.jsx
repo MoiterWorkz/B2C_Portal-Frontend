@@ -5,6 +5,7 @@ import SignUpPage from "./pages/signup";
 import SetPin from "./hooks/SignupHooks/MinKyc/SetPin";
 import Login from "./pages/Login";
 import Layout from "./components/layout/Layout";
+import Dashboard from "./pages/Dashboard";
 // import MakersDashboard from "./pages/makersDashboard";
 
 function AppRoutes({ setRole }) {
@@ -20,7 +21,7 @@ function AppRoutes({ setRole }) {
       {/* If you want to redirect unknown paths to LandingPage */}
       <Route path="*" element={<Navigate to="/" replace />} />
       <Route path="/Sign-Up" element={<SignUpPage />} />
-      <Route path="/dashboard" element={<Layout />} />
+      <Route path="/dashboard" element={<Dashboard />} />
     </Routes>
   );
 }
