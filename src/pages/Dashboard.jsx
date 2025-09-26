@@ -3,6 +3,7 @@ import Layout from "../components/layout/Layout";
 import DashboardHeader from "./components/dashboard/DashboardHeader";
 import Cards from "./components/dashboard/Cards";
 import Charts from "./components/dashboard/Charts";
+import QuickAction from "./components/dashboard/QuickAction";
 
 const Dashboard = () => {
   const [hideBalance, setHideBalance] = useState(false);
@@ -16,6 +17,7 @@ const Dashboard = () => {
           />
           <Cards hideBalance={hideBalance} />
           <Charts />
+          <QuickAction />
         </div>
       </div>
     </Layout>

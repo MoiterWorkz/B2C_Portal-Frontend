@@ -14,6 +14,13 @@ import {
 import { Pie, Line } from "react-chartjs-2";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import { label } from "framer-motion/client";
+import {
+  BarChart,
+  BarChart2,
+  BarChart3,
+  ChartBar,
+  MoveLeft,
+} from "lucide-react";
 
 ChartJS.register(ChartDataLabels);
 
@@ -150,7 +157,7 @@ const Charts = () => {
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 m-1 mb-4">
       {/* Spend Breakdown */}
       <div className="text-card-foreground flex flex-col gap-6 rounded-xl border p-6 card-bg-br chart-heading ">
         <h4 className="chart-heading font-semibold">
@@ -186,6 +193,7 @@ const Charts = () => {
       {/* Monthly Money Flow */}
       <div className="text-card-foreground flex flex-col gap-6 rounded-xl border p-6 card-bg-br chart-heading">
         <h4 className="text-lg font-semibold flex items-center gap-2">
+          <BarChart3 style={{ color: "var(--primary-color)" }} />
           Monthly Money Flow
         </h4>
         <div className="h-64 w-full max-w-md mx-auto flex items-center justify-center">

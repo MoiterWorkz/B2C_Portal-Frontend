@@ -422,3 +422,30 @@ body {
   @apply text-[10px] sm:text-[12.5px];
   font-weight: 500;
 }
+.quickAction {
+  h4 {
+    color: var(--primary-font-color);
+  }
+  .icon {
+    color: var(--primary-color);
+  }
+  .quickAction .label {
+    color: white; /* all labels white */
+  }
+
+  .quickAction button:nth-child(1) .icon {
+    color: #3b82f6; /* blue */
+  }
+
+  .quickAction button:nth-child(2) .icon {
+    color: #22c55e; /* green */
+  }
+
+  .quickAction button:nth-child(3) .icon {
+    color: #8b5cf6; /* purple */
+  }
+
+  .quickAction button:nth-child(4) .icon {
+    color: #facc15; /* yellow */
+  }
+}
