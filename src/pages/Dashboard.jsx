@@ -8,19 +8,19 @@ import QuickAction from "./components/dashboard/QuickAction";
 const Dashboard = () => {
   const [hideBalance, setHideBalance] = useState(false);
   return (
-    <Layout>
-      <div className="max-w-6xl mx-auto">
-        <div className="space-y-6">
-          <DashboardHeader
-            hideBalance={hideBalance}
-            setHideBalance={setHideBalance}
-          />
-          <Cards hideBalance={hideBalance} />
-          <Charts />
-          <QuickAction />
-        </div>
+    // <Layout>
+    <div className="max-w-6xl mx-auto">
+      <div className="space-y-6">
+        <DashboardHeader
+          hideBalance={hideBalance}
+          setHideBalance={setHideBalance}
+        />
+        <Cards hideBalance={hideBalance} />
+        <Charts />
+        <QuickAction />
       </div>
-    </Layout>
+    </div>
+    // </Layout>
   );
 };
 

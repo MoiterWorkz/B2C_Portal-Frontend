@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Header from "./Header";
 import SideBar from "./SideBar";
-
+import { Outlet } from "react-router-dom";
 const Layout = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -18,7 +18,9 @@ const Layout = ({ children }) => {
         <SideBar isOpen={sidebarOpen} onClose={closeSidebar} />
 
         {/* Main content */}
-        <main className="flex-1 lg:p-8">{children}</main>
+        <main className="flex-1 lg:p-8">
+          <Outlet />
+        </main>
       </div>
     </div>
   );
