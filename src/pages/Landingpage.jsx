@@ -8,21 +8,19 @@ import Security from "./components/landingPage/Security";
 import CustomerReview from "./components/landingPage/CustomerReview";
 import PaymentExperience from "./components/landingPage/PaymentExperience";
 import Contact from "./components/landingPage/Contact";
+import { ArrowUp, Menu, X } from "lucide-react";
 
 const sections = [
   { id: "home", label: "Home", component: <HomePage /> },
   { id: "features", label: "Features", component: <Features /> },
   { id: "howitworks", label: "HowItWorks", component: <HowItWorks /> },
   { id: "security", label: "Security", component: <Security /> },
-
   {
     id: "customerReview",
-    label: "CustomerReview",
     component: <CustomerReview />,
   },
   {
     id: "paymentExperience",
-    label: "PaymentExperience",
     component: <PaymentExperience />,
   },
   {
@@ -30,12 +28,12 @@ const sections = [
     label: "Contact",
     component: <Contact />,
   },
-  // Add other sections here if needed
 ];
 
 const LandingPage = () => {
   const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState(sections[0]?.id);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleScroll = (id) => {
     const element = document.getElementById(id);
@@ -51,7 +49,10 @@ const LandingPage = () => {
     });
   };
 
-  // 🔥 Track active section on scroll
+  const handleScrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -62,7 +63,7 @@ const LandingPage = () => {
         });
       },
       {
-        rootMargin: "-50% 0px -50% 0px", // Trigger when middle of viewport
+        rootMargin: "-50% 0px -50% 0px",
         threshold: 0,
       }
     );
@@ -95,30 +96,53 @@ const LandingPage = () => {
             </div>
           </div>
 
-          {/* Navigation */}
-          <nav className="flex space-x-6">
-            {sections.map((section) => (
-              <button
-                key={section.id}
-                onClick={() => handleScroll(section.id)}
-                className={`subheading2-size transition-colors ${
-                  activeSection === section.id
-                    ? "text-yellow-400 border-b-2 border-yellow-400"
-                    : "text-white"
-                }`}
-              >
-                {section.label}
-              </button>
-            ))}
+          {/* Mobile Hamburger Toggle */}
+          <div className="md:hidden">
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="text-white focus:outline-none"
+              aria-label="Toggle menu"
+            >
+              {isMobileMenuOpen ? (
+                <X className="w-6 h-6" />
+              ) : (
+                <Menu className="w-6 h-6" />
+              )}
+            </button>
+          </div>
+
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex space-x-6 items-center">
+            {sections
+              .filter((section) => section.label)
+              .map((section) => (
+                <button
+                  key={section.id}
+                  onClick={() => handleScroll(section.id)}
+                  className={`subheading2-size transition-colors hover:text-gray-400 ${
+                    activeSection === section.id ? "" : "text-white"
+                  }`}
+                  style={
+                    activeSection === section.id
+                      ? { color: "var(--primary-color)" }
+                      : {}
+                  }
+                  type="button"
+                >
+                  {section.label}
+                </button>
+              ))}
+            <button
+              onClick={() => navigate("/dashboard")}
+              className="subheading2-size transition-colors text-white hover:text-gray-400"
+              type="button"
+            >
+              Dashboard
+            </button>
           </nav>
-          <button
-            onClick={() => navigate("/dashboard")}
-            className="subheading2-size transition-colors"
-          >
-            Dashboard
-          </button>
-          {/* Auth Buttons */}
-          <div className="flex space-x-3">
+
+          {/* Desktop Auth Buttons */}
+          <div className="hidden md:flex space-x-3">
             <button className="px-4 py-1 rounded border sign-in-button transition">
               Sign In
             </button>
@@ -130,6 +154,51 @@ const LandingPage = () => {
             </button>
           </div>
         </div>
+
+        {/* Mobile Menu Dropdown */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden bg-primary-background px-6 py-4 space-y-4 border-t border-primary-bottom shadow">
+            {sections
+              .filter((section) => section.label)
+              .map((section) => (
+                <button
+                  key={section.id}
+                  onClick={() => {
+                    handleScroll(section.id);
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className={`block w-full text-left text-white hover:text-gray-400 transition-colors ${
+                    activeSection === section.id ? "text-yellow-400" : ""
+                  }`}
+                >
+                  {section.label}
+                </button>
+              ))}
+            <button
+              onClick={() => {
+                navigate("/dashboard");
+                setIsMobileMenuOpen(false);
+              }}
+              className="block w-full text-left text-white hover:text-gray-400 transition-colors"
+            >
+              Dashboard
+            </button>
+            <div className="flex space-x-3 pt-2">
+              <button className="flex-1 py-1 rounded border sign-in-button transition">
+                Sign In
+              </button>
+              <button
+                onClick={() => {
+                  navigate("/Sign-Up");
+                  setIsMobileMenuOpen(false);
+                }}
+                className="flex-1 py-1 rounded sign-up-button transition"
+              >
+                Sign Up
+              </button>
+            </div>
+          </div>
+        )}
       </header>
 
       {/* Sections */}
@@ -148,6 +217,34 @@ const LandingPage = () => {
           </section>
         ))}
       </main>
+
+      {/* Scroll to Top Button */}
+      {activeSection !== "home" && (
+        <button
+          onClick={handleScrollToTop}
+          className={`
+            scroll-to-top-btn
+            fixed z-50 w-12 h-12 rounded-full flex items-center justify-center
+            bg-[#fad489f2] border border-[#fad4894d]
+            shadow-xl
+            transition-all duration-300
+            hover:scale-110
+          `}
+          style={{
+            transformOrigin: "center",
+            minWidth: "44px",
+            minHeight: "44px",
+            overflow: "hidden",
+            backdropFilter: "blur(16px)",
+            WebkitBackdropFilter: "blur(16px)",
+            bottom: "max(1rem, env(safe-area-inset-bottom, 1rem))",
+            right: "max(1rem, env(safe-area-inset-right, 1rem))",
+            isolation: "isolate",
+          }}
+        >
+          <ArrowUp className="h-5 w-5 text-primary-foreground" />
+        </button>
+      )}
     </div>
   );
 };

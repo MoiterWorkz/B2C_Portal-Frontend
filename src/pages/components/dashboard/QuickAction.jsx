@@ -9,27 +9,29 @@ const quickActions = [
 ];
 const QuickAction = () => {
   return (
-    <div className="text-card-foreground flex flex-col gap-6 rounded-xl border m-2 card-bg-br quickAction">
+    <div className="text-card-foreground flex flex-col gap-6 rounded-xl border m-2 card-bg-br">
       {/* Card Header */}
-      <div className="grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5 px-6 pt-6">
+      <div className="grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5 px-6 pt-6 icon-header">
         <h4 className="leading-none text-foreground flex items-center gap-2">
-          <Zap className="h-5 w-5 icon" /> Quick Actions
+          <Zap className="icon" size={20} /> Quick Actions
         </h4>
       </div>
 
       {/* Card Content */}
       <div className="p-6">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 ">
           {quickActions.map((action, index) => {
             const Icon = action.icon; // get the component
             return (
               <button
                 key={index}
-                className="flex flex-col items-center gap-2 p-4 border rounded-md lable card-hover-effect"
+                className="flex flex-col items-center gap-2 p-4 rounded-md lable card-hover-effect-noboder "
               >
-                <Icon className="h-6 w-6 " />
-                <span className="text-sm">{action.label}</span>
-              </button>
+            <Icon size={20} className={`${action.color}`} />
+          <span className="text-sm duration-200">
+            {action.label}
+          </span>
+          </button>
             );
           })}
         </div>

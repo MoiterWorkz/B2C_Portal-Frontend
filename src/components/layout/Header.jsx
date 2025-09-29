@@ -1,16 +1,36 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Menu, Globe, ChevronDown } from "lucide-react";
+import UserDropdown from "../../pages/components/dashboard/UserDropdown";
 
 const Header = ({ toggleSidebar }) => {
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+  const buttonRef = useRef(null); // ✅ Add ref for the button
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target) &&
+        buttonRef.current &&
+        !buttonRef.current.contains(event.target) // ✅ check if click is outside the button too
+      ) {
+        setDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
     <header
       className="shadow-sm border-b border-border header-glass-effect border-bottom w-full fixed top-0 z-50"
       style={{ backgroundColor: "var(--card-background-color)" }}
     >
       <div className="flex items-center justify-between px-4 lg:px-6 h-16 border-bottom">
-        {/* Left section: Menu button + Logo */}
+        {/* Left: Sidebar toggle + Logo */}
         <div className="flex items-center gap-4">
-          {/* Mobile menu toggle button */}
           <button
             onClick={toggleSidebar}
             className="inline-flex items-center justify-center lg:hidden h-8 gap-1.5 px-3 rounded-lg text-foreground hover:bg-primary hover:text-primary-foreground transition-all duration-200 hover:scale-105 hover:shadow-md header-item-glass"
@@ -23,16 +43,10 @@ const Header = ({ toggleSidebar }) => {
           </div>
         </div>
 
-        {/* Right section: Language + Avatar */}
-        <div className="flex items-center gap-3">
+        {/* Right: Language + User */}
+        <div className="flex items-center gap-3 relative">
           <button
-            className="inline-flex items-center justify-center hover:text-accent-foreground 
-                   rounded-md 
-                   px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 md:py-2.5 
-                   gap-1 sm:gap-2 
-                   transition-all duration-300 
-                   hover:scale-105 
-                   Language-button"
+            className="inline-flex items-center justify-center hover:text-accent-foreground rounded-md px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 md:py-2.5 gap-1 sm:gap-2 transition-all duration-300 hover:scale-105 Language-button"
           >
             <Globe className="h-3 sm:h-4 md:h-5 w-3 sm:w-4 md:w-5 icon-color" />
             <span className="font-medium white-letter-color subheading1-size text-xs sm:text-sm md:text-base">
@@ -41,7 +55,12 @@ const Header = ({ toggleSidebar }) => {
             <ChevronDown className="h-2 sm:h-3 md:h-3 w-2 sm:w-3 md:w-3 text-muted-foreground transition-transform duration-200 small-letter-greycolor" />
           </button>
 
-          <button className="relative h-8 w-8 rounded-full hover:bg-primary hover:text-primary-foreground hover:scale-110 hover:shadow-lg transition-all duration-200 ease-in-out header-item-glass">
+          {/* ✅ Avatar Button */}
+          <button
+            ref={buttonRef} // ✅ Attach ref to button
+            onClick={() => setDropdownOpen((open) => !open)}
+            className="relative h-8 w-8 rounded-full hover:bg-primary hover:text-primary-foreground hover:scale-110 hover:shadow-lg transition-all duration-200 ease-in-out header-item-glass"
+          >
             <span
               className="relative flex h-8 w-8 items-center justify-center rounded-full white-letter-color"
               style={{ backgroundColor: "var(--user-icon-background-color)" }}
@@ -49,6 +68,16 @@ const Header = ({ toggleSidebar }) => {
               KA
             </span>
           </button>
+
+          {/* ✅ Dropdown */}
+          {dropdownOpen && (
+            <div
+              ref={dropdownRef}
+              className="absolute right-0 top-full mt-2 z-50"
+            >
+              <UserDropdown />
+            </div>
+          )}
         </div>
       </div>
     </header>

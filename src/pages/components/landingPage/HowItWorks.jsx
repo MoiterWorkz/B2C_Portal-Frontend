@@ -40,6 +40,9 @@ const HowItWorks = () => {
       step: "3",
     },
   ];
+   const handleScrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <div className="pt-12 pb-12 px-4 sm:px-6 lg:px-8">
@@ -130,8 +133,10 @@ const HowItWorks = () => {
             </motion.div>
           ))}
         </div>
+        
       </div>
     </div>
+    
   );
 };
 

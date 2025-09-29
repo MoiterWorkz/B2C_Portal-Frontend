@@ -4,6 +4,7 @@ import DashboardHeader from "./components/dashboard/DashboardHeader";
 import Cards from "./components/dashboard/Cards";
 import Charts from "./components/dashboard/Charts";
 import QuickAction from "./components/dashboard/QuickAction";
+import BillAndTransaction from "./components/dashboard/BillAndTransaction";
 
 const Dashboard = () => {
   const [hideBalance, setHideBalance] = useState(false);
@@ -18,6 +19,7 @@ const Dashboard = () => {
           <Cards hideBalance={hideBalance} />
           <Charts />
           <QuickAction />
+          <BillAndTransaction/>
         </div>
       </div>
     </Layout>
