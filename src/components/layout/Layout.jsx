@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Header from "./Header";
 import SideBar from "./SideBar";
-import { Outlet } from "react-router-dom";
+
 const Layout = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -22,6 +22,9 @@ const Layout = ({ children }) => {
           <Outlet />
         </main>
       </div>
+
+      {/* Footer outside main */}
+      <Footer />
     </div>
   );
 };
