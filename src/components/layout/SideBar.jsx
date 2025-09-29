@@ -57,7 +57,7 @@ const SideBar = ({ isOpen, onClose }) => {
         className={`fixed top-16 left-0 z-40 h-full w-64 transform transition-transform duration-300 ease-in-out border-right
           ${
             isOpen ? "translate-x-0" : "-translate-x-full"
-          } lg:translate-x-0 lg:static lg:h-[calc(100vh-4rem)]`}
+          } lg:translate-x-0 lg:static lg:h-[calc(100vh)]`}
         style={{ backgroundColor: "var(--card-background-color)" }}
       >
         <nav className="p-4 space-y-2">

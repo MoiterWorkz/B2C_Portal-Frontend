@@ -18,7 +18,7 @@ const Layout = ({ children }) => {
         <SideBar isOpen={sidebarOpen} onClose={closeSidebar} />
 
         {/* Main content */}
-        <main className="flex-1 bg-gray-50 lg:p-8">{children}</main>
+        <main className="flex-1 lg:p-8">{children}</main>
       </div>
     </div>
   );
