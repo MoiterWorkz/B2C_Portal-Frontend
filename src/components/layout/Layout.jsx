@@ -20,7 +20,7 @@ const Layout = () => {
         <SideBar isOpen={sidebarOpen} onClose={closeSidebar} />
 
         {/* Main content */}
-        <main className="flex-1 lg:p-8">
+        <main className="flex-1 my-8 max-w-6xl mx-3 md:mx-6 lg:mx-20">
           <Outlet />
         </main>
       </div>

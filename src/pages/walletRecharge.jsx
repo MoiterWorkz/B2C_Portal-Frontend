@@ -1,20 +1,11 @@
-import React from "react";
-import { Wallet } from "lucide-react";
+import RechargeDetails from "./components/walletRecharge/rechargeDetails";
+import WalletHeader from "./components/walletRecharge/walletHeader";
 const WalletRecharge = () => {
   return (
-    <>
-      <div className="flex gap-2 items-center">
-        <div>
-          <Wallet size="28" color="var(--primary-color)" />
-        </div>
-        <div>
-          <p className="second-normal-heading">Wallet Recharge</p>
-          <p className="subheading2-size">
-            Add money to your digital wallet instantly
-          </p>
-        </div>
-      </div>
-    </>
+    <div className="space-y-5">
+      <WalletHeader />
+      <RechargeDetails />
+    </div>
   );
 };
 

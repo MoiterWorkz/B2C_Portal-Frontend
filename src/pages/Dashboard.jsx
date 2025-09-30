@@ -9,20 +9,16 @@ import BillAndTransaction from "./components/dashboard/BillAndTransaction";
 const Dashboard = () => {
   const [hideBalance, setHideBalance] = useState(false);
   return (
-    // <Layout>
-    <div className="max-w-6xl mx-auto">
-      <div className="space-y-6">
-        <DashboardHeader
-          hideBalance={hideBalance}
-          setHideBalance={setHideBalance}
-        />
-        <Cards hideBalance={hideBalance} />
-        <Charts />
-        <QuickAction />
-        <BillAndTransaction />
-      </div>
+    <div className="space-y-6">
+      <DashboardHeader
+        hideBalance={hideBalance}
+        setHideBalance={setHideBalance}
+      />
+      <Cards hideBalance={hideBalance} />
+      <Charts />
+      <QuickAction />
+      <BillAndTransaction />
     </div>
-    // </Layout>
   );
 };
 

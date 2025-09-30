@@ -49,7 +49,7 @@ const Cards = ({ hideBalance }) => {
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
       {cards.map((card, index) => {
         const isNegative = typeof card.value === "number" && card.value < 0;
         const color = isNegative ? negativeColors[index] : defaultColors[index];
@@ -57,7 +57,7 @@ const Cards = ({ hideBalance }) => {
         return (
           <div
             key={index}
-            className="text-card-foreground flex flex-col gap-6 m-1 rounded-xl border card-hover-effect "
+            className="text-card-foreground flex flex-col gap-6 m-1 rounded-xl border card-hover-effect"
           >
             <div className="p-6 cards rounded-xl">
               <div className="flex items-center justify-between">

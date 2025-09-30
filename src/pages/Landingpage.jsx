@@ -184,7 +184,12 @@ const LandingPage = () => {
               Dashboard
             </button>
             <div className="flex space-x-3 pt-2">
-              <button className="flex-1 py-1 rounded border sign-in-button transition">
+              <button 
+               onClick={() => {
+                  navigate("/Customer-Login");
+                  setIsMobileMenuOpen(false);
+                }}
+              className="flex-1 py-1 rounded border sign-in-button transition">
                 Sign In
               </button>
               <button
