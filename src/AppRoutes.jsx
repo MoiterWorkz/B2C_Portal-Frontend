@@ -20,10 +20,10 @@ function AppRoutes({ setRole }) {
   return (
     <Routes>
       {/* Default route → directly show LandingPage */}
-      <Route path="/" element={<Navigate to="/MW-B2C" />} />
+      <Route path="/" element={<Navigate to="/home" />} />
 
       {/* Optional: if someone types /LandingPage in URL */}
-      <Route path="/MW-B2C" element={<LandingPage />} />
+      <Route path="home" element={<LandingPage />} />
       <Route path="/set-pin" element={<SetPin />} />
       <Route path="/Customer-Login" element={<Login />} />
       {/* If you want to redirect unknown paths to LandingPage */}

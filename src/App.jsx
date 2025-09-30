@@ -23,7 +23,7 @@ function App() {
   }, [showAlert]);
 
   return (
-    <Router>
+    <Router basename="/MW-B2C">
       <AppRoutes setRole={setRole} />
     </Router>
   );
