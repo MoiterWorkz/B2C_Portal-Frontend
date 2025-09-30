@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import Header from "./Header";
 import SideBar from "./SideBar";
+import { Outlet } from "react-router";
+import Footer from "./Footer";
 
-const Layout = ({ children }) => {
+const Layout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);

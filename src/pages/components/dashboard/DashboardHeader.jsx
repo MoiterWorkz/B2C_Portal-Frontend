@@ -6,9 +6,7 @@ const DashboardHeader = ({ hideBalance, setHideBalance }) => {
     <div className="flex items-center justify-between">
       {/* Left Side: Welcome message */}
       <div>
-        <h1 className="font-semibold second-normal-heading white-letter-color">
-          Welcome back, Kavin! 👋
-        </h1>
+        <h1 className="second-normal-heading">Welcome back, Kavin! 👋</h1>
         <p className="text-sm subheading2-size">
           Here's what's happening with your money today.
         </p>
