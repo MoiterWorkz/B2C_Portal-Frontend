@@ -25,13 +25,11 @@ const QuickAction = () => {
             return (
               <button
                 key={index}
-                className="flex flex-col items-center gap-2 p-4 rounded-md lable card-hover-effect-noboder "
+                className="flex flex-col items-center gap-2 p-4 rounded-md lable card-hover-effect-noboder"
               >
-            <Icon size={20} className={`${action.color}`} />
-          <span className="text-sm duration-200">
-            {action.label}
-          </span>
-          </button>
+                <Icon size={20} className={`${action.color}`} />
+                <span className="text-sm duration-200">{action.label}</span>
+              </button>
             );
           })}
         </div>
