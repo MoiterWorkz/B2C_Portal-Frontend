@@ -11,20 +11,21 @@ import {
   Receipt,
   ChevronDown,
 } from "lucide-react";
+import { useNavigate } from "react-router";
 
 const sidebarItems = [
-  { label: "Dashboard", icon: Home },
-  { label: "Manage Wallet", icon: Banknote },
-  { label: "My Card", icon: CreditCard },
-  { label: "Bill & Recharges", icon: Receipt },
-  { label: "Transaction History", icon: History },
-  { label: "Card Topup", icon: Wallet },
+  { label: "Dashboard", icon: Home, url: "dashboard" },
+  { label: "Manage Wallet", icon: Banknote, url: "manage-wallet" },
+  { label: "My Card", icon: CreditCard, url: "my-card" },
+  { label: "Bill & Recharges", icon: Receipt, url: "bill-recharges" },
+  { label: "Transaction History", icon: History, url: "transaction-history" },
+  { label: "Wallet Recharge", icon: Wallet, url: "wallet-recharge" },
   {
     label: "Fund Transfer",
     icon: ArrowRightLeft,
     dropdown: [
-      { label: "Add Payee", icon: UserPlus },
-      { label: "Payee List", icon: Users },
+      { label: "Add Payee", icon: UserPlus, url: "fund-transfer/add-payee" },
+      { label: "Payee List", icon: Users, url: "fund-transfer/payee-list" },
     ],
   },
 ];
@@ -32,12 +33,13 @@ const sidebarItems = [
 const SideBar = ({ isOpen, onClose }) => {
   const [openDropdown, setOpenDropdown] = useState(null);
   const [activeItem, setActiveItem] = useState("Dashboard");
-
+  const navigate = useNavigate();
   const toggleDropdown = (label) => {
     setOpenDropdown(openDropdown === label ? null : label);
   };
 
-  const handleItemClick = (label, hasDropdown = false) => {
+  const handleItemClick = (label, hasDropdown = false, url) => {
+    navigate(url);
     setActiveItem(label);
     if (!hasDropdown) onClose(); // close sidebar on mobile
   };
@@ -54,10 +56,10 @@ const SideBar = ({ isOpen, onClose }) => {
       />
 
       <aside
-        className={`fixed top-16 left-0 z-40 h-full w-64 transform transition-transform duration-300 ease-in-out border-right
+        className={`fixed top-16 left-0 z-40  w-64 transform transition-transform duration-300 ease-in-out border-right
           ${
             isOpen ? "translate-x-0" : "-translate-x-full"
-          } lg:translate-x-0 lg:static lg:h-[calc(100vh-4rem)]`}
+          } lg:translate-x-0 lg:static lg:top-16 lg:bottom-0`}
         style={{ backgroundColor: "var(--card-background-color)" }}
       >
         <nav className="p-4 space-y-2">
@@ -71,7 +73,7 @@ const SideBar = ({ isOpen, onClose }) => {
                     isActive ? "sidebar-item-active" : "sidebar-item-inactive"
                   }`}
                   onClick={() => {
-                    handleItemClick(item.label, !!item.dropdown);
+                    handleItemClick(item.label, !!item.dropdown, item.url);
                     if (item.dropdown) toggleDropdown(item.label);
                   }}
                 >
@@ -113,7 +115,9 @@ const SideBar = ({ isOpen, onClose }) => {
                               ? "sidebar-item-active"
                               : "sidebar-item-inactive"
                           }`}
-                          onClick={() => handleItemClick(subItem.label)}
+                          onClick={() =>
+                            handleItemClick(subItem.label, false, subItem.url)
+                          }
                         >
                           <subItem.icon
                             className={`sidebar-icon ${

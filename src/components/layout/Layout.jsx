@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import Header from "./Header";
 import SideBar from "./SideBar";
+import { Outlet } from "react-router";
+import Footer from "./Footer";
 
-const Layout = ({ children }) => {
+const Layout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
@@ -18,8 +20,13 @@ const Layout = ({ children }) => {
         <SideBar isOpen={sidebarOpen} onClose={closeSidebar} />
 
         {/* Main content */}
-        <main className="flex-1 bg-gray-50 lg:p-8">{children}</main>
+        <main className="flex-1 lg:p-8">
+          <Outlet />
+        </main>
       </div>
+
+      {/* Footer outside main */}
+      <Footer />
     </div>
   );
 };

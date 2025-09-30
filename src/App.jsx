@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
-import AppRoutes from './AppRoutes';
+import AppRoutes from "./AppRoutes";
 import { AlertProvider, useAlert } from "./components/AlertProvider";
 
 function AppWrapper() {
@@ -23,7 +23,7 @@ function App() {
   }, [showAlert]);
 
   return (
-    <Router basename={"/MW-B2C"}>
+    <Router>
       <AppRoutes setRole={setRole} />
     </Router>
   );
