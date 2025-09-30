@@ -470,7 +470,7 @@ body {
 .sidebar-item-active {
   transition: all 0.3s ease;
 }
-}
+
 /*Dashboard cards*/
 
 .cards {
