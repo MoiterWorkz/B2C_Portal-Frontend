@@ -2,9 +2,8 @@ import React, { useEffect, useState } from "react";
 import { getStateAndCityByPincode, submitMinKyc, pepCheck,sanctionCheck  } from "../../../services/service";
 import { v4 as uuidv4 } from "uuid"; // for generating transactionId
 import { useNavigate } from "react-router-dom";
-import LOGO from "../../../assets/logo.png"
 
-function MinKycForm({ verifiedMobile, pan }) {
+function FullKycForm({ verifiedMobile, pan }) {
     const navigate = useNavigate();
     const [pincode, setPincode] = useState("");
     const [stateOptions, setStateOptions] = useState([]);
@@ -46,7 +45,7 @@ function MinKycForm({ verifiedMobile, pan }) {
         agentId: "",
         kycLevel: "min",
     });
-    // console.log(formValues)
+    console.log(formValues)
     // Fetch PEP flag when user fills required fields
     useEffect(() => {
         const fetchPepFlag = async () => {
@@ -168,31 +167,25 @@ function MinKycForm({ verifiedMobile, pan }) {
 
 
     return (
-        <div className="min-h-screen bg-primary-background text-white flex flex-col items-center py-10 px-4">
-           {/* Logo + Progress */}
-                 <div className="w-full flex flex-col items-center mb-5">
-                   {/* Logo */}
-                   <div className="flex items-center gap-2 mb-6">
-                     <img src={LOGO} alt="Moiter Workz Logo" className="h-9" />
-           
-                   </div>
-                   <div className=" w-1/4 flex justify-between">
-                     <p className=" gray-text medium-text">Min KYC - Personal Details</p>
-                     <p className="icon-color small-text">60%</p>
-                   </div>
-                   <div className="w-1/4 bg-gray-800 h-2 rounded-full mt-2">
-           
-                     <div
-                       className="sign-up-button h-2 rounded-full"
-                       style={{ width: "60%" }}
-                     ></div>
-                   </div>
-                 </div>
+        <div className="min-h-screen bg-black text-white flex flex-col items-center py-10 px-4">
+            {/* Logo + Progress */}
+            <div className="flex flex-col items-center mb-8">
+                <img src="/logo.png" alt="logo" className="h-10 mb-2" />
+                <h1 className="text-2xl font-bold">Moiter Workz</h1>
+            </div>
+
+            <div className="w-full max-w-5xl mb-10">
+                <div className="flex justify-between mb-2">
+                    <span className="text-sm">Min KYC - Personal Details</span>
+                    <span className="text-sm text-yellow-500">60%</span>
+                </div>
+                <div className="w-full bg-neutral-800 rounded-full h-2">
+                    <div className="bg-yellow-500 h-2 rounded-full" style={{ width: "60%" }} />
+                </div>
+            </div>
 
             {/* Form Card */}
-            <div className="cardhover rounded-2xl shadow-xl p-10 text-center 
-                w-full sm:w-[600px] lg:w-[800px] xl:w-[1100px] 
-                transform transition-transform duration-300 hover:scale-105 mx-auto mt-5">
+            <div className="bg-neutral-900 p-8 rounded-2xl shadow-xl w-full max-w-5xl">
 
                 <form className="space-y-8" onSubmit={handleSubmit}>
                     {/* Personal Information */}
@@ -453,4 +446,4 @@ function MinKycForm({ verifiedMobile, pan }) {
     );
 }
 
-export default MinKycForm;
+export default FullKycForm;

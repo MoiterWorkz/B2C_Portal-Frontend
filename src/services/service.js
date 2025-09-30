@@ -1,6 +1,7 @@
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid"; // for generating transactionId
 import { getPublicIp } from "../services/ipService"
+import { CodeSquare } from "lucide-react";
 // Base URL
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://192.168.22.247";
 const ip = await getPublicIp()
@@ -82,6 +83,28 @@ export const submitMinKyc = async (formData) => {
     ...formData,
   });
 };
+export const pepCheck = async ({ firstName, middleName, lastName, dateOfBirth, country }) => {
+  const payload = {
+    givenNames: firstName + (middleName ? ` ${middleName}` : ""),
+    lastName,
+    dob: dateOfBirth,
+    country: country || "IN",
+    entityType: "individual",
+  };
+
+  return postRequest("/cs/api/Customer/pep_check", payload);
+};
+
+
+export const sanctionCheck = async ({ firstName, middleName, lastName, dateOfBirth, country }) => {
+  const payload = {
+    givenNames: firstName + (middleName ? ` ${middleName}` : ""),
+    lastName,
+    dob: dateOfBirth,
+    country: country || "IN",
+  };
+  return postRequest("/cs/api/Customer/sanction-check", payload);
+};
 
 // ✅ Set Account PIN (Password API)
 export const setAccountPin = async (mobileNumber, pin) => {
@@ -99,3 +122,5 @@ export const loginWithPin = async (mobileNumber, password) => {
     password,
   });
 };
+
+

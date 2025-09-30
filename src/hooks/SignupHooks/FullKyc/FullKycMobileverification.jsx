@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Phone, ArrowLeft, Smartphone, CircleCheck, RefreshCw, Verified } from "lucide-react";
+import { Phone, ArrowLeft, Smartphone, CircleCheck, RefreshCw } from "lucide-react";
 import { checkMobileNumber, generateOtp, verifyOtp, resendOtp } from "../../../services/service";
 import LOGO from "../../../assets/logo.png"
-function MinKycMobileVerification({ onBack, onVerified }) {
 
-  // console.log(onVerified)
+function FullKycMobileVerification({ onBack, onVerified }) {
+  
+  console.log(onVerified)
   const [mobile, setMobile] = useState("");
   const [step, setStep] = useState("mobile");
   const [otp, setOtp] = useState("");
@@ -14,7 +15,7 @@ function MinKycMobileVerification({ onBack, onVerified }) {
   // Auto-clear OTP after 5–8 seconds
   useEffect(() => {
     if (serverOtp) {
-      const timer = setTimeout(() => setServerOtp(""), 6000); // ⏱️ 6 seconds
+      const timer = setTimeout(() => setServerOtp(""), 9000); // ⏱️ 6 seconds
       return () => clearTimeout(timer);
     }
   }, [serverOtp]);
@@ -78,6 +79,7 @@ function MinKycMobileVerification({ onBack, onVerified }) {
         {/* Logo */}
         <div className="flex items-center gap-2 mb-6">
           <img src={LOGO} alt="Moiter Workz Logo" className="h-9" />
+
         </div>
         <div className=" w-1/2 flex justify-between">
           <p className=" gray-text medium-text">Mobile Verification</p>
@@ -225,4 +227,4 @@ function MinKycMobileVerification({ onBack, onVerified }) {
   );
 }
 
-export default MinKycMobileVerification;
+export default FullKycMobileVerification;

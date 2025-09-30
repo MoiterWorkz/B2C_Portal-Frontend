@@ -17,27 +17,21 @@
   --accent-color: #494233;
   --dark-accent-color: #35332e;
   --user-icon-background-color: #404040;
-
   /* Backgrounds */
   --button-hover: color-mix(in oklab, #fad489 90%, transparent);
   --transparent-color: transparent;
   --smallbutton-inside-backgound: color-mix(in oklab, #fad489 10%, transparent);
-  --smallbutton-inside-hover-backgound: color-mix(
-    in oklab,
-    #fad489 50%,
-    transparent
-  );
-  --secondary-backgroundcolor: color-mix(
-    in oklab,
-    var(--card-background-color) 30%,
-    transparent
-  );
+  --smallbutton-inside-hover-backgound: color-mix(in oklab,
+      #fad489 50%,
+      transparent);
+  --secondary-backgroundcolor: color-mix(in oklab,
+      var(--card-background-color) 30%,
+      transparent);
   --third-backgroundcolor: color-mix(in oklab, #2a2a2a 80%, transparent);
 
   /* Shadows */
   --card-hover-shadow: 0 20px 40px #fad48926, 0 8px 16px #fad4891a;
-  --small-cards-shadow: 0px 0px 0px 1px
-      color-mix(in srgb, var(--primary-color) 4%, transparent),
+  --small-cards-shadow: 0px 0px 0px 1px color-mix(in srgb, var(--primary-color) 4%, transparent),
     0px 1px 1px -0.5px color-mix(in srgb, var(--primary-color) 4%, transparent),
     0px 3px 3px -1.5px color-mix(in srgb, var(--primary-color) 4%, transparent),
     0px 6px 6px -3px color-mix(in srgb, var(--primary-color) 4%, transparent),
@@ -46,8 +40,7 @@
 
   /* Border */
   --circle-border: 3.40282e38px;
-  --thin-border: 1px solid
-    color-mix(in oklab, var(--primary-color) 20%, transparent);
+  --thin-border: 1px solid color-mix(in oklab, var(--primary-color) 20%, transparent);
   /* side bar */
   --sidebar-active-text: #1a1a1a;
   --sidebar-active-bg: #fad4891f;
@@ -61,6 +54,7 @@
   --font-medium: 14px;
   --font-normal: 16px;
   --font-heading-2: 28px;
+  --font-heading-4: 25px;
   --font-heading-3: 20px;
 }
 
@@ -69,48 +63,73 @@
   background-color: var(--primary-backgroundcolor);
 }
 
+.gray-text {
+  color: #9CA3AF;
+}
+
+.icon-bg {
+  background-color: var(--user-icon-background-color);
+}
+
+.button-hoverbg:hover {
+  background-color: var(--smallbutton-inside-hover-backgound);
+  color: var(--primary-color);
+}
+
 .primary-input {
   background-color: #3a3a3a;
-  border: 2px solid
-    color-mix(in oklab, var(--primary-border-color) 30%, transparent);
+  border: 2px solid color-mix(in oklab, var(--primary-border-color) 30%, transparent);
 }
+
 
 .Small-Heading {
   font-size: var(--font-normal);
 }
+
+.form-heading {
+  font-size: var(--font-heading-4);
+}
+
 .medium-text {
   font-size: var(--font-medium);
 }
+
 .small-text {
   font-size: var(--font-small);
+}
+
+.cardhover:hover {
+  box-shadow: var(--card-hover-shadow);
 }
 
 /* Card Background */
 .card-bg {
   background-color: var(--card-background-color);
 }
+
 .card-bg:hover {
-  border: 1px solid
-    color-mix(in oklab, var(--primary-border-color) 30%, transparent);
+  border: 1px solid color-mix(in oklab, var(--primary-border-color) 30%, transparent);
   box-shadow: var(--card-hover-shadow);
 }
 
 /* Border */
 .border-primary-bottom {
-  border-bottom: 1px solid
-    color-mix(in oklab, var(--primary-border-color) 30%, transparent);
+  border-bottom: 1px solid color-mix(in oklab, var(--primary-border-color) 30%, transparent);
 }
 
 /* ================= Ashwin ================= */
 .home-font {
   @apply text-[44px] sm:text-[52px];
 }
+
 .normal-heading {
   @apply text-[28px] sm:text-[36px];
 }
+
 .second-normal-heading {
   @apply text-[17px] sm:text-[21px];
 }
+
 .third-normal-heading {
   @apply text-[20px] sm:text-[24px];
 }
@@ -119,10 +138,12 @@
   @apply text-[15.5px] sm:text-[17.5px];
   color: var(--subheading-color);
 }
+
 .subheading1-size {
   @apply text-[10.5px] sm:text-[12.5px];
   color: var(--subheading-color);
 }
+
 .subheading2-size {
   @apply text-[12.5px] sm:text-[14px];
   color: var(--subheading-color);
@@ -140,18 +161,22 @@
   box-shadow: 0 4px 10px rgba(97, 48, 48, 0.15);
   transition: all 0.3s ease;
 }
+
 .custom-button:hover {
   background-color: var(--button-hover) !important;
 }
+
 .arrow-icon {
   height: 1.25rem;
   width: 1.25rem;
   margin-left: 0.5rem;
   transition: transform 0.3s ease;
 }
+
 .custom-button:hover .arrow-icon {
   transform: translateX(4px);
 }
+
 .custom-buton1:hover {
   color: var(--transparent-color) !important;
 }
@@ -159,24 +184,26 @@
 /* Small Cards */
 .small-cards {
   background-color: var(--card-background-color);
-  border: 2px solid
-    color-mix(in oklab, var(--primary-border-color) 30%, transparent);
+  border: 2px solid color-mix(in oklab, var(--primary-border-color) 30%, transparent);
   transition: all 0.3s ease;
   box-shadow: none;
 }
+
 .small-cards:hover {
   border-color: var(--primary-color);
   box-shadow: var(--small-cards-shadow);
 }
+
 .small-cards:hover .subheading-size {
   color: var(--primary-color) !important;
 }
+
 .small-cards-icon {
   background-color: var(--smallbutton-inside-backgound);
-  border: 1px solid
-    color-mix(in oklab, var(--primary-border-color) 30%, transparent);
+  border: 1px solid color-mix(in oklab, var(--primary-border-color) 30%, transparent);
   transition: background-color 0.3s ease, border-color 0.3s ease;
 }
+
 .small-cards:hover .small-cards-icon {
   background-color: var(--smallbutton-inside-hover-backgound);
   border-color: var(--primary-color);
@@ -191,24 +218,27 @@
   font-size: var(--smaller-font);
   transition: all 0.2s ease-in-out;
 }
+
 .smallbutton:hover {
   transform: scale(1.05);
   box-shadow: 0 2px 8px rgba(var(--primary-color-rgb), 0.2);
   background-color: rgba(var(--primary-color-rgb), 0.1);
 }
 
+.font-themecolor {
+  color: var(--primary-color);
+}
+
 /* Third Background */
 .third-background-cards {
   background-color: var(--third-backgroundcolor);
 }
+
 /* Define a custom gradient using OKLab and color-mix */
 .my-gradient {
-  --tw-gradient-stops: color-mix(
-        in oklab,
-        var(--primary-color) 20%,
-        transparent
-      )
-      0%,
+  --tw-gradient-stops: color-mix(in oklab,
+      var(--primary-color) 20%,
+      transparent) 0%,
     color-mix(in oklab, var(--primary-color) 10%, transparent) 100%;
 
   background-image: linear-gradient(to bottom right, var(--tw-gradient-stops));
@@ -221,15 +251,28 @@
 .backgroundfont-hover:hover {
   color: var(--primary-color);
 }
+
+.full-border {
+  border: var(--thin-border);
+}
+
+.full-border:focus {
+  border: var(--hover);
+  outline: none; /* prevent default blue outline */
+}
+
 .border-top {
   border-top: var(--thin-border);
 }
+
 .border-bottom {
   border-bottom: var(--thin-border);
 }
+
 .border-right {
   border-right: var(--thin-border);
 }
+
 .sign-in-button {
   background-color: var(--primary-backgroundcolor);
   font-size: var(--font-small);
@@ -237,9 +280,11 @@
   font-weight: 500;
   border: var(--thin-border);
 }
+
 .sign-in-button:hover {
   background-color: var(--smallbutton-inside-hover-backgound);
 }
+
 .sign-up-button {
   background-color: var(--primary-color);
   font-size: var(--font-small);
@@ -248,35 +293,42 @@
   border: var(--thin-border);
   color: var(--font-black);
 }
+
 .sign-up-button:hover {
   background-color: var(--button-hover);
 }
+
 .Language-button {
   background-color: var(--transparent-color);
   font-size: var(--font-small);
   white-space: nowrap;
   font-weight: 500;
   border: var(--transparent-color);
-  transition: all 0.3s ease-in-out; /* Smooth transition for hover effects */
+  transition: all 0.3s ease-in-out;
+  /* Smooth transition for hover effects */
 }
 
 .Language-button:hover {
   background-color: var(--smallbutton-inside-hover-backgound);
   box-shadow: 0 0 0px var(--smallbutton-inside-hover-backgound),
     0 0 24px var(--smallbutton-inside-hover-backgound);
-  transform: scale(1); /* Slight zoom */
+  transform: scale(1);
+  /* Slight zoom */
   border: var(--thin-border);
 }
 
 .icon-color {
   color: var(--primary-color);
 }
+
 .white-letter-color {
   color: var(--primary-font-color);
 }
+
 .small-letter-greycolor {
   color: var(--subheading-color);
 }
+
 /* Base button */
 .sidebar-item {
   display: flex;
@@ -302,6 +354,7 @@
   background-color: var(--transparent-color);
   color: var(--primary-font-color);
 }
+
 .sidebar-item-inactive:hover {
   color: var(--font-black);
   background: var(--sidebar-active-bg);
@@ -320,6 +373,7 @@
 .sidebar-icon-inactive:hover {
   color: var(--font-black);
 }
+
 /* Dropdown container */
 .sidebar-dropdown {
   @apply ml-8 mt-1 space-y-1;

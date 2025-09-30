@@ -101,11 +101,10 @@ const LandingPage = () => {
               <button
                 key={section.id}
                 onClick={() => handleScroll(section.id)}
-                className={`subheading2-size transition-colors ${
-                  activeSection === section.id
+                className={`subheading2-size transition-colors ${activeSection === section.id
                     ? "text-yellow-400 border-b-2 border-yellow-400"
                     : "text-white"
-                }`}
+                  }`}
               >
                 {section.label}
               </button>
@@ -119,7 +118,9 @@ const LandingPage = () => {
           </button>
           {/* Auth Buttons */}
           <div className="flex space-x-3">
-            <button className="px-4 py-1 rounded border sign-in-button transition">
+            <button
+              onClick={() => navigate("/Customer-Login")}
+              className="px-4 py-1 rounded border sign-in-button transition">
               Sign In
             </button>
             <button
@@ -138,9 +139,8 @@ const LandingPage = () => {
           <section
             key={section.id}
             id={section.id}
-            className={`${
-              idx === 0 ? "min-h-screen" : "py-5"
-            } flex items-center justify-center`}
+            className={`${idx === 0 ? "min-h-screen" : "py-5"
+              } flex items-center justify-center`}
           >
             <div className="w-full flex items-center justify-center">
               {section.component}
