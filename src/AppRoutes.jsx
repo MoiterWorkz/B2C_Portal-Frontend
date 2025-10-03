@@ -14,6 +14,9 @@ import TransactionHistory from "./pages/transactionHistory";
 import FundTransferLayout from "./pages/fundTransfer/fundTransferLayout";
 import AddPayee from "./pages/fundTransfer/addPayee";
 import PayeeList from "./pages/fundTransfer/payeeList";
+import MyProfile from "./pages/components/MyProfile";
+import BillDetails from "./pages/components/Electricity/BillDetails";
+import SelectorProvider from "./pages/components/Electricity/SelectorProvider";
 // import MakersDashboard from "./pages/makersDashboard";
 
 function AppRoutes({ setRole }) {
@@ -41,6 +44,11 @@ function AppRoutes({ setRole }) {
           <Route path="payee-list" element={<PayeeList />} />
         </Route>
         <Route />
+        <Route path="/MyProfile" element={<MyProfile />} />
+      </Route>
+      <Route element={<Layout />}>
+        <Route path="BillDetails" element={<BillDetails />} />
+        <Route path="SelectorProvider" element={<SelectorProvider />} />
       </Route>
       {/* Fallback */}
       <Route path="*" element={<Navigate to="/" replace />} />
