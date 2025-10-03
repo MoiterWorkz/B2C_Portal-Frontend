@@ -110,7 +110,7 @@ const WalletRecharge = () => {
               }  card-hover-effect-noboder flex-1 p-4 rounded-lg flex flex-col items-center justify-center transition ${
                 method.bg
               }`}
-              // onClick={() => setActivePayment(method.name)}
+              onClick={() => setActivePayment(method.name)}
             >
               <div>{method.icon}</div>
               <p>{method.name}</p>
@@ -186,7 +186,7 @@ const WalletRecharge = () => {
           className={`${
             amount.length == 0 && "opacity-70"
           } flex-1 bg-[var(--primary-color)] p-2 rounded-lg hover:opacity-90 cursor-pointer`}
-          onClick={() => setIsModalOpen(true)}
+          // onClick={() => setIsModalOpen(true)}
         >
           Recharge Wallet
         </button>
