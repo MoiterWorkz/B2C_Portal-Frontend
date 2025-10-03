@@ -53,7 +53,7 @@ const SetPin = () => {
           </div>
         </div>
 
-        <h2 className="text-2xl font-semibold text-center mb-2">Set Account PIN</h2>
+        <h2 className="text-2xl font-semibold text-center mb-2 text-white">Set Account PIN</h2>
         <p className="text-center text-neutral-400 mb-6">
           Create a secure 4-digit PIN for your account<br />
           Setting up PIN for{" "}

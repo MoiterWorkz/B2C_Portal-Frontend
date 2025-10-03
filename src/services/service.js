@@ -45,6 +45,7 @@ api.interceptors.request.use((config) => {
 export const postRequest = async (endpoint, payload) => {
   try {
     const response = await api.post(endpoint, payload);
+    
     return response.data;
   } catch (error) {
     console.error("API Error:", error.response || error.message);
@@ -80,6 +81,12 @@ export const getStateAndCityByPincode = async (pincode) => {
 
 export const submitMinKyc = async (formData) => {
   return postRequest("/cs/api/Customer/min_kyc", {
+    ...formData,
+  });
+};
+
+export const submitFullKyc = async (formData) => {
+  return postRequest("/cs/api/Customer/full_kyc", {
     ...formData,
   });
 };
