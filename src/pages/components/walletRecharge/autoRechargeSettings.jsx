@@ -2,14 +2,35 @@ import React, { useState } from "react";
 import { Settings } from "lucide-react";
 const AutoRechargeSettings = () => {
   const [isEnabled, setIsEnabled] = useState(true);
-  const [threshold, setThreshold] = useState(500);
-  const [amount, setAmount] = useState(2000);
+  const [amount, setAmount] = useState({ trigger: "", auto: "" });
 
   const handleSubmit = () => {
     // Add API call or local storage logic here
     alert(
       `Auto Recharge Enabled: ${isEnabled}\nThreshold: ₹${threshold}\nAmount: ₹${amount}`
     );
+  };
+
+  const inputFields = [
+    {
+      label: "Trigger when balance falls below",
+      name: "trigger",
+    },
+    {
+      label: "Auto recharge amount",
+      name: "auto",
+    },
+  ];
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    const cleanedValue = value.replace(/,/g, ""); // Remove commas
+    if (!isNaN(cleanedValue)) {
+      setAmount((prev) => ({
+        ...prev,
+        [name]: cleanedValue,
+      }));
+    }
   };
 
   return (
@@ -31,59 +52,59 @@ const AutoRechargeSettings = () => {
         <label className="inline-flex items-center cursor-pointer">
           <input
             type="checkbox"
-            className="sr-only peer"
+            value=""
+            className="sr-only peer focus:outline-none"
             checked={isEnabled}
             onChange={() => setIsEnabled(!isEnabled)}
           />
-          <div className="w-11 h-6 bg-yellow-600 rounded-full peer peer-checked:bg-yellow-400 transition-colors duration-300 relative">
-            <div className="absolute top-0.5 left-0.5 w-5 h-5 bg-black rounded-full transition-all duration-300 peer-checked:translate-x-5"></div>
-          </div>
+          <div
+            className="relative w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700
+    peer-checked:bg-[var(--primary-color)]
+    peer-checked:after:bg-black
+    peer-checked:after:translate-x-full
+    rtl:peer-checked:after:-translate-x-full
+    peer-checked:after:border-white
+    after:content-[''] after:absolute after:top-[2px] after:start-[2px]
+    after:bg-white after:border-gray-300 after:border after:rounded-full
+    after:h-5 after:w-5 after:transition-all
+    dark:border-gray-600 dark:peer-checked:bg-[var(--primary-color)]"
+          />
         </label>
       </div>
 
       {/* Conditional Inputs */}
       {isEnabled && (
-        <div className=" rounded-md p-4 bg-[var(card-settings-bg)] space-y-4">
+        <div
+          style={{ background: "#fad48905" }}
+          className=" rounded-md py-2 px-4  space-y-4 card-hover-effect"
+        >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* Threshold Input */}
-            <div>
-              <label className="block text-sm font-medium text-white mb-1">
-                Trigger when balance falls below
-              </label>
-              <div className="flex items-center bg-gray-800 border border-gray-600 rounded-md px-3 py-2">
-                <span className="text-gray-400 mr-2">₹</span>
-                <input
-                  type="number"
-                  value={threshold}
-                  onChange={(e) => setThreshold(e.target.value)}
-                  className="bg-transparent outline-none text-white w-full"
-                  placeholder="e.g. 500"
-                />
+            {inputFields.map((field, index) => (
+              <div key={index}>
+                <label className="block text-xs text-[var(--primary-font-color)]">
+                  {field.label}
+                </label>
+                <div className="relative w-full mt-2">
+                  <span className="absolute inset-y-0 left-3 flex items-center text-[var(--subheading-color)]">
+                    ₹
+                  </span>
+                  <input
+                    style={{ padding: "2px 24px", color: "white" }}
+                    type="text"
+                    className="w-full rounded-md input-field-style"
+                    name={field.name}
+                    value={amount[field.name]}
+                    onChange={handleChange}
+                  />
+                </div>
               </div>
-            </div>
-
-            {/* Auto Recharge Amount */}
-            <div>
-              <label className="block text-sm font-medium text-white mb-1">
-                Auto recharge amount
-              </label>
-              <div className="flex items-center bg-gray-800 border border-gray-600 rounded-md px-3 py-2">
-                <span className="text-gray-400 mr-2">₹</span>
-                <input
-                  type="number"
-                  value={amount}
-                  onChange={(e) => setAmount(e.target.value)}
-                  className="bg-transparent outline-none text-white w-full"
-                  placeholder="e.g. 2000"
-                />
-              </div>
-            </div>
+            ))}
           </div>
 
           {/* Save Button */}
           <button
             onClick={handleSubmit}
-            className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold px-4 py-2 rounded-md"
+            className="bg-[var(--primary-color)] hover:opacity-90 text-sm font-semibold px-4 py-2 rounded-md"
           >
             Save Auto Recharge Settings
           </button>
