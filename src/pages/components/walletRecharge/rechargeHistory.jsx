@@ -40,9 +40,12 @@ const RechargeHistory = () => {
           key={txn.id}
           className="card-hover-effect p-4 mb-4 shadow-lg flex justify-between items-center"
         >
-          <div className="flex items-start gap-4">
+          <div className="flex items-center gap-4">
             <div className="bg-[var(--bg-primary\/20)] p-2 rounded-lg">
-              <TrendingUp size="12" className="text-[var(--primary-color)]" />
+              <TrendingUp
+                size="14"
+                className="text-[var(--primary-color)] font-bold"
+              />
             </div>
             <div>
               <p className="text-[var(--subheading-color)] text-xs">{txn.id}</p>

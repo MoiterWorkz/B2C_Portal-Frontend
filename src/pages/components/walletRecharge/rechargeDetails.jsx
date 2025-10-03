@@ -7,9 +7,12 @@ import {
   Zap,
   IndianRupee,
 } from "lucide-react";
+import ConfirmRechargeModal from "./confirmRechargeModal";
 const WalletRecharge = () => {
   const [amount, setAmount] = useState("");
   const [activePayment, setActivePayment] = useState("UPI");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  // const [activeQuickAmount,setActiveQuickAmount]=  useState('')
   const quickAmounts = [500, 1000, 2000, 5000, 10000, 25000];
 
   const walletInfo = [
@@ -46,6 +49,12 @@ const WalletRecharge = () => {
       setAmount(value);
     }
   };
+
+  const handleConfirm = () => {
+    alert(`Recharge ₹${amount} confirmed`);
+    setIsModalOpen(false);
+  };
+
   return (
     <div className="text-card-foreground rounded-xl border card-hover-effect p-6 space-y-5">
       {/* Wallet Recharge Details */}
@@ -98,10 +107,10 @@ const WalletRecharge = () => {
               key={index}
               className={`${
                 activePayment === method.name ? "text-black" : "text-white"
-              } card-hover-effect flex-1 p-4 rounded-lg flex flex-col items-center justify-center transition ${
+              }  card-hover-effect-noboder flex-1 p-4 rounded-lg flex flex-col items-center justify-center transition ${
                 method.bg
               }`}
-              onClick={() => setActivePayment(method.name)}
+              // onClick={() => setActivePayment(method.name)}
             >
               <div>{method.icon}</div>
               <p>{method.name}</p>
@@ -122,13 +131,20 @@ const WalletRecharge = () => {
         <div className="flex flex-wrap gap-3">
           {quickAmounts.map((amt) => (
             <button
+              style={{
+                background: amount === amt && "var(--primary-color)",
+              }}
               key={amt}
               className="flex-1 min-w-[100px] py-2 card-hover-effect-noboder "
               onClick={() => setAmount(amt)}
             >
-              <span className="text-sm duration-200">
+              <p
+                className={` hover:text-black ${
+                  amount === amt ? "text-black" : "text-white"
+                } text-sm duration-200`}
+              >
                 ₹{amt.toLocaleString("en-IN")}
-              </span>
+              </p>
             </button>
           ))}
         </div>
@@ -166,16 +182,29 @@ const WalletRecharge = () => {
 
       {/* Buttons */}
       <section className="flex gap-4">
-        <button className="flex-1 bg-[var(--primary-color)] p-2 rounded-lg hover:bg-yellow-200 cursor-pointer">
+        <button
+          className={`${
+            amount.length == 0 && "opacity-70"
+          } flex-1 bg-[var(--primary-color)] p-2 rounded-lg hover:opacity-90 cursor-pointer`}
+          onClick={() => setIsModalOpen(true)}
+        >
           Recharge Wallet
         </button>
         <button
-          className="flex-1 rounded-lg bg-gray-300 hover:bg-gray-200 cursor-pointer"
+          className="flex-1 text-white hover:text-black cursor-pointer"
           onClick={() => setAmount("")}
         >
           Clear
         </button>
       </section>
+      <ConfirmRechargeModal
+        amount={amount}
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onConfirm={handleConfirm}
+        paymentMethod={activePayment}
+        amt={amount}
+      />
     </div>
   );
 };
