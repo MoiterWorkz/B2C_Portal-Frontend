@@ -8,12 +8,21 @@ import {
   IndianRupee,
 } from "lucide-react";
 import ConfirmRechargeModal from "./confirmRechargeModal";
+import { generateTransactionRef } from "../../../helper/index";
+import { useSignInStore } from "../../../store/useSigninStore";
+import { moveTransaction, rechargeWallet } from "../../../services/service";
 const WalletRecharge = () => {
   const [amount, setAmount] = useState("");
   const [activePayment, setActivePayment] = useState("UPI");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { getCustomerId } = useSignInStore();
   // const [activeQuickAmount,setActiveQuickAmount]=  useState('')
   const quickAmounts = [500, 1000, 2000, 5000, 10000, 25000];
+  const customerId = getCustomerId();
+
+  console.log(customerId);
+
+  console.log(generateTransactionRef());
 
   const walletInfo = [
     {
@@ -53,6 +62,39 @@ const WalletRecharge = () => {
   const handleConfirm = () => {
     alert(`Recharge ₹${amount} confirmed`);
     setIsModalOpen(false);
+  };
+
+  const handleWalletRecharge = async () => {
+    console.log("func");
+    //wallet recharge
+    const rechargeWalletPayload = {
+      customerId: 2000044,
+      // customerId,
+      amount,
+      channelId: "web",
+      referenceNumber: generateTransactionRef(),
+    };
+    try {
+      const res = await rechargeWallet(rechargeWalletPayload);
+      try {
+        //move Transaction
+        const moveTransactionPayload = {
+          trackerId: res?.tracker_id,
+          // apiStatus: res?.status,
+          // trackerId: "f1f8fbf3-ce18-407c-b325-8fc5132bd9aa",
+          apiStatus: "Failure",
+        };
+
+        const res2 = await moveTransaction(moveTransactionPayload);
+        alert(res2);
+      } catch (error) {
+        alert("Move Transaction API failed. Please Try again Later");
+      }
+    } catch (error) {
+      alert("Recharge Wallet API failed. Please Try again Later");
+    }
+
+    // setIsModalOpen(true)
   };
 
   return (
@@ -183,10 +225,13 @@ const WalletRecharge = () => {
       {/* Buttons */}
       <section className="flex gap-4">
         <button
+          disabled={!amount}
           className={`${
-            amount.length == 0 && "opacity-70"
-          } flex-1 bg-[var(--primary-color)] p-2 rounded-lg hover:opacity-90 cursor-pointer`}
-          // onClick={() => setIsModalOpen(true)}
+            !amount
+              ? "opacity-50 cursor-not-allowed hover:opacity-50"
+              : "hover:opacity-90 cursor-pointer"
+          } flex-1 bg-[var(--primary-color)] p-2 rounded-lg `}
+          onClick={handleWalletRecharge}
         >
           Recharge Wallet
         </button>

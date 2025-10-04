@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginWithPin } from "../services/service"; // API service
 import { ArrowLeft, Phone, LogIn, Shield } from "lucide-react";
-import LOGO from "../assets/logo.png"
+import LOGO from "../assets/logo.png";
+import { useSignInStore } from "../store/useSigninStore";
 
 const Login = () => {
   const [phone, setPhone] = useState("");
   const [pin, setPin] = useState("");
+  const { setCustomerId } = useSignInStore();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -15,6 +17,7 @@ const Login = () => {
       const encodedPin = btoa(pin); // encode if backend expects Base64
       const res = await loginWithPin(phone, encodedPin);
       console.error("Login success:", res);
+      setCustomerId(res?.customerId);
       navigate("/dashboard");
     } catch (err) {
       console.error("Login failed:", err.response?.data || err.message);
@@ -27,7 +30,6 @@ const Login = () => {
       {/* Logo */}
       <div className="flex items-center gap-2 mb-6">
         <img src={LOGO} alt="Moiter Workz Logo" className="h-9" />
-      
       </div>
 
       {/* Card */}

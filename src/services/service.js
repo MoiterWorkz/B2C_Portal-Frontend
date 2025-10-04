@@ -1,10 +1,11 @@
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid"; // for generating transactionId
-import { getPublicIp } from "../services/ipService"
+import { getPublicIp } from "../services/ipService";
 import { CodeSquare } from "lucide-react";
 // Base URL
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://192.168.22.247";
-const ip = await getPublicIp()
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://192.168.22.247";
+const ip = await getPublicIp();
 // Common metadata
 const getCommonMetadata = () => ({
   ipAddress: ip || "0.0.0.0",
@@ -17,29 +18,44 @@ const getCommonMetadata = () => ({
     modifiedBy: null,
     modifiedDate: new Date().toISOString(),
     header: {
-      additionalProp1: { options: { propertyNameCaseInsensitive: true }, parent: "string", root: "string" },
-      additionalProp2: { options: { propertyNameCaseInsensitive: true }, parent: "string", root: "string" },
-      additionalProp3: { options: { propertyNameCaseInsensitive: true }, parent: "string", root: "string" },
-    }
-  }
+      additionalProp1: {
+        options: { propertyNameCaseInsensitive: true },
+        parent: "string",
+        root: "string",
+      },
+      additionalProp2: {
+        options: { propertyNameCaseInsensitive: true },
+        parent: "string",
+        root: "string",
+      },
+      additionalProp3: {
+        options: { propertyNameCaseInsensitive: true },
+        parent: "string",
+        root: "string",
+      },
+    },
+  },
 });
 
 // Axios instance
 const api = axios.create({
   baseURL: API_BASE_URL,
-  headers: { "Content-Type": "application/json" }
+  headers: { "Content-Type": "application/json" },
 });
 
 // Request interceptor — add metadata
-api.interceptors.request.use((config) => {
-  if (config.method === "post" || config.method === "put") {
-    config.data = {
-      ...config.data,
-      metadata: getCommonMetadata(),
-    };
-  }
-  return config;
-}, (error) => Promise.reject(error));
+api.interceptors.request.use(
+  (config) => {
+    if (config.method === "post" || config.method === "put") {
+      config.data = {
+        ...config.data,
+        metadata: getCommonMetadata(),
+      };
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
 
 // Generic POST request
 export const postRequest = async (endpoint, payload) => {
@@ -54,7 +70,9 @@ export const postRequest = async (endpoint, payload) => {
 
 // ✅ PAN Verification
 export const verifyPan = async (panNumber) => {
-  return postRequest("/cs/api/Customer/get_pan_details", { documentNumber: panNumber });
+  return postRequest("/cs/api/Customer/get_pan_details", {
+    documentNumber: panNumber,
+  });
 };
 
 // ✅ Mobile Verification Flow
@@ -63,7 +81,10 @@ export const checkMobileNumber = async (mobileNumber) => {
 };
 
 export const generateOtp = async (mobileNumber, transactionId = uuidv4()) => {
-  return postRequest("/cs/api/Customer/generate_otp", { mobileNumber, transactionId });
+  return postRequest("/cs/api/Customer/generate_otp", {
+    mobileNumber,
+    transactionId,
+  });
 };
 
 export const verifyOtp = async (transactionId, otp) => {
@@ -83,7 +104,13 @@ export const submitMinKyc = async (formData) => {
     ...formData,
   });
 };
-export const pepCheck = async ({ firstName, middleName, lastName, dateOfBirth, country }) => {
+export const pepCheck = async ({
+  firstName,
+  middleName,
+  lastName,
+  dateOfBirth,
+  country,
+}) => {
   const payload = {
     givenNames: firstName + (middleName ? ` ${middleName}` : ""),
     lastName,
@@ -95,8 +122,13 @@ export const pepCheck = async ({ firstName, middleName, lastName, dateOfBirth, c
   return postRequest("/cs/api/Customer/pep_check", payload);
 };
 
-
-export const sanctionCheck = async ({ firstName, middleName, lastName, dateOfBirth, country }) => {
+export const sanctionCheck = async ({
+  firstName,
+  middleName,
+  lastName,
+  dateOfBirth,
+  country,
+}) => {
   const payload = {
     givenNames: firstName + (middleName ? ` ${middleName}` : ""),
     lastName,
@@ -114,7 +146,6 @@ export const setAccountPin = async (mobileNumber, pin) => {
   });
 };
 
-
 // ✅ Login with Phone + PIN
 export const loginWithPin = async (mobileNumber, password) => {
   return postRequest("/cs/api/Customer/login", {
@@ -123,4 +154,11 @@ export const loginWithPin = async (mobileNumber, password) => {
   });
 };
 
+export const rechargeWallet = (payload) =>
+  postRequest("/cs/api/Customer/recharge-wallet", {
+    ...payload,
+    logId: uuidv4(),
+  });
 
+export const moveTransaction = (payload) =>
+  postRequest("/cs/api/Customer/move-transaction", payload);
