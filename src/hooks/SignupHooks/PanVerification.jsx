@@ -53,7 +53,7 @@ export default function PanVerification() {
                     <p className="small-text text-gray-400">Enter your PAN to continue</p>
 
                     {/* Card */}
-                    <div className="card-bg p-6 rounded-xl shadow-lg mt-6  w-full sm:w-[400px] max-w-md mx-auto">
+                    <div className="card-bg p-6 rounded-xl shadow-lg mt-6  w-full sm:w-[400px] max-w-md mx-auto card-hover-effect">
                         <h2 className="flex items-center gap-2 font-semibold mb-2">
                             <span className="font-themecolor">  <CreditCard size={18} /></span> PAN Verification
                         </h2>
@@ -68,7 +68,7 @@ export default function PanVerification() {
                                 value={pan}
                                 onChange={(e) => setPan(e.target.value.toUpperCase())} // auto-uppercase
                                 placeholder="ABCDE1234F"
-                                className="w-full pl-[10px] pr-[8px] py-[8px] rounded-[10px] bg-neutral-800 border small-text border-neutral-700 focus:outline-none focus:ring-1 focus:ring-yellow-200"
+                                className="w-full full-border pl-[10px] pr-[8px] py-[8px] rounded-[10px] bg-neutral-800 border small-text border-neutral-700 focus:outline-none focus:ring-1 focus:ring-yellow-200"
                             />
                             <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-neutral-400">
                                 <CreditCard size={18} />

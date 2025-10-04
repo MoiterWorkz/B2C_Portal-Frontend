@@ -29,7 +29,7 @@ const DashboardHeader = ({ hideBalance, setHideBalance }) => {
         {/* Date Badge */}
         <span
           className="inline-flex items-center justify-center rounded-md border w-fit whitespace-nowrap 
-            gap-1 overflow-hidden px-3 py-1 smallbutton"
+            gap-1 overflow-hidden px-2 py-1 smallbutton"
         >
           <Clock className="h-3 w-3 mr-1" />
           25/09/2025

@@ -5,7 +5,6 @@ import FullKycMobileVerification from "../FullKyc/FullKycMobileverification";
 export default function Index({ pan }) {
     const [verified, setVerified] = useState(false);
     const [verifiedMobile, setVerifiedMobile] = useState("");
-    console.log(verified)
     return (
         <>
             {!verified ? (

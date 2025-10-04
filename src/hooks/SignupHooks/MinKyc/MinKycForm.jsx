@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { getStateAndCityByPincode, submitMinKyc, pepCheck,sanctionCheck  } from "../../../services/service";
+import { getStateAndCityByPincode, submitMinKyc, pepCheck, sanctionCheck } from "../../../services/service";
 import { v4 as uuidv4 } from "uuid"; // for generating transactionId
 import { useNavigate } from "react-router-dom";
 import LOGO from "../../../assets/logo.png"
+import { ArrowLeft, CheckIcon } from "lucide-react";
 
 function MinKycForm({ verifiedMobile, pan }) {
     const navigate = useNavigate();
     const [pincode, setPincode] = useState("");
     const [stateOptions, setStateOptions] = useState([]);
     const [cityOptions, setCityOptions] = useState([]);
+    const [checked, setChecked] = useState(false);
+    const [errors, setErrors] = useState({});
+     const [partners, setPartners] = useState([]);
     const [formValues, setFormValues] = useState({
         firstName: "",
         middleName: "",
@@ -45,8 +49,26 @@ function MinKycForm({ verifiedMobile, pan }) {
         partnerId: "",
         agentId: "",
         kycLevel: "min",
+        termsAndConditions: false,
     });
     // console.log(formValues)
+    useEffect(() => {
+    const fetchPartners = async () => {
+      try {
+        const res = await fetch("http://192.168.22.247/fes/api/Export/partner_summary_export");
+        const data = await res.json();
+        if (Array.isArray(data)) {
+          setPartners(data);
+        } else {
+          setPartners([data]); // in case API returns single object
+        }
+      } catch (err) {
+        console.error("❌ Error fetching partners:", err);
+      }
+    };
+
+    fetchPartners();
+  }, []);
     // Fetch PEP flag when user fills required fields
     useEffect(() => {
         const fetchPepFlag = async () => {
@@ -98,8 +120,11 @@ function MinKycForm({ verifiedMobile, pan }) {
         }));
     }, [verifiedMobile, pan]);
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormValues((prev) => ({ ...prev, [name]: value }));
+        const { name, value, type, checked } = e.target;
+        setFormValues((prev) => ({
+            ...prev, [name]: value,
+            [name]: type === "checkbox" ? checked : value,
+        }));
     };
 
     const handlePincodeChange = async (e) => {
@@ -142,12 +167,15 @@ function MinKycForm({ verifiedMobile, pan }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        let newErrors = {};
         if (!formValues.documentNumber) {
             alert("PAN number is required!");
             return;
         }
-
+        if (!formValues.termsAndConditions) {
+            newErrors.termsAndConditions = "You must agree to the Terms and Conditions.";
+        }
+        setErrors(newErrors);
         try {
             const payload = {
                 ...formValues,
@@ -169,25 +197,25 @@ function MinKycForm({ verifiedMobile, pan }) {
 
     return (
         <div className="min-h-screen bg-primary-background text-white flex flex-col items-center py-10 px-4">
-           {/* Logo + Progress */}
-                 <div className="w-full flex flex-col items-center mb-5">
-                   {/* Logo */}
-                   <div className="flex items-center gap-2 mb-6">
-                     <img src={LOGO} alt="Moiter Workz Logo" className="h-9" />
-           
-                   </div>
-                   <div className=" w-1/4 flex justify-between">
-                     <p className=" gray-text medium-text">Min KYC - Personal Details</p>
-                     <p className="icon-color small-text">60%</p>
-                   </div>
-                   <div className="w-1/4 bg-gray-800 h-2 rounded-full mt-2">
-           
-                     <div
-                       className="sign-up-button h-2 rounded-full"
-                       style={{ width: "60%" }}
-                     ></div>
-                   </div>
-                 </div>
+            {/* Logo + Progress */}
+            <div className="w-full flex flex-col items-center mb-5">
+                {/* Logo */}
+                <div className="flex items-center gap-2 mb-6">
+                    <img src={LOGO} alt="Moiter Workz Logo" className="h-9" />
+
+                </div>
+                <div className=" w-1/4 flex justify-between">
+                    <p className=" gray-text medium-text">Min KYC - Personal Details</p>
+                    <p className="icon-color small-text">60%</p>
+                </div>
+                <div className="w-1/4 bg-gray-800 h-2 rounded-full mt-2">
+
+                    <div
+                        className="sign-up-button h-2 rounded-full"
+                        style={{ width: "60%" }}
+                    ></div>
+                </div>
+            </div>
 
             {/* Form Card */}
             <div className="cardhover rounded-2xl shadow-xl p-10 text-center 
@@ -197,70 +225,70 @@ function MinKycForm({ verifiedMobile, pan }) {
                 <form className="space-y-8" onSubmit={handleSubmit}>
                     {/* Personal Information */}
                     <section>
-                        <h2 className="text-lg font-semibold mb-4">Personal Information</h2>
+                        <p className=" mb-4 flex pb-2 border-primary-bottom medium-text">Personal Information</p>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                             <div>
-                                <label className="block text-sm mb-2">First Name *</label>
+                                <label className="small-text font-medium flex">First Name *</label>
                                 <input
                                     type="text"
                                     name="firstName"
                                     value={formValues.firstName}
                                     onChange={handleChange}
-                                    placeholder="Enter first name"
-                                    className="w-full bg-black border border-neutral-700 rounded-lg px-3 py-2 focus:outline-none"
+                                    placeholder="Enter middle name"
+                                    className="w-full  border full-border rounded-lg px-3 py-1  medium-text"
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm mb-2">Middle Name</label>
+                                <label className="small-text font-medium flex">Middle Name</label>
                                 <input
                                     type="text"
                                     name="middleName"
                                     value={formValues.middleName}
                                     onChange={handleChange}
                                     placeholder="Enter middle name"
-                                    className="w-full bg-black border border-neutral-700 rounded-lg px-3 py-2 focus:outline-none"
+                                    className="w-full  border full-border rounded-lg px-3 py-1  medium-text"
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm mb-2">Last Name *</label>
+                                <label className="small-text font-medium flex">Last Name *</label>
                                 <input
                                     type="text"
                                     name="lastName"
                                     value={formValues.lastName}
                                     onChange={handleChange}
                                     placeholder="Enter last name"
-                                    className="w-full bg-black border border-neutral-700 rounded-lg px-3 py-2 focus:outline-none"
+                                    className="w-full  border full-border rounded-lg px-3 py-1  medium-text"
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm mb-2">Father Name *</label>
+                                <label className="small-text font-medium flex">Father Name *</label>
                                 <input
                                     type="text"
                                     name="fatherName"
                                     value={formValues.fatherName}
                                     onChange={handleChange}
                                     placeholder="Enter Father Name"
-                                    className="w-full bg-black border border-neutral-700 rounded-lg px-3 py-2 focus:outline-none"
+                                    className="w-full  border full-border rounded-lg px-3 py-1  medium-text"
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm mb-2">Mother Name *</label>
+                                <label className="small-text font-medium flex">Mother Name *</label>
                                 <input
                                     type="text"
                                     name="motherName"
                                     value={formValues.motherName}
                                     onChange={handleChange}
                                     placeholder="Enter Mother Name"
-                                    className="w-full bg-black border border-neutral-700 rounded-lg px-3 py-2 focus:outline-none"
+                                    className="w-full  border full-border rounded-lg px-3 py-1  medium-text"
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm mb-2">Gender *</label>
+                                <label className="small-text font-medium flex">Gender *</label>
                                 <select
                                     name="gender"
                                     value={formValues.gender}
                                     onChange={handleChange}
-                                    className="w-full bg-black border border-neutral-700 rounded-lg px-3 py-2 focus:outline-none"
+                                    className="golden-dropdown w-full  border full-border rounded-lg px-3 py-1  medium-text"
                                 >
                                     <option value="">Select Gender</option>
                                     <option value="MALE">MALE</option>
@@ -269,14 +297,15 @@ function MinKycForm({ verifiedMobile, pan }) {
                                 </select>
                             </div>
                             <div>
-                                <label className="block text-sm mb-2">Date of Birth *</label>
+                                <label className="small-text font-medium flex">Date of Birth *</label>
                                 <input
                                     type="date"
                                     name="dateOfBirth"               // Important!
                                     value={formValues.dateOfBirth}   // Controlled input
                                     onChange={handleChange}          // Update state on change
-                                    className="w-full bg-black border border-neutral-700 rounded-lg px-3 py-2 focus:outline-none"
+                                    className="w-full  border full-border rounded-lg px-3 py-1  medium-text"
                                 />
+                                <p className="text-[10px] gray-text">You can type the date directly (DD/MM/YYYY) or click the calendar icon</p>
                             </div>
 
                         </div>
@@ -284,27 +313,27 @@ function MinKycForm({ verifiedMobile, pan }) {
 
                     {/* Contact Information */}
                     <section>
-                        <h2 className="text-lg font-semibold mb-4">Contact Information</h2>
+                        <p className="mb-4 flex pb-2 border-primary-bottom medium-text">Contact Information</p>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
-                                <label className="block text-sm mb-2">Email ID *</label>
+                                <label className="small-text font-medium flex">Email ID *</label>
                                 <input
                                     type="email"
                                     name="email"
                                     value={formValues.email}
                                     onChange={handleChange}
                                     placeholder="Enter email address"
-                                    className="w-full bg-black border border-neutral-700 rounded-lg px-3 py-2 focus:outline-none"
+                                    className="w-full  border full-border rounded-lg px-3 py-1  medium-text"
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm mb-2">Mobile Number *</label>
+                                <label className="small-text font-medium flex">Mobile Number *</label>
                                 <input
                                     type="tel"
                                     name="mobileNumber"
                                     value={formValues.mobileNumber}
                                     readOnly
-                                    className="w-full bg-black border border-neutral-700 rounded-lg px-3 py-2 focus:outline-none text-neutral-400"
+                                    className="w-full  border full-border rounded-lg px-3 py-1  medium-text"
                                 />
                             </div>
                         </div>
@@ -312,37 +341,37 @@ function MinKycForm({ verifiedMobile, pan }) {
 
                     {/* Address Information */}
                     <section>
-                        <h2 className="text-lg font-semibold mb-4">Address Information</h2>
+                        <p className=" mb-4 flex pb-2 border-primary-bottom medium-text">Address Information</p>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                             <div className="md:col-span-3">
-                                <label className="block text-sm mb-2">Address *</label>
+                                <label className="small-text font-medium flex">Address *</label>
                                 <input
                                     type="text"
                                     name="permanentAddress"
                                     value={formValues.permanentAddress}
                                     onChange={handleChange}
                                     placeholder="Enter complete address"
-                                    className="w-full bg-black border border-neutral-700 rounded-lg px-3 py-2 focus:outline-none"
+                                    className="w-full  border full-border rounded-lg px-3 py-1  medium-text"
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm mb-2">Pincode *</label>
+                                <label className="small-text font-medium flex">Pincode *</label>
                                 <input
                                     type="text"
                                     value={pincode}
                                     onChange={handlePincodeChange}
                                     maxLength={6}
                                     placeholder="Enter pincode"
-                                    className="w-full bg-black border border-neutral-700 rounded-lg px-3 py-2 focus:outline-none"
+                                    className="w-full  border full-border rounded-lg px-3 py-1  medium-text"
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm mb-2">State *</label>
+                                <label className="small-text font-medium flex">State *</label>
                                 <select
                                     name="state"
                                     value={formValues.state}
                                     onChange={handleChange}
-                                    className="w-full bg-black border border-neutral-700 rounded-lg px-3 py-2 focus:outline-none"
+                                    className="w-full  border full-border rounded-lg px-3 py-1  medium-text"
                                 >
                                     <option value="">Select state</option>
                                     {stateOptions.map((s) => (
@@ -353,12 +382,12 @@ function MinKycForm({ verifiedMobile, pan }) {
                                 </select>
                             </div>
                             <div>
-                                <label className="block text-sm mb-2">City *</label>
+                                <label className="small-text font-medium flex">City *</label>
                                 <select
                                     name="city"
                                     value={formValues.city}
                                     onChange={handleChange}
-                                    className="w-full bg-black border border-neutral-700 rounded-lg px-3 py-2 focus:outline-none"
+                                    className="w-full  border full-border rounded-lg px-3 py-1  medium-text"
                                 >
                                     <option value="">Select city</option>
                                     {cityOptions.map((c) => (
@@ -373,26 +402,26 @@ function MinKycForm({ verifiedMobile, pan }) {
 
                     {/* Financial Information */}
                     <section>
-                        <h2 className="text-lg font-semibold mb-4">Financial Information</h2>
+                        <p className="  mb-4 flex pb-2 border-primary-bottom medium-text">Financial Information</p>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
-                                <label className="block text-sm mb-2">PAN Number *</label>
+                                <label className="small-text font-medium flex">PAN Number *</label>
                                 {/* PAN Number (always readonly) */}
                                 <input
                                     type="text"
                                     name="panNumber"
                                     value={formValues.panNumber}
                                     readOnly
-                                    className="w-full bg-black border border-neutral-700 rounded-lg px-3 py-2 focus:outline-none text-neutral-400"
+                                    className="w-full  border full-border rounded-lg px-3 py-1  medium-text"
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm mb-2">Occupation *</label>
+                                <label className="small-text font-medium flex">Occupation *</label>
                                 <select
                                     name="occupation"
                                     value={formValues.occupation}
                                     onChange={handleChange}
-                                    className="w-full bg-black border border-neutral-700 rounded-lg px-3 py-2 focus:outline-none"
+                                    className="w-full  border full-border rounded-lg px-3 py-1  medium-text"
                                 >
                                     <option value="">Select occupation</option>
                                     <option value="Engineer">Engineer</option>
@@ -405,15 +434,15 @@ function MinKycForm({ verifiedMobile, pan }) {
 
                     {/* Identity Verification */}
                     <section>
-                        <h2 className="text-lg font-semibold mb-4">Identity Verification</h2>
+                        <p className=" mb-4 flex pb-2 border-primary-bottom medium-text">Identity Verification</p>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
-                                <label className="block text-sm mb-2">Choose ID Proof *</label>
+                                <label className="small-text font-medium flex">Choose ID Proof *</label>
                                 <select
                                     name="documentType"
                                     value={formValues.documentType}
                                     onChange={handleChange}
-                                    className="w-full bg-black border border-neutral-700 rounded-lg px-3 py-2 focus:outline-none"
+                                    className="w-full  border full-border rounded-lg px-3 py-1  medium-text"
                                 >
                                     <option value="">Select ID proof type</option>
                                     <option value="Aadhar">Aadhar</option>
@@ -423,7 +452,7 @@ function MinKycForm({ verifiedMobile, pan }) {
                                 </select>
                             </div>
                             <div>
-                                <label className="block text-sm mb-2">ID Proof Number *</label>
+                                <label className="small-text font-medium flex">ID Proof Number *</label>
 
                                 {/* ID Proof Number */}
                                 <input
@@ -432,19 +461,84 @@ function MinKycForm({ verifiedMobile, pan }) {
                                     value={formValues.documentNumber}
                                     onChange={handleChange}
                                     placeholder="Enter ID proof number"
-                                    className="w-full bg-black border border-neutral-700 rounded-lg px-3 py-2 focus:outline-none"
+                                    className="w-full  border full-border rounded-lg px-3 py-1  medium-text"
                                 />
                             </div>
+
+                            <div>
+                                <label className="small-text font-medium flex">Select Partner *</label>
+                                <select
+                                    name="partnerId"
+                                    value={formValues.partnerId}
+                                    onChange={handleChange}
+                                    className="w-full border rounded-lg px-3 py-1 medium-text"
+                                >
+                                    <option value="">-- Select Partner --</option>
+                                    {partners.map((p) => (
+                                        <option key={p.partnerId} value={p.partnerId}>
+                                            {p.partnerName}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+
                         </div>
                     </section>
+                    <label className="flex items-center space-x-2 text-[11px] text-white cursor-pointer">
+                        <input
+                            type="checkbox"
+                            name="termsAndConditions"
+                            checked={formValues.termsAndConditions}
+                            onChange={handleChange}
+                            onClick={() => { setChecked(!checked) }}
+                            className="appearance-none w-3 h-3 full-border rounded-sm 
+                   bg-transparent cursor-pointer
+                  font-themecolor
+                   relative transition-all"
+                        />
+                        {/* Custom tick mark */}
+                        <span
+                            className={`pointer-events-none absolute w-3 h-3 flex items-center justify-center text-[10px] font-bold ${checked ? "text-black" : "text-transparent"
+                                }`}
+                        >
+                            <CheckIcon />
+                        </span>
 
+                        <span>
+                            I agree to the{" "}
+                            <a
+                                href="https://www.discover.com/credit-cards/digital-wallets/terms-conditions.html"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="font-themecolor underline "
+                            >
+                                Terms and Conditions
+                            </a>{" "}
+                            and{" "}
+                            <a
+                                href="https://www.securityfederalbank.com/business/digital-resources/digital-wallet-terms-and-conditions"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="font-themecolor underline"
+                            >
+                                Privacy Policy
+                            </a>
+                        </span>
+                    </label>
                     {/* Submit */}
-                    <div className="flex justify-end">
+                    <div className="flex justify-start gap-2">
+                        <button
+                            className=" flex items-center gap-1 gray-text small-text  button-hoverbg px-2 py-1 rounded-[10px]"
+                        >
+                            <ArrowLeft className="w-4 h-4 " />
+                            Back
+                        </button>
+
                         <button
                             type="submit"
-                            className="bg-yellow-600 hover:bg-yellow-500 text-black font-semibold px-6 py-3 rounded-lg"
+                            className=" py-1 px-2 rounded-lg  flex items-center justify-center gap-2 sign-up-button  transition"
                         >
-                            🚀 Submit
+                            Complete Profile
                         </button>
                     </div>
                 </form>

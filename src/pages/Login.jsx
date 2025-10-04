@@ -27,11 +27,10 @@ const Login = () => {
       {/* Logo */}
       <div className="flex items-center gap-2 mb-6">
         <img src={LOGO} alt="Moiter Workz Logo" className="h-9" />
-      
       </div>
 
       {/* Card */}
-      <div className="w-full max-w-md small-cards rounded-2xl p-6 shadow-lg ">
+      <div className="w-full max-w-md small-cards rounded-2xl p-6 shadow-lg card-hover-effect">
         {/* Back */}
         <button
           onClick={() => navigate("/")}
@@ -60,7 +59,7 @@ const Login = () => {
               value={phone}
               onChange={(e) => setPhone(e.target.value.replace(/\D/g, ""))}
               placeholder="Enter your phone number"
-              className="w-full pl-10 pr-[8px] py-[8px] rounded-[20px] bg-neutral-800 border small-text border-neutral-700 focus:outline-none focus:ring-1 focus:ring-yellow-200"
+              className="w-full pl-10 pr-[8px] py-[8px] rounded-[20px] bg-neutral-800 border small-text border-neutral-700 focus:outline-none focus:ring-1 focus:ring-yellow-200 full-border"
               maxLength={10}
               required
             />
@@ -77,7 +76,7 @@ const Login = () => {
               value={pin}
               onChange={(e) => setPin(e.target.value.replace(/\D/g, ""))}
               placeholder="Enter your 4-digit PIN"
-              className="w-full pl-10 pr-[8px] py-[8px] rounded-[20px] bg-neutral-800 border small-text border-neutral-700 focus:outline-none focus:ring-1 focus:ring-yellow-200"
+              className="w-full pl-10 pr-[8px] py-[8px] rounded-[20px] bg-neutral-800 border small-text border-neutral-700 focus:outline-none focus:ring-1 focus:ring-yellow-200 full-border"
               maxLength={4}
               required
             />

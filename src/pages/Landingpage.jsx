@@ -119,9 +119,8 @@ const LandingPage = () => {
                 <button
                   key={section.id}
                   onClick={() => handleScroll(section.id)}
-                  className={`subheading2-size transition-colors hover:text-gray-400 ${
-                    activeSection === section.id ? "" : "text-white"
-                  }`}
+                  className={`subheading2-size transition-colors hover:text-gray-400 ${activeSection === section.id ? "" : "text-white"
+                    }`}
                   style={
                     activeSection === section.id
                       ? { color: "var(--primary-color)" }
@@ -143,7 +142,9 @@ const LandingPage = () => {
 
           {/* Desktop Auth Buttons */}
           <div className="hidden md:flex space-x-3">
-            <button className="px-4 py-1 rounded border sign-in-button transition">
+            <button  onClick={() => 
+                  navigate("/Customer-Login")
+                } className="px-4 py-1 rounded border sign-in-button transition">
               Sign In
             </button>
             <button
@@ -167,9 +168,8 @@ const LandingPage = () => {
                     handleScroll(section.id);
                     setIsMobileMenuOpen(false);
                   }}
-                  className={`block w-full text-left text-white hover:text-gray-400 transition-colors ${
-                    activeSection === section.id ? "text-yellow-400" : ""
-                  }`}
+                  className={`block w-full text-left text-white hover:text-gray-400 transition-colors ${activeSection === section.id ? "text-yellow-400" : ""
+                    }`}
                 >
                   {section.label}
                 </button>
@@ -184,12 +184,12 @@ const LandingPage = () => {
               Dashboard
             </button>
             <div className="flex space-x-3 pt-2">
-              <button 
-               onClick={() => {
-                  navigate("/Customer-Login");
-                  setIsMobileMenuOpen(false);
-                }}
-              className="flex-1 py-1 rounded border sign-in-button transition">
+              <button
+                onClick={() => 
+                  navigate("/Customer-Login")
+                }
+                className="flex-1 py-1 rounded border sign-in-button transition"
+              >
                 Sign In
               </button>
               <button
