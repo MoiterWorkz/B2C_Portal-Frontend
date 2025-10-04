@@ -28,7 +28,7 @@ const transactions = [
 
 const RechargeHistory = () => {
   return (
-    <div className="p-4 rounded-xl border card-hover-effect">
+    <div className="p-4 rounded-xl border card-hover-effect-no-pointer">
       <h1 className="card-title flex items-center gap-2 mb-5">
         <History size="18" />
         Recent Recharge History

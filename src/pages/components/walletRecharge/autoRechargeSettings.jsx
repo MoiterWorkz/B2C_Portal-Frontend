@@ -34,7 +34,7 @@ const AutoRechargeSettings = () => {
   };
 
   return (
-    <div className="p-4 rounded-xl border card-hover-effect">
+    <div className="p-4 rounded-xl border card-hover-effect-no-pointer">
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <div>
@@ -76,7 +76,7 @@ const AutoRechargeSettings = () => {
       {isEnabled && (
         <div
           style={{ background: "#fad48905" }}
-          className=" rounded-md py-2 px-4  space-y-4 card-hover-effect"
+          className=" rounded-md py-2 px-4  space-y-4 card-hover-effect-no-pointer"
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {inputFields.map((field, index) => (
@@ -104,7 +104,7 @@ const AutoRechargeSettings = () => {
           {/* Save Button */}
           <button
             onClick={handleSubmit}
-            className="bg-[var(--primary-color)] hover:opacity-90 text-sm font-semibold px-4 py-2 rounded-md"
+            className="bg-[var(--primary-color)] hover:opacity-90 text-sm font-semibold cursor-pointer px-4 py-2 rounded-md"
           >
             Save Auto Recharge Settings
           </button>

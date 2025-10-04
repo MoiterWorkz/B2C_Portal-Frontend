@@ -592,6 +592,20 @@ body {
   color: var(--primary-color) !important;
 }
 
+.card-hover-effect-no-pointer {
+  transition: all 0.3s ease-in-out;
+  position: relative;
+  border: 1px solid transparent; /* default border */
+  border-radius: 1rem; /* optional rounded corners */
+  background-color: var(--card-background-color); /* card background */
+  border: var(--thin-border);
+  &:hover {
+    border-color: #fad48966;
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: var(--card-hover-shadow);
+  }
+}
+
 .chart-heading {
   h4 {
     color: var(--primary-font-color);
