@@ -39,7 +39,8 @@ const SetPin = () => {
     try {
       const encodedPin = btoa(pin); // 🔒 encode
       await setAccountPin(mobileNumber, encodedPin);
-      navigate("/dashboard");
+      alert("Accouct created Successfully , You May Login now with your Registered Mobile Number and Pin")
+      navigate("/Customer-Login");
     } catch (err) {
       console.error("Error setting PIN:", err);
     }
@@ -55,7 +56,7 @@ const SetPin = () => {
 
         </div>
         <div className=" w-1/2 flex justify-between">
-          <p className=" font-themecolor medium-text">Set Account Pin</p>
+          <p className=" font-themecolor medium-text ">Set Account Pin</p>
           <p className="icon-color small-text">90%</p>
         </div>
         <div className="w-1/2 bg-gray-800 h-2 rounded-full mt-2">
@@ -75,14 +76,14 @@ const SetPin = () => {
           </div>
         </div>
 
-        <h2 className="form-heading2 font-semibold text-center mb-2">Set Account PIN</h2>
+        <h2 className="form-heading2 font-semibold text-center mb-2 white-letter-color">Set Account PIN</h2>
         <p className="text-center medium-text gray-text mb-6">
           Create a secure 4-digit PIN for your account<br />
           <p className="text-center medium-text gray-text mt-3">  Setting up PIN for{" "}</p>
 
           <span className="font-themecolor font-semibold">{mobileNumber}</span>
         </p>
-        <label className="small-text font-medium">Enter 4-digit PIN</label>
+        <label className="small-text font-medium white-letter-color">Enter 4-digit PIN</label>
         {/* Input */}
         <div className="relative mb-4">
           <input
@@ -91,7 +92,7 @@ const SetPin = () => {
             value={pin}
             onChange={(e) => setPin(e.target.value.replace(/\D/g, ""))}
             placeholder="Enter your PIN"
-            className="w-full full-border pl-[10px] pr-[8px] py-[8px] rounded-[10px] bg-neutral-800 border small-text border-neutral-700 focus:outline-none focus:ring-1 focus:ring-yellow-200"
+            className="w-full full-border pl-[10px] pr-[8px] py-[8px] rounded-[10px] bg-neutral-800 border small-text border-neutral-700 focus:outline-none focus:ring-1 focus:ring-yellow-200 white-letter-color"
           />
           <button
             type="button"
@@ -102,7 +103,7 @@ const SetPin = () => {
           </button>
         </div>
 
-        <label className="small-text font-medium">PIN Requirements:</label>
+        <label className="small-text font-medium white-letter-color">PIN Requirements:</label>
         {/* Validations */}
         <div className="space-y-1 mb-6 text-sm">
           {Object.entries(validations).map(([rule, passed]) => (

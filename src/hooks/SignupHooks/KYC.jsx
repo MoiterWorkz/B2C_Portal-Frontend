@@ -1,61 +1,64 @@
-import React, { useState } from "react";
-import { FileText, Shield, ArrowLeft, Lock } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { FileText, Shield, ArrowLeft } from "lucide-react";
 import MinKyc from "./MinKyc";
 import FullKyc from "./FullKyc/index";
 import LOGO from "../../assets/logo.png";
 import { useNavigate } from "react-router-dom";
 
 // Example components for next step
-const MinKYCForm = ({ pan }) => (
-    <div className="w-full p-6 text-white"><MinKyc pan={pan} /></div>
+const MinKYCForm = ({ pan, onBackPressed }) => (
+    <div className="w-full p-6 text-white">
+        <MinKyc pan={pan} onBackPressed={onBackPressed} />
+    </div>
 );
 
-const FullKYCForm = ({pan}) => (
-    <div className="p-6 text-white"><FullKyc pan={pan}/></div>
+const FullKYCForm = ({ pan,onBackPressed }) => (
+    <div className="p-6 text-white">
+        <FullKyc pan={pan} onBackPressed={onBackPressed} />
+    </div>
 );
 
-const KYCScreen = ({ pan }) => {
+const KYCScreen = ({ pan , setShowKyc }) => {
     const [selected, setSelected] = useState(null);
+    const [backPressed, setBackPressed] = useState("");   // track "back pressed" state
+    const navigate = useNavigate();
 
-  const navigate = useNavigate();
+    useEffect(() => {
+        if (backPressed === "KYCScreen-Triggered") {
+            setSelected(null);          // reset to selection screen
+            setBackPressed("");         // clear state so it doesn't loop
+        }
+    }, [backPressed]);
     return (
         <div className="min-h-screen w-full bg-primary-background text-white flex flex-col items-center px-6 py-10">
-            {/* Back button */}
             <div className="w-full max-w-6xl">
-
 
                 {/* If no selection -> show KYC choice */}
                 {!selected && (
                     <>
                         {/* Logo + Progress */}
                         <div className="flex flex-col items-center mb-5">
-                            {/* Logo */}
                             <div className="flex items-center gap-2 mb-6">
                                 <img src={LOGO} alt="Moiter Workz Logo" className="h-9" />
-
                             </div>
                             <div className=" w-1/2 flex justify-between">
                                 <p className=" gray-text medium-text">Select KYC Type</p>
                                 <p className="icon-color small-text">15%</p>
                             </div>
                             <div className="w-1/2 bg-gray-800 h-2 rounded-full mt-2">
-
-                                <div
-                                    className="sign-up-button h-2 rounded-full"
-                                    style={{ width: "15%" }}
-                                ></div>
+                                <div className="sign-up-button h-2 rounded-full" style={{ width: "15%" }}></div>
                             </div>
-
-
                         </div>
+
                         <div className="cardhover hover:scale-103 rounded-[15px]">
                             <button
                                 className="flex items-center gap-2 gray-text small-text mb-6 button-hoverbg px-2 py-1 rounded-[10px]"
-                                onClick={() => setSelected(null)} // reset selection
+                                onClick={() => {setSelected(null);setShowKyc(false)}} // reset selection
                             >
                                 <ArrowLeft size={16} />
                                 Back to Home
                             </button>
+
                             {/* Title */}
                             <div className="text-center mb-10">
                                 <h2 className="form-heading font-medium">Choose Your KYC Type</h2>
@@ -69,10 +72,10 @@ const KYCScreen = ({ pan }) => {
                                 {/* Min KYC */}
                                 <div
                                     onClick={() => setSelected("min")}
-                                    className="cursor-pointer  small-cards rounded-xl p-6 shadow-lg hover:scale-103 transition  w-full sm:w-[400px] max-w-md "
+                                    className="cursor-pointer  card-bg hover:scale-105 rounded-xl p-6 shadow-lg hover:scale-103 transition  w-full sm:w-[400px] max-w-md "
                                 >
-                                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-5 mb-4">
-                                        <div className="icon-bg  p-3 rounded-lg">
+                                    <div className="flex flex-col sm:flex-row items-start gap-3 sm:gap-5 mb-4">
+                                        <div className="icon-bg p-3 rounded-lg">
                                             <FileText className="font-themecolor" size={32} />
                                         </div>
                                         <div>
@@ -97,18 +100,16 @@ const KYCScreen = ({ pan }) => {
                                                 Mobile recharge, bill payments, basic transfers
                                             </p>
                                         </div>
-
                                     </div>
                                 </div>
 
                                 {/* Full KYC */}
                                 <div
                                     onClick={() => setSelected("full")}
-                                    className="cursor-pointer small-cards rounded-xl p-6 shadow-lg  hover:scale-103 transition w-full sm:w-[400px] max-w-md "
+                                    className="cursor-pointer card-bg hover:scale-105 rounded-xl p-6 shadow-lg  hover:scale-103 transition w-full sm:w-[400px] max-w-md "
                                 >
-
-                                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-5 mb-4">
-                                        <div className="icon-bg  p-3 rounded-lg">
+                                    <div className="flex flex-col sm:flex-row items-start  gap-3 sm:gap-5 mb-4 ">
+                                        <div className="icon-bg p-3 rounded-lg">
                                             <Shield className="font-themecolor" size={32} />
                                         </div>
                                         <div>
@@ -132,16 +133,13 @@ const KYCScreen = ({ pan }) => {
                                                 All banking features, high-value transfers, investment options
                                             </p>
                                         </div>
-
                                     </div>
-
-
-
                                 </div>
                             </div>
+
                             <div className="pb-8">
                                 {/* Footer */}
-                                <p className="gray-text text-center  mt-6">
+                                <p className="gray-text text-center mt-6">
                                     Already have an account?{" "}
                                     <button
                                         onClick={() => navigate("/Customer-Login")}
@@ -152,15 +150,13 @@ const KYCScreen = ({ pan }) => {
                                 </p>
                             </div>
                         </div>
-
                     </>
                 )}
-
-
             </div>
+
             {/* If selected -> show form */}
-            {selected === "min" && <MinKYCForm pan={pan} />}
-            {selected === "full" && <FullKYCForm pan={pan} />}
+            {selected === "min" && <MinKYCForm pan={pan} onBackPressed={setBackPressed} />}
+            {selected === "full" && <FullKYCForm pan={pan} onBackPressed={setBackPressed}  />}
         </div>
     );
 };

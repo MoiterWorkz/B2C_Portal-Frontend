@@ -4,7 +4,7 @@ import { checkMobileNumber, generateOtp, verifyOtp, resendOtp } from "../../../s
 import LOGO from "../../../assets/logo.png"
 
 function FullKycMobileVerification({ onBack, onVerified }) {
-  
+
   const [mobile, setMobile] = useState("");
   const [step, setStep] = useState("mobile");
   const [otp, setOtp] = useState("");
@@ -119,6 +119,7 @@ function FullKycMobileVerification({ onBack, onVerified }) {
                     type="tel"
                     placeholder="Enter your mobile number"
                     value={mobile}
+                    maxLength={10}
                     onChange={(e) => setMobile(e.target.value)}
                     className="w-full pl-10 pr-[8px] py-[8px] rounded-[20px] bg-neutral-800 border small-text border-neutral-700 focus:outline-none focus:ring-1 focus:ring-yellow-200"
                   />

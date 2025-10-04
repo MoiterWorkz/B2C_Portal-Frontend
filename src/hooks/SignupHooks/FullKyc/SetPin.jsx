@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { setAccountPin } from "../../../services/service";
+import LOGO from "../../../assets/logo.png";
+import { CircleCheck, CircleCheckBig, Eye, EyeClosed, EyeOff, Lock, Shield } from "lucide-react";
 
 const SetPin = () => {
   const location = useLocation();
@@ -37,29 +39,51 @@ const SetPin = () => {
     try {
       const encodedPin = btoa(pin); // 🔒 encode
       await setAccountPin(mobileNumber, encodedPin);
-      navigate("/dashboard");
+      alert("Accouct created Successfully , You May Login now with your Registered Mobile Number and Pin")
+      navigate("/Customer-Login");
     } catch (err) {
       console.error("Error setting PIN:", err);
     }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-black text-white px-4">
-      <div className="w-full max-w-md bg-neutral-900 rounded-2xl p-6 shadow-lg border border-neutral-800">
+    <div className="flex flex-col items-center justify-center  bg-primary-background  w-full">
+      {/* Logo + Progress */}
+      <div className="flex flex-col items-center mb-5 w-full">
+        {/* Logo */}
+        <div className="flex items-center gap-2 mb-6">
+          <img src={LOGO} alt="Moiter Workz Logo" className="h-9" />
+
+        </div>
+        <div className=" w-1/2 flex justify-between">
+          <p className=" font-themecolor medium-text ">Set Account Pin</p>
+          <p className="icon-color small-text">90%</p>
+        </div>
+        <div className="w-1/2 bg-gray-800 h-2 rounded-full mt-2">
+
+          <div
+            className="sign-up-button h-2 rounded-full"
+            style={{ width: "90%" }}
+          ></div>
+        </div>
+      </div>
+      {/* card */}
+      <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 rounded-2xl px-6 py-6 card-hover-effect mt-4">
         {/* Icon */}
         <div className="flex justify-center mb-4">
-          <div className="w-14 h-14 bg-neutral-800 rounded-full flex items-center justify-center">
-            <span className="text-yellow-400 text-2xl">🔒</span>
+          <div className="icon-bg  p-3 rounded-[50px]">
+            <Shield className="font-themecolor" size={32} />
           </div>
         </div>
 
-        <h2 className="text-2xl font-semibold text-center mb-2 text-white">Set Account PIN</h2>
-        <p className="text-center text-neutral-400 mb-6">
+        <h2 className="form-heading2 font-semibold text-center mb-2 white-letter-color">Set Account PIN</h2>
+        <p className="text-center medium-text gray-text mb-6">
           Create a secure 4-digit PIN for your account<br />
-          Setting up PIN for{" "}
-          <span className="text-yellow-400 font-semibold">{mobileNumber}</span>
-        </p>
+          <p className="text-center medium-text gray-text mt-3">  Setting up PIN for{" "}</p>
 
+          <span className="font-themecolor font-semibold">{mobileNumber}</span>
+        </p>
+        <label className="small-text font-medium white-letter-color">Enter 4-digit PIN</label>
         {/* Input */}
         <div className="relative mb-4">
           <input
@@ -68,22 +92,23 @@ const SetPin = () => {
             value={pin}
             onChange={(e) => setPin(e.target.value.replace(/\D/g, ""))}
             placeholder="Enter your PIN"
-            className="w-full px-4 py-3 rounded-lg bg-neutral-800 border border-neutral-700 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-center text-lg tracking-widest"
+            className="w-full full-border pl-[10px] pr-[8px] py-[8px] rounded-[10px] bg-neutral-800 border small-text border-neutral-700 focus:outline-none focus:ring-1 focus:ring-yellow-200 white-letter-color"
           />
           <button
             type="button"
             onClick={() => setShowPin(!showPin)}
             className="absolute right-3 top-1/2 transform -translate-y-1/2 text-neutral-400"
           >
-            {showPin ? "🙈" : "👁️"}
+            {showPin ? <EyeOff size={18} /> : <Eye size={18} />}
           </button>
         </div>
 
+        <label className="small-text font-medium white-letter-color">PIN Requirements:</label>
         {/* Validations */}
         <div className="space-y-1 mb-6 text-sm">
           {Object.entries(validations).map(([rule, passed]) => (
-            <p key={rule} className={`flex items-center gap-2 ${passed ? "text-green-400" : "text-neutral-400"}`}>
-              <span>{passed ? "✔" : "○"}</span>
+            <p key={rule} className={`flex  small-text items-center gap-2 ${passed ? "text-green-400" : "text-neutral-400"}`}>
+              <span>{passed ? <CircleCheckBig size={12} /> : <CircleCheckBig size={12} />}</span>
               {rule}
             </p>
           ))}
@@ -93,22 +118,23 @@ const SetPin = () => {
         <button
           onClick={handleSubmit}
           disabled={!allValid}
-          className={`w-full py-3 rounded-lg font-semibold transition ${
-            allValid
-              ? "bg-yellow-400 text-black hover:bg-yellow-300"
-              : "bg-neutral-700 text-neutral-500 cursor-not-allowed"
-          }`}
+          className={`w-full py-2 rounded-lg font-semibold transition ${allValid
+            ? "sign-up-button text-black hover:bg-yellow-300"
+            : "bg-neutral-700 text-neutral-500 cursor-not-allowed"
+            }`}
         >
           Continue
         </button>
 
         {/* Footer note */}
-        <p className="text-xs text-neutral-500 mt-4 text-center flex items-center justify-center gap-2">
-          <span>🔒</span>
+        <p className="small-text px-5 py-2 gray-text text-center  rounded-[5px] mt-5 full-border flex items-center">
+          <span className="font-themecolor"><Lock size={14}/></span>
           Your PIN is encrypted and securely stored. Never share your PIN with anyone.
         </p>
       </div>
     </div>
+
+    
   );
 };
 
