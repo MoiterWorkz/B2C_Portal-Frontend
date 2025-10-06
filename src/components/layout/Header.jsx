@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Menu, Globe, ChevronDown } from "lucide-react";
 import UserDropdown from "../../pages/components/dashboard/UserDropdown";
-
+import LOGO from "../../assets/logo.png"
 const Header = ({ toggleSidebar }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -39,7 +39,7 @@ const Header = ({ toggleSidebar }) => {
           </button>
 
           <div className="flex items-center gap-2 header-item-glass rounded-lg px-2 py-1">
-            <img src="/logo.png" alt="Logo" className="h-6 w-auto" />
+            <img src={LOGO} alt="Logo" className="sm:w-50" />
           </div>
         </div>
 
