@@ -22,8 +22,8 @@ function MinKycForm({ verifiedMobile, pan, setVerified }) {
         motherName: "",
         dateOfBirth: "",
         gender: "",
-        nationality: "",
-        residentialStatus: "",
+        // nationality: "",
+        // residentialStatus: "",
         email: "",
         mobileNumber: verifiedMobile || "",
         alternateContactNumber: "",
@@ -32,7 +32,7 @@ function MinKycForm({ verifiedMobile, pan, setVerified }) {
         city: 0,
         state: 0,
         pincode: "",
-        country: "",
+        // country: "",
         occupation: "",
         documentType: "", // default
         documentNumber: "",
@@ -180,11 +180,12 @@ function MinKycForm({ verifiedMobile, pan, setVerified }) {
         try {
             const payload = {
                 ...formValues,
-                p_pan_number: formValues.panNumber,
+                // p_pan_number: formValues.panNumber,
                 state: parseInt(formValues.state),       // ensure integer
                 city: parseInt(formValues.city),
             };
-
+            // console.log(JSON.stringify(payload, null, 2));
+            // console.log(payload)
             const response = await submitMinKyc(payload);
             // console.log("✅ Min KYC Submitted:", response);
             navigate("/set-pin", { state: { mobileNumber: formValues.mobileNumber } });
@@ -192,9 +193,6 @@ function MinKycForm({ verifiedMobile, pan, setVerified }) {
             console.error("❌ KYC Submission Failed:", err.response?.data || err.message);
         }
     };
-
-
-
 
     return (
         <div className="min-h-screen bg-primary-background text-white flex flex-col items-center py-10 px-4">
@@ -461,12 +459,12 @@ function MinKycForm({ verifiedMobile, pan, setVerified }) {
                                 </label>
                                 <CustomSelect
                                     options={partners.map((p) => ({
-                                        id: p.partnerId,
+                                        id: String(p.partnerId),   // ✅ ensure id is string
                                         name: p.partnerName,
                                     }))}
                                     value={formValues.partnerId}
                                     onChange={(val) =>
-                                        setFormValues((prev) => ({ ...prev, partnerId: val }))
+                                        setFormValues((prev) => ({ ...prev, partnerId: String(val) })) // ✅ cast to string
                                     }
                                     placeholder="-- Select Partner --"
                                 />

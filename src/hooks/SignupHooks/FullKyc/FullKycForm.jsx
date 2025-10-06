@@ -60,7 +60,7 @@ function FullKycForm({ verifiedMobile, pan }) {
     regulatoryReportingEnabled: true,
     partnerId: "",
     agentId: "",
-    kycLevel: "max",
+    kycLevel: "full",
     createdBy: "string",
   });
   // console.log(formValues);
@@ -231,8 +231,8 @@ function FullKycForm({ verifiedMobile, pan }) {
         state: parseInt(formValues.state),
         city: parseInt(formValues.city),
       };
-      console.log(JSON.stringify(payload, null, 2));
-      console.log(payload);
+      // console.log(JSON.stringify(payload, null, 2));
+      // console.log(payload);
       const response = await submitFullKyc(payload);
 
       // console.log("✅ Min KYC Submitted:", response);
@@ -651,7 +651,7 @@ function FullKycForm({ verifiedMobile, pan }) {
               }))}
               value={formValues.partnerId}
               onChange={(val) =>
-                setFormValues((prev) => ({ ...prev, partnerId: val }))
+                setFormValues((prev) => ({ ...prev, partnerId: String(val) }))
               }
               placeholder="-- Select Partner --"
             />
