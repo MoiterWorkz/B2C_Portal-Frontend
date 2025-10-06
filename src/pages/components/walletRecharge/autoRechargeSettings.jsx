@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Settings } from "lucide-react";
+import ToggleButton from "../../../components/toggleButton";
 const AutoRechargeSettings = () => {
-  const [isEnabled, setIsEnabled] = useState(true);
+  const [isEnabled, setIsEnabled] = useState(false);
   const [amount, setAmount] = useState({ trigger: "", auto: "" });
 
   const handleSubmit = () => {
@@ -42,10 +43,10 @@ const AutoRechargeSettings = () => {
             <Settings size="18" />
             Auto Recharge Settings
           </h1>
-          <div className="card-whiteText-title">Enable Auto Recharge</div>
-          <div className="text-xs text-[var(--subheading-color)]">
+          <h2 className="card-whiteText-title">Enable Auto Recharge</h2>
+          <p className="text-xs text-[var(--subheading-color)]">
             Automatically add money when wallet balance falls below threshold
-          </div>
+          </p>
         </div>
 
         {/* Toggle Switch */}
@@ -57,18 +58,7 @@ const AutoRechargeSettings = () => {
             checked={isEnabled}
             onChange={() => setIsEnabled(!isEnabled)}
           />
-          <div
-            className="relative w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700
-    peer-checked:bg-[var(--primary-color)]
-    peer-checked:after:bg-black
-    peer-checked:after:translate-x-full
-    rtl:peer-checked:after:-translate-x-full
-    peer-checked:after:border-white
-    after:content-[''] after:absolute after:top-[2px] after:start-[2px]
-    after:bg-white after:border-gray-300 after:border after:rounded-full
-    after:h-5 after:w-5 after:transition-all
-    dark:border-gray-600 dark:peer-checked:bg-[var(--primary-color)]"
-          />
+          <ToggleButton />
         </label>
       </div>
 

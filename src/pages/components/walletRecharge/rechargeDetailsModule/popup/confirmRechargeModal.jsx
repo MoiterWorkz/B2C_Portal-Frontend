@@ -8,7 +8,6 @@ const ConfirmRechargeModal = ({
   processingFee = "FREE",
   confirmModal,
   onClose,
-  onConfirm,
   setProcessingModalModal,
 }) => {
   const details = [
@@ -43,7 +42,7 @@ const ConfirmRechargeModal = ({
         className="fixed inset-0 h-full flex justify-center items-center z-50 backdrop-blur-xs"
         onClick={handleOverlayClick}
       >
-        <div className="bg-[#292929] rounded-lg p-6 w-full max-w-md text-white relative border inner-card-border">
+        <div className="bg-[#292929] rounded-lg p-6 w-full max-w-md text-white relative border inner-card-border mx-3">
           {/* Header */}
 
           <button
@@ -101,13 +100,13 @@ const ConfirmRechargeModal = ({
           {/* Actions */}
           <div className="flex justify-end gap-3 text-xs">
             <button
-              className="px-4 py-2 rounded text-white hover:text-black"
+              className="px-4 py-2 rounded text-white hover:text-black cursor-pointer"
               onClick={onClose}
             >
               Cancel
             </button>
             <button
-              className="px-4 py-2 rounded bg-[var(--primary-color)] text-black hover:opacity-90 font-semibold"
+              className="px-4 py-2 rounded bg-[var(--primary-color)] text-black hover:opacity-90 font-semibold cursor-pointer"
               onClick={() => {
                 setProcessingModalModal(true);
                 onClose();

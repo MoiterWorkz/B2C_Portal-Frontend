@@ -1,657 +1,759 @@
 import React, { useEffect, useState } from "react";
-import { getStateAndCityByPincode, submitFullKyc, pepCheck, sanctionCheck } from "../../../services/service";
+import {
+  getStateAndCityByPincode,
+  submitFullKyc,
+  pepCheck,
+  sanctionCheck,
+} from "../../../services/service";
 import { v4 as uuidv4 } from "uuid"; // for generating transactionId
 import { useNavigate } from "react-router-dom";
-import LOGO from "../../../assets/logo.png"
+import LOGO from "../../../assets/logo.png";
 import { ArrowLeft, CheckIcon, CircleCheckBig, Upload, X } from "lucide-react";
 import { fileToBase64 } from "../../../utils/fileUtils";
 
 function FullKycForm({ verifiedMobile, pan }) {
-    const navigate = useNavigate();
-    const [pincode, setPincode] = useState("");
-    const [stateOptions, setStateOptions] = useState([]);
-    const [cityOptions, setCityOptions] = useState([]);
-    const [identityFile, setIdentityFile] = useState(null);
-    const [addressFile, setAddressFile] = useState(null);
-    const [checked, setChecked] = useState(false);
-    const [partners, setPartners] = useState([]);
-    const [formValues, setFormValues] = useState({
-        firstName: "",
-        middleName: "",
-        lastName: "",
-        fatherName: "",
-        motherName: "",
-        dateOfBirth: "",
-        gender: "",
-        // nationality: "",
-        // residentialStatus: "",
-        email: "",
-        mobileNumber: verifiedMobile || "",
-        alternateContactNumber: "",
-        permanentAddress: "",
-        correspondenceAddress: "",
-        city: 0,
-        state: 0,
-        pincode: "",
-        // country: "",
-        occupation: "",
-        documentType: "", // default
-        documentNumber: "",
-        documentImage: "",
-        addressProofType: "",
-        rDocumentNumber: "",
-        addressProofImage: "",
-        panNumber: "string",
-        logId: uuidv4(),
-        kycVerificationDate: new Date().toISOString(),
-        kycVerifiedBy: uuidv4(),
-        kycMode: "Physical",
-        channel: "WEB",
-        programId: 0,
-        annualIncome: 0,
-        pepFlag: false,
-        sanctionsScreened: false,
-        regulatoryReportingEnabled: true,
-        partnerId: "",
-        agentId: "",
-        kycLevel: "max",
-        createdBy: "string",
-    });
-    console.log(formValues)
-    const handleFileChange = async (e, type) => {
-        const file = e.target.files?.[0];
-        if (!file) return;
+  const navigate = useNavigate();
+  const [pincode, setPincode] = useState("");
+  const [stateOptions, setStateOptions] = useState([]);
+  const [cityOptions, setCityOptions] = useState([]);
+  const [identityFile, setIdentityFile] = useState(null);
+  const [addressFile, setAddressFile] = useState(null);
+  const [checked, setChecked] = useState(false);
+  const [partners, setPartners] = useState([]);
+  const [formValues, setFormValues] = useState({
+    firstName: "",
+    middleName: "",
+    lastName: "",
+    fatherName: "",
+    motherName: "",
+    dateOfBirth: "",
+    gender: "",
+    // nationality: "",
+    // residentialStatus: "",
+    email: "",
+    mobileNumber: verifiedMobile || "",
+    alternateContactNumber: "",
+    permanentAddress: "",
+    correspondenceAddress: "",
+    city: 0,
+    state: 0,
+    pincode: "",
+    // country: "",
+    occupation: "",
+    documentType: "", // default
+    documentNumber: "",
+    documentImage: "",
+    addressProofType: "",
+    rDocumentNumber: "",
+    addressProofImage: "",
+    panNumber: "string",
+    logId: uuidv4(),
+    kycVerificationDate: new Date().toISOString(),
+    kycVerifiedBy: uuidv4(),
+    kycMode: "Physical",
+    channel: "WEB",
+    programId: 0,
+    annualIncome: 0,
+    pepFlag: false,
+    sanctionsScreened: false,
+    regulatoryReportingEnabled: true,
+    partnerId: "",
+    agentId: "",
+    kycLevel: "max",
+    createdBy: "string",
+  });
+  console.log(formValues);
+  const handleFileChange = async (e, type) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
 
-        const base64 = await fileToBase64(file);
+    const base64 = await fileToBase64(file);
 
-        if (type === "identity") {
-            setIdentityFile(file);
-            setFormValues(prev => ({ ...prev, documentImage: base64 }));
+    if (type === "identity") {
+      setIdentityFile(file);
+      setFormValues((prev) => ({ ...prev, documentImage: base64 }));
+    } else {
+      setAddressFile(file);
+      setFormValues((prev) => ({ ...prev, addressProofImage: base64 }));
+    }
+  };
+
+  const handleRemove = (type) => {
+    if (type === "identity") {
+      setIdentityFile(null);
+      setFormValues((prev) => ({ ...prev, identityDocumentBytes: "" }));
+    } else {
+      setAddressFile(null);
+      setFormValues((prev) => ({ ...prev, addressDocumentBytes: "" }));
+    }
+  };
+  // Fetch PEP flag when user fills required fields
+  useEffect(() => {
+    const fetchPartners = async () => {
+      try {
+        const res = await fetch(
+          "http://192.168.22.247/fes/api/Export/partner_summary_export"
+        );
+        const data = await res.json();
+        if (Array.isArray(data)) {
+          setPartners(data);
         } else {
-            setAddressFile(file);
-            setFormValues(prev => ({ ...prev, addressProofImage: base64 }));
+          setPartners([data]); // in case API returns single object
         }
+      } catch (err) {
+        console.error("❌ Error fetching partners:", err);
+      }
     };
 
-
-    const handleRemove = (type) => {
-        if (type === "identity") {
-            setIdentityFile(null);
-            setFormValues(prev => ({ ...prev, identityDocumentBytes: "" }));
-        } else {
-            setAddressFile(null);
-            setFormValues(prev => ({ ...prev, addressDocumentBytes: "" }));
-        }
-    };
-    // Fetch PEP flag when user fills required fields
-    useEffect(() => {
-        const fetchPartners = async () => {
-            try {
-                const res = await fetch("http://192.168.22.247/fes/api/Export/partner_summary_export");
-                const data = await res.json();
-                if (Array.isArray(data)) {
-                    setPartners(data);
-                } else {
-                    setPartners([data]); // in case API returns single object
-                }
-            } catch (err) {
-                console.error("❌ Error fetching partners:", err);
-            }
-        };
-
-        fetchPartners();
-    }, []);
-    useEffect(() => {
-        const fetchPepFlag = async () => {
-            if (formValues.firstName && formValues.lastName && formValues.dateOfBirth) {
-                try {
-                    const res = await pepCheck(formValues);
-
-                    if (res?.isPep !== undefined) {
-                        setFormValues((prev) => ({ ...prev, pepFlag: res.isPep }));
-                    }
-                } catch (err) {
-                    console.error("❌ Error fetching PEP flag:", err);
-                }
-            }
-        };
-        const fetchSanctions = async () => {
-            if (formValues.firstName && formValues.lastName && formValues.dateOfBirth) {
-                try {
-                    const res = await sanctionCheck(formValues);
-                    if (res?.sanctionsScreened !== undefined) {
-                        setFormValues((prev) => ({ ...prev, sanctionsScreened: res.sanctionsScreened }));
-                    }
-                    if (res?.message) {
-                        console.warn("Sanctions API Message:", res.message);
-                    }
-                } catch (err) {
-                    console.error("❌ Error fetching sanctions:", err);
-                }
-            }
-        };
-
-        fetchSanctions();
-        fetchPepFlag();
-    }, [
-        formValues.firstName,
-        formValues.middleName,
-        formValues.lastName,
-        formValues.dateOfBirth,
-        formValues.country,
-    ]);
-
-
-    // ✅ Keep props in sync
-    useEffect(() => {
-        setFormValues((prev) => ({
-            ...prev,
-            mobileNumber: verifiedMobile || "",
-            panNumber: pan || "",
-        }));
-    }, [verifiedMobile, pan]);
-    const handleChange = (e) => {
-        const { name, value, type, checked } = e.target;
-        setFormValues((prev) => ({
-            ...prev, [name]: value,
-            [name]: type === "checkbox" ? checked : value,
-        }));
-    };
-
-    const handlePincodeChange = async (e) => {
-        const value = e.target.value;
-        setPincode(value);
-        setFormValues((prev) => ({ ...prev, pincode: value }));
-
-        if (value.length === 6) {
-            try {
-                const response = await getStateAndCityByPincode(value);
-
-                if (response?.areas) {
-                    const states = [...new Map(response.areas.map(area => [area.stateId, area.state]))]
-                        .map(([id, name]) => ({ id, name }));
-
-                    const cities = response.areas.map(area => ({
-                        id: area.cityId,
-                        name: area.city
-                    }));
-
-                    setStateOptions(states);
-                    setCityOptions(cities);
-
-                    setFormValues(prev => ({
-                        ...prev,
-                        state: response.areas[0].stateId,
-                        city: response.areas[0].cityId
-                    }));
-                }
-
-            } catch (error) {
-                console.error("Error fetching state/city:", error);
-            }
-        } else {
-            setStateOptions([]);
-            setCityOptions([]);
-            setFormValues((prev) => ({ ...prev, state: "", city: "" }));
-        }
-    };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        if (!formValues.documentNumber) {
-            alert("PAN number is required!");
-            return;
-        }
-
+    fetchPartners();
+  }, []);
+  useEffect(() => {
+    const fetchPepFlag = async () => {
+      if (
+        formValues.firstName &&
+        formValues.lastName &&
+        formValues.dateOfBirth
+      ) {
         try {
-            const payload = {
-                ...formValues,
-                // p_pan_number: formValues.panNumber,
-                state: parseInt(formValues.state),
-                city: parseInt(formValues.city),
-            };
-            console.log(JSON.stringify(payload, null, 2));
-            console.log(payload)
-            const response = await submitFullKyc(payload);
+          const res = await pepCheck(formValues);
 
-            // console.log("✅ Min KYC Submitted:", response);
-            navigate("/set-pin", { state: { mobileNumber: formValues.mobileNumber } });
+          if (res?.isPep !== undefined) {
+            setFormValues((prev) => ({ ...prev, pepFlag: res.isPep }));
+          }
         } catch (err) {
-            console.error("❌ KYC Submission Failed:", err.response?.data || err.message);
+          console.error("❌ Error fetching PEP flag:", err);
         }
+      }
+    };
+    const fetchSanctions = async () => {
+      if (
+        formValues.firstName &&
+        formValues.lastName &&
+        formValues.dateOfBirth
+      ) {
+        try {
+          const res = await sanctionCheck(formValues);
+          if (res?.sanctionsScreened !== undefined) {
+            setFormValues((prev) => ({
+              ...prev,
+              sanctionsScreened: res.sanctionsScreened,
+            }));
+          }
+          if (res?.message) {
+            console.warn("Sanctions API Message:", res.message);
+          }
+        } catch (err) {
+          console.error("❌ Error fetching sanctions:", err);
+        }
+      }
     };
 
+    fetchSanctions();
+    fetchPepFlag();
+  }, [
+    formValues.firstName,
+    formValues.middleName,
+    formValues.lastName,
+    formValues.dateOfBirth,
+    formValues.country,
+  ]);
 
-    const FileUploadSection = ({ file, label, onChange, onRemove }) => (
-        <div className="w-full space-y-3">
-            <label className="small-text font-medium flex mt-3">Upload {label}</label>
-            {file ? (
-                <div className="flex flex-col items-center justify-center w-full h-40 primary-border-color rounded-lg text-center cursor-pointer transition">
-                    <div className="flex flex-col items-center gap-2">
-                        <span className="text-green-500 small-text flex items-center gap-1 mt-2">
-                            <CircleCheckBig size={18} /> File Selected
-                        </span>
-                        <span className="small-text gray-text">{(file.size / 1024 / 1024).toFixed(2)} MB</span>
-                    </div>
-                    <button className="text-red-500 small-text flex items-center gap-1 mt-2" onClick={onRemove}>
-                        <X size={15} /> Remove
-                    </button>
-                </div>
-            ) : (
-                <label className="flex flex-col items-center justify-center w-full h-40 primary-border-color rounded-lg text-center cursor-pointer transition">
-                    <Upload className="font-themecolor" />
-                    <p className="text-sm font-medium text-white">Upload {label}</p>
-                    <p className="small-text text-gray-400">
-                        Click to browse or drag & drop<br />
-                        Supported: JPG, PNG, PDF (max 5MB)
-                    </p>
-                    <input type="file" accept=".jpg,.jpeg,.png,.pdf" className="hidden" onChange={onChange} />
-                </label>
-            )}
-            <div className="small-text gray-text border full-border rounded-md p-2 text-left">
-                Clear document, all edges visible, no glare • Max 5MB • JPG, PNG, PDF
-            </div>
+  // ✅ Keep props in sync
+  useEffect(() => {
+    setFormValues((prev) => ({
+      ...prev,
+      mobileNumber: verifiedMobile || "",
+      panNumber: pan || "",
+    }));
+  }, [verifiedMobile, pan]);
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormValues((prev) => ({
+      ...prev,
+      [name]: value,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+  };
+
+  const handlePincodeChange = async (e) => {
+    const value = e.target.value;
+    setPincode(value);
+    setFormValues((prev) => ({ ...prev, pincode: value }));
+
+    if (value.length === 6) {
+      try {
+        const response = await getStateAndCityByPincode(value);
+
+        if (response?.areas) {
+          const states = [
+            ...new Map(
+              response.areas.map((area) => [area.stateId, area.state])
+            ),
+          ].map(([id, name]) => ({ id, name }));
+
+          const cities = response.areas.map((area) => ({
+            id: area.cityId,
+            name: area.city,
+          }));
+
+          setStateOptions(states);
+          setCityOptions(cities);
+
+          setFormValues((prev) => ({
+            ...prev,
+            state: response.areas[0].stateId,
+            city: response.areas[0].cityId,
+          }));
+        }
+      } catch (error) {
+        console.error("Error fetching state/city:", error);
+      }
+    } else {
+      setStateOptions([]);
+      setCityOptions([]);
+      setFormValues((prev) => ({ ...prev, state: "", city: "" }));
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!formValues.documentNumber) {
+      alert("PAN number is required!");
+      return;
+    }
+
+    try {
+      const payload = {
+        ...formValues,
+        // p_pan_number: formValues.panNumber,
+        state: parseInt(formValues.state),
+        city: parseInt(formValues.city),
+      };
+      console.log(JSON.stringify(payload, null, 2));
+      console.log(payload);
+      const response = await submitFullKyc(payload);
+
+      // console.log("✅ Min KYC Submitted:", response);
+      navigate("/set-pin", {
+        state: { mobileNumber: formValues.mobileNumber },
+      });
+    } catch (err) {
+      console.error(
+        "❌ KYC Submission Failed:",
+        err.response?.data || err.message
+      );
+    }
+  };
+
+  const FileUploadSection = ({ file, label, onChange, onRemove }) => (
+    <div className="w-full space-y-3">
+      <label className="small-text font-medium flex mt-3">Upload {label}</label>
+      {file ? (
+        <div className="flex flex-col items-center justify-center w-full h-40 primary-border-color rounded-lg text-center cursor-pointer transition">
+          <div className="flex flex-col items-center gap-2">
+            <span className="text-green-500 small-text flex items-center gap-1 mt-2">
+              <CircleCheckBig size={18} /> File Selected
+            </span>
+            <span className="small-text gray-text">
+              {(file.size / 1024 / 1024).toFixed(2)} MB
+            </span>
+          </div>
+          <button
+            className="text-red-500 small-text flex items-center gap-1 mt-2"
+            onClick={onRemove}
+          >
+            <X size={15} /> Remove
+          </button>
         </div>
-    );
+      ) : (
+        <label className="flex flex-col items-center justify-center w-full h-40 primary-border-color rounded-lg text-center cursor-pointer transition">
+          <Upload className="font-themecolor" />
+          <p className="text-sm font-medium text-white">Upload {label}</p>
+          <p className="small-text text-gray-400">
+            Click to browse or drag & drop
+            <br />
+            Supported: JPG, PNG, PDF (max 5MB)
+          </p>
+          <input
+            type="file"
+            accept=".jpg,.jpeg,.png,.pdf"
+            className="hidden"
+            onChange={onChange}
+          />
+        </label>
+      )}
+      <div className="small-text gray-text border full-border rounded-md p-2 text-left">
+        Clear document, all edges visible, no glare • Max 5MB • JPG, PNG, PDF
+      </div>
+    </div>
+  );
 
+  return (
+    <div className="min-h-screen bg-primary-background text-white flex flex-col items-center py-10 px-4">
+      {/* Logo + Progress */}
+      <div className="w-full flex flex-col items-center mb-5">
+        {/* Logo */}
+        <div className="flex items-center gap-2 mb-6">
+          <img src={LOGO} alt="Moiter Workz Logo" className="h-9" />
+        </div>
+        <div className=" w-1/4 flex justify-between">
+          <p className=" gray-text small-text">MAX KYC - Personal Details</p>
+          <p className="icon-color small-text">60%</p>
+        </div>
+        <div className="w-1/4 bg-gray-800 h-2 rounded-full mt-2">
+          <div
+            className="sign-up-button h-2 rounded-full"
+            style={{ width: "60%" }}
+          ></div>
+        </div>
+      </div>
 
+      {/* Form Card */}
+      <div
+        className="cardhover rounded-2xl shadow-xl p-10 text-center 
+                w-full sm:w-[600px] lg:w-[800px] xl:w-[1100px] 
+                transform transition-transform duration-300 hover:scale-105 mx-auto mt-5"
+      >
+        <form className="space-y-8" onSubmit={handleSubmit}>
+          {/* Personal Information */}
+          <section>
+            <p className=" mb-4 flex pb-2 border-primary-bottom small-text">
+              Personal Information
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div>
+                <label className="small-text font-medium flex">
+                  First Name *
+                </label>
+                <input
+                  type="text"
+                  name="firstName"
+                  value={formValues.firstName}
+                  onChange={handleChange}
+                  placeholder="Enter middle name"
+                  className="w-full  border full-border rounded-lg px-3 py-1  small-text"
+                />
+              </div>
+              <div>
+                <label className="small-text font-medium flex">
+                  Middle Name
+                </label>
+                <input
+                  type="text"
+                  name="middleName"
+                  value={formValues.middleName}
+                  onChange={handleChange}
+                  placeholder="Enter middle name"
+                  className="w-full  border full-border rounded-lg px-3 py-1  small-text"
+                />
+              </div>
+              <div>
+                <label className="small-text font-medium flex">
+                  Last Name *
+                </label>
+                <input
+                  type="text"
+                  name="lastName"
+                  value={formValues.lastName}
+                  onChange={handleChange}
+                  placeholder="Enter last name"
+                  className="w-full  border full-border rounded-lg px-3 py-1  small-text"
+                />
+              </div>
+              <div>
+                <label className="small-text font-medium flex">
+                  Father Name *
+                </label>
+                <input
+                  type="text"
+                  name="fatherName"
+                  value={formValues.fatherName}
+                  onChange={handleChange}
+                  placeholder="Enter Father Name"
+                  className="w-full  border full-border rounded-lg px-3 py-1  small-text"
+                />
+              </div>
+              <div>
+                <label className="small-text font-medium flex">
+                  Mother Name *
+                </label>
+                <input
+                  type="text"
+                  name="motherName"
+                  value={formValues.motherName}
+                  onChange={handleChange}
+                  placeholder="Enter Mother Name"
+                  className="w-full  border full-border rounded-lg px-3 py-1  small-text"
+                />
+              </div>
+              <div>
+                <label className="small-text font-medium flex">Gender *</label>
+                <select
+                  name="gender"
+                  value={formValues.gender}
+                  onChange={handleChange}
+                  className="golden-dropdown w-full  border full-border rounded-lg px-3 py-1  small-text"
+                >
+                  <option value="">Select Gender</option>
+                  <option value="MALE">MALE</option>
+                  <option value="FEMALE">FEMALE</option>
+                  <option value="OTHER">OTHER</option>
+                </select>
+              </div>
+              <div>
+                <label className="small-text font-medium flex">
+                  Date of Birth *
+                </label>
+                <input
+                  type="date"
+                  name="dateOfBirth" // Important!
+                  value={formValues.dateOfBirth} // Controlled input
+                  onChange={handleChange} // Update state on change
+                  className="w-full  border full-border rounded-lg px-3 py-1  small-text"
+                />
+                <p className="text-[10px] gray-text">
+                  You can type the date directly (DD/MM/YYYY) or click the
+                  calendar icon
+                </p>
+              </div>
+            </div>
+          </section>
 
-    return (
-        <div className="min-h-screen bg-primary-background text-white flex flex-col items-center py-10 px-4">
-            {/* Logo + Progress */}
-            <div className="w-full flex flex-col items-center mb-5">
-                {/* Logo */}
-                <div className="flex items-center gap-2 mb-6">
-                    <img src={LOGO} alt="Moiter Workz Logo" className="h-9" />
+          {/* Contact Information */}
+          <section>
+            <p className="mb-4 flex pb-2 border-primary-bottom small-text">
+              Contact Information
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label className="small-text font-medium flex">
+                  Email ID *
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  value={formValues.email}
+                  onChange={handleChange}
+                  placeholder="Enter email address"
+                  className="w-full  border full-border rounded-lg px-3 py-1  small-text"
+                />
+              </div>
+              <div>
+                <label className="small-text font-medium flex">
+                  Mobile Number *
+                </label>
+                <input
+                  type="tel"
+                  name="mobileNumber"
+                  value={formValues.mobileNumber}
+                  readOnly
+                  className="w-full  border full-border rounded-lg px-3 py-1  small-text"
+                />
+              </div>
+            </div>
+          </section>
 
-                </div>
-                <div className=" w-1/4 flex justify-between">
-                    <p className=" gray-text small-text">MAX KYC - Personal Details</p>
-                    <p className="icon-color small-text">60%</p>
-                </div>
-                <div className="w-1/4 bg-gray-800 h-2 rounded-full mt-2">
+          {/* Address Information */}
+          <section>
+            <p className=" mb-4 flex pb-2 border-primary-bottom small-text">
+              Address Information
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="md:col-span-3">
+                <label className="small-text font-medium flex">Address *</label>
+                <input
+                  type="text"
+                  name="permanentAddress"
+                  value={formValues.permanentAddress}
+                  onChange={handleChange}
+                  placeholder="Enter complete address"
+                  className="w-full  border full-border rounded-lg px-3 py-1  small-text"
+                />
+              </div>
+              <div>
+                <label className="small-text font-medium flex">Pincode *</label>
+                <input
+                  type="text"
+                  value={pincode}
+                  onChange={handlePincodeChange}
+                  maxLength={6}
+                  placeholder="Enter pincode"
+                  className="w-full  border full-border rounded-lg px-3 py-1  small-text"
+                />
+              </div>
+              <div>
+                <label className="small-text font-medium flex">State *</label>
+                <select
+                  name="state"
+                  value={formValues.state}
+                  onChange={handleChange}
+                  className="w-full  border full-border rounded-lg px-3 py-1  small-text"
+                >
+                  <option value="">Select state</option>
+                  {stateOptions.map((s) => (
+                    <option key={s.id} value={s.id}>
+                      {s.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="small-text font-medium flex">City *</label>
+                <select
+                  name="city"
+                  value={formValues.city}
+                  onChange={handleChange}
+                  className="w-full  border full-border rounded-lg px-3 py-1  small-text"
+                >
+                  <option value="">Select city</option>
+                  {cityOptions.map((c) => (
+                    <option key={c.id} value={c.id}>
+                      {c.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          </section>
 
-                    <div
-                        className="sign-up-button h-2 rounded-full"
-                        style={{ width: "60%" }}
-                    ></div>
-                </div>
+          {/* Financial Information */}
+          <section>
+            <p className="  mb-4 flex pb-2 border-primary-bottom small-text">
+              Financial Information
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label className="small-text font-medium flex">
+                  PAN Number *
+                </label>
+                {/* PAN Number (always readonly) */}
+                <input
+                  type="text"
+                  name="panNumber"
+                  value={formValues.panNumber}
+                  readOnly
+                  className="w-full  border full-border rounded-lg px-3 py-1  small-text"
+                />
+              </div>
+              <div>
+                <label className="small-text font-medium flex">
+                  Occupation *
+                </label>
+                <select
+                  name="occupation"
+                  value={formValues.occupation}
+                  onChange={handleChange}
+                  className="w-full  border full-border rounded-lg px-3 py-1  small-text"
+                >
+                  <option value="">Select occupation</option>
+                  <option value="Engineer">Engineer</option>
+                  <option value="Doctor">Doctor</option>
+                  <option value="Teacher">Teacher</option>
+                </select>
+              </div>
+            </div>
+          </section>
+
+          {/* Identity Verification */}
+          <section>
+            <p className="mb-4 flex pb-2 border-primary-bottom small-text">
+              Identity Verification
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label className="small-text font-medium flex">
+                  Choose ID Proof *
+                </label>
+                <select
+                  name="documentType"
+                  value={formValues.documentType}
+                  onChange={(e) =>
+                    setFormValues((prev) => ({
+                      ...prev,
+                      documentType: e.target.value,
+                    }))
+                  }
+                  className="w-full border full-border rounded-lg px-3 py-1 small-text"
+                >
+                  <option value="">Select ID proof type</option>
+                  <option value="Aadhaar">Aadhaar</option>
+                  <option value="Passport">Passport</option>
+                  <option value="Voter ID">Voter ID</option>
+                  <option value="PAN">PAN</option>
+                </select>
+              </div>
+              <div>
+                <label className="small-text font-medium flex">
+                  ID Proof Number *
+                </label>
+                <input
+                  type="text"
+                  name="documentNumber"
+                  value={formValues.documentNumber}
+                  onChange={(e) =>
+                    setFormValues((prev) => ({
+                      ...prev,
+                      documentNumber: e.target.value,
+                    }))
+                  }
+                  placeholder="Enter ID proof number"
+                  className="w-full border full-border rounded-lg px-3 py-1 small-text"
+                />
+              </div>
             </div>
 
-            {/* Form Card */}
-            <div className="cardhover rounded-2xl shadow-xl p-10 text-center 
-                w-full sm:w-[600px] lg:w-[800px] xl:w-[1100px] 
-                transform transition-transform duration-300 hover:scale-105 mx-auto mt-5">
+            <FileUploadSection
+              file={identityFile}
+              label={formValues.documentType || "ID Proof"}
+              onChange={(e) => handleFileChange(e, "identity")}
+              onRemove={() => handleRemove("identity")}
+            />
+          </section>
 
-                <form className="space-y-8" onSubmit={handleSubmit}>
-                    {/* Personal Information */}
-                    <section>
-                        <p className=" mb-4 flex pb-2 border-primary-bottom small-text">Personal Information</p>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <div>
-                                <label className="small-text font-medium flex">First Name *</label>
-                                <input
-                                    type="text"
-                                    name="firstName"
-                                    value={formValues.firstName}
-                                    onChange={handleChange}
-                                    placeholder="Enter middle name"
-                                    className="w-full  border full-border rounded-lg px-3 py-1  small-text"
-                                />
-                            </div>
-                            <div>
-                                <label className="small-text font-medium flex">Middle Name</label>
-                                <input
-                                    type="text"
-                                    name="middleName"
-                                    value={formValues.middleName}
-                                    onChange={handleChange}
-                                    placeholder="Enter middle name"
-                                    className="w-full  border full-border rounded-lg px-3 py-1  small-text"
-                                />
-                            </div>
-                            <div>
-                                <label className="small-text font-medium flex">Last Name *</label>
-                                <input
-                                    type="text"
-                                    name="lastName"
-                                    value={formValues.lastName}
-                                    onChange={handleChange}
-                                    placeholder="Enter last name"
-                                    className="w-full  border full-border rounded-lg px-3 py-1  small-text"
-                                />
-                            </div>
-                            <div>
-                                <label className="small-text font-medium flex">Father Name *</label>
-                                <input
-                                    type="text"
-                                    name="fatherName"
-                                    value={formValues.fatherName}
-                                    onChange={handleChange}
-                                    placeholder="Enter Father Name"
-                                    className="w-full  border full-border rounded-lg px-3 py-1  small-text"
-                                />
-                            </div>
-                            <div>
-                                <label className="small-text font-medium flex">Mother Name *</label>
-                                <input
-                                    type="text"
-                                    name="motherName"
-                                    value={formValues.motherName}
-                                    onChange={handleChange}
-                                    placeholder="Enter Mother Name"
-                                    className="w-full  border full-border rounded-lg px-3 py-1  small-text"
-                                />
-                            </div>
-                            <div>
-                                <label className="small-text font-medium flex">Gender *</label>
-                                <select
-                                    name="gender"
-                                    value={formValues.gender}
-                                    onChange={handleChange}
-                                    className="golden-dropdown w-full  border full-border rounded-lg px-3 py-1  small-text"
-                                >
-                                    <option value="">Select Gender</option>
-                                    <option value="MALE">MALE</option>
-                                    <option value="FEMALE">FEMALE</option>
-                                    <option value="OTHER">OTHER</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label className="small-text font-medium flex">Date of Birth *</label>
-                                <input
-                                    type="date"
-                                    name="dateOfBirth"               // Important!
-                                    value={formValues.dateOfBirth}   // Controlled input
-                                    onChange={handleChange}          // Update state on change
-                                    className="w-full  border full-border rounded-lg px-3 py-1  small-text"
-                                />
-                                <p className="text-[10px] gray-text">You can type the date directly (DD/MM/YYYY) or click the calendar icon</p>
-                            </div>
+          {/* Address Verification */}
+          <section>
+            <p className="mb-4 flex pb-2 border-primary-bottom small-text">
+              🔹 Address Proof (Residence Proof)
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label className="small-text font-medium flex">
+                  Address Proof Type *
+                </label>
+                <select
+                  name="addressProofType"
+                  value={formValues.addressProofType}
+                  onChange={(e) =>
+                    setFormValues((prev) => ({
+                      ...prev,
+                      addressProofType: e.target.value,
+                    }))
+                  }
+                  className="w-full border full-border rounded-lg px-3 py-1 small-text"
+                >
+                  <option value="">Select Address proof type</option>
+                  <option value="Passport">Passport (shows address)</option>
+                  <option value="Aadhaar">Aadhaar Card</option>
+                  <option value="Driving License">
+                    Driving License (with address)
+                  </option>
+                  <option value="Utility Bills">Utility Bills</option>
+                  <option value="Rent Agreement / Bank Statement">
+                    Rent Agreement / Bank Statement
+                  </option>
+                </select>
+              </div>
+              <div>
+                <label className="small-text font-medium flex">
+                  ID Proof Number *
+                </label>
+                <input
+                  type="text"
+                  name="documentNumberAddress"
+                  value={formValues.rDocumentNumber}
+                  onChange={(e) =>
+                    setFormValues((prev) => ({
+                      ...prev,
+                      rDocumentNumber: e.target.value,
+                    }))
+                  }
+                  placeholder="Enter ID proof number"
+                  className="w-full border full-border rounded-lg px-3 py-1 small-text"
+                />
+              </div>
+            </div>
 
-                        </div>
-                    </section>
+            <FileUploadSection
+              file={addressFile}
+              label={formValues.rDocumentNumber || "Address Proof"}
+              onChange={(e) => handleFileChange(e, "address")}
+              onRemove={() => handleRemove("address")}
+            />
+          </section>
 
-                    {/* Contact Information */}
-                    <section>
-                        <p className="mb-4 flex pb-2 border-primary-bottom small-text">Contact Information</p>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label className="small-text font-medium flex">Email ID *</label>
-                                <input
-                                    type="email"
-                                    name="email"
-                                    value={formValues.email}
-                                    onChange={handleChange}
-                                    placeholder="Enter email address"
-                                    className="w-full  border full-border rounded-lg px-3 py-1  small-text"
-                                />
-                            </div>
-                            <div>
-                                <label className="small-text font-medium flex">Mobile Number *</label>
-                                <input
-                                    type="tel"
-                                    name="mobileNumber"
-                                    value={formValues.mobileNumber}
-                                    readOnly
-                                    className="w-full  border full-border rounded-lg px-3 py-1  small-text"
-                                />
-                            </div>
-                        </div>
-                    </section>
-
-                    {/* Address Information */}
-                    <section>
-                        <p className=" mb-4 flex pb-2 border-primary-bottom small-text">Address Information</p>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <div className="md:col-span-3">
-                                <label className="small-text font-medium flex">Address *</label>
-                                <input
-                                    type="text"
-                                    name="permanentAddress"
-                                    value={formValues.permanentAddress}
-                                    onChange={handleChange}
-                                    placeholder="Enter complete address"
-                                    className="w-full  border full-border rounded-lg px-3 py-1  small-text"
-                                />
-                            </div>
-                            <div>
-                                <label className="small-text font-medium flex">Pincode *</label>
-                                <input
-                                    type="text"
-                                    value={pincode}
-                                    onChange={handlePincodeChange}
-                                    maxLength={6}
-                                    placeholder="Enter pincode"
-                                    className="w-full  border full-border rounded-lg px-3 py-1  small-text"
-                                />
-                            </div>
-                            <div>
-                                <label className="small-text font-medium flex">State *</label>
-                                <select
-                                    name="state"
-                                    value={formValues.state}
-                                    onChange={handleChange}
-                                    className="w-full  border full-border rounded-lg px-3 py-1  small-text"
-                                >
-                                    <option value="">Select state</option>
-                                    {stateOptions.map((s) => (
-                                        <option key={s.id} value={s.id}>
-                                            {s.name}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
-                            <div>
-                                <label className="small-text font-medium flex">City *</label>
-                                <select
-                                    name="city"
-                                    value={formValues.city}
-                                    onChange={handleChange}
-                                    className="w-full  border full-border rounded-lg px-3 py-1  small-text"
-                                >
-                                    <option value="">Select city</option>
-                                    {cityOptions.map((c) => (
-                                        <option key={c.id} value={c.id}>
-                                            {c.name}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
-                        </div>
-                    </section>
-
-                    {/* Financial Information */}
-                    <section>
-                        <p className="  mb-4 flex pb-2 border-primary-bottom small-text">Financial Information</p>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label className="small-text font-medium flex">PAN Number *</label>
-                                {/* PAN Number (always readonly) */}
-                                <input
-                                    type="text"
-                                    name="panNumber"
-                                    value={formValues.panNumber}
-                                    readOnly
-                                    className="w-full  border full-border rounded-lg px-3 py-1  small-text"
-                                />
-                            </div>
-                            <div>
-                                <label className="small-text font-medium flex">Occupation *</label>
-                                <select
-                                    name="occupation"
-                                    value={formValues.occupation}
-                                    onChange={handleChange}
-                                    className="w-full  border full-border rounded-lg px-3 py-1  small-text"
-                                >
-                                    <option value="">Select occupation</option>
-                                    <option value="Engineer">Engineer</option>
-                                    <option value="Doctor">Doctor</option>
-                                    <option value="Teacher">Teacher</option>
-                                </select>
-                            </div>
-                        </div>
-                    </section>
-
-                    {/* Identity Verification */}
-                    <section>
-                        <p className="mb-4 flex pb-2 border-primary-bottom small-text">Identity Verification</p>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label className="small-text font-medium flex">Choose ID Proof *</label>
-                                <select
-                                    name="documentType"
-                                    value={formValues.documentType}
-                                    onChange={(e) => setFormValues(prev => ({ ...prev, documentType: e.target.value }))}
-                                    className="w-full border full-border rounded-lg px-3 py-1 small-text"
-                                >
-                                    <option value="">Select ID proof type</option>
-                                    <option value="Aadhaar">Aadhaar</option>
-                                    <option value="Passport">Passport</option>
-                                    <option value="Voter ID">Voter ID</option>
-                                    <option value="PAN">PAN</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label className="small-text font-medium flex">ID Proof Number *</label>
-                                <input
-                                    type="text"
-                                    name="documentNumber"
-                                    value={formValues.documentNumber}
-                                    onChange={(e) => setFormValues(prev => ({ ...prev, documentNumber: e.target.value }))}
-                                    placeholder="Enter ID proof number"
-                                    className="w-full border full-border rounded-lg px-3 py-1 small-text"
-                                />
-                            </div>
-                        </div>
-
-                        <FileUploadSection
-                            file={identityFile}
-                            label={formValues.documentType || "ID Proof"}
-                            onChange={(e) => handleFileChange(e, "identity")}
-                            onRemove={() => handleRemove("identity")}
-                        />
-                    </section>
-
-                    {/* Address Verification */}
-                    <section>
-                        <p className="mb-4 flex pb-2 border-primary-bottom small-text">🔹 Address Proof (Residence Proof)</p>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label className="small-text font-medium flex">Address Proof Type *</label>
-                                <select
-                                    name="addressProofType"
-                                    value={formValues.addressProofType}
-                                    onChange={(e) => setFormValues(prev => ({ ...prev, addressProofType: e.target.value }))}
-                                    className="w-full border full-border rounded-lg px-3 py-1 small-text"
-                                >
-                                    <option value="">Select Address proof type</option>
-                                    <option value="Passport">Passport (shows address)</option>
-                                    <option value="Aadhaar">Aadhaar Card</option>
-                                    <option value="Driving License">Driving License (with address)</option>
-                                    <option value="Utility Bills">Utility Bills</option>
-                                    <option value="Rent Agreement / Bank Statement">Rent Agreement / Bank Statement</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label className="small-text font-medium flex">ID Proof Number *</label>
-                                <input
-                                    type="text"
-                                    name="documentNumberAddress"
-                                    value={formValues.rDocumentNumber}
-                                    onChange={(e) => setFormValues(prev => ({ ...prev, rDocumentNumber: e.target.value }))}
-                                    placeholder="Enter ID proof number"
-                                    className="w-full border full-border rounded-lg px-3 py-1 small-text"
-                                />
-                            </div>
-                        </div>
-
-                        <FileUploadSection
-                            file={addressFile}
-                            label={formValues.rDocumentNumber || "Address Proof"}
-                            onChange={(e) => handleFileChange(e, "address")}
-                            onRemove={() => handleRemove("address")}
-                        />
-                    </section>
-
-                    <div>
-                        <label className="small-text font-medium flex">Select Partner *</label>
-                        <select
-                            name="partnerId"
-                            value={formValues.partnerId}
-                            onChange={handleChange}
-                            className="w-full border rounded-lg px-3 py-1 small-text"
-                        >
-                            <option value="">-- Select Partner --</option>
-                            {partners.map((p) => (
-                                <option key={p.partnerId} value={p.partnerId}>
-                                    {p.partnerName}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-                    <label className="flex items-center space-x-2 text-[11px] text-white cursor-pointer">
-                        <input
-                            type="checkbox"
-                            name="termsAndConditions"
-                            checked={formValues.termsAndConditions}
-                            onChange={handleChange}
-                            onClick={() => { setChecked(!checked) }}
-                            className="appearance-none w-3 h-3 full-border rounded-sm 
+          <div>
+            <label className="small-text font-medium flex">
+              Select Partner *
+            </label>
+            <select
+              name="partnerId"
+              value={formValues.partnerId}
+              onChange={handleChange}
+              className="w-full border rounded-lg px-3 py-1 small-text"
+            >
+              <option value="">-- Select Partner --</option>
+              {partners.map((p) => (
+                <option key={p.partnerId} value={p.partnerId}>
+                  {p.partnerName}
+                </option>
+              ))}
+            </select>
+          </div>
+          <label className="flex items-center space-x-2 text-[11px] text-white cursor-pointer">
+            <input
+              type="checkbox"
+              name="termsAndConditions"
+              checked={formValues.termsAndConditions}
+              onChange={handleChange}
+              onClick={() => {
+                setChecked(!checked);
+              }}
+              className="appearance-none w-3 h-3 full-border rounded-sm 
                    bg-transparent cursor-pointer
                   font-themecolor
                    relative transition-all"
-                        />
-                        {/* Custom tick mark */}
-                        <span
-                            className={`pointer-events-none absolute w-3 h-3 flex items-center justify-center text-[10px] font-bold ${checked ? "text-black" : "text-transparent"
-                                }`}
-                        >
-                            <CheckIcon />
-                        </span>
+            />
+            {/* Custom tick mark */}
+            <span
+              className={`pointer-events-none absolute w-3 h-3 flex items-center justify-center text-[10px] font-bold ${
+                checked ? "text-black" : "text-transparent"
+              }`}
+            >
+              <CheckIcon />
+            </span>
 
-                        <span>
-                            I agree to the{" "}
-                            <a
-                                href="https://www.discover.com/credit-cards/digital-wallets/terms-conditions.html"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="font-themecolor underline "
-                            >
-                                Terms and Conditions
-                            </a>{" "}
-                            and{" "}
-                            <a
-                                href="https://www.securityfederalbank.com/business/digital-resources/digital-wallet-terms-and-conditions"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="font-themecolor underline"
-                            >
-                                Privacy Policy
-                            </a>
-                        </span>
-                    </label>
-                    {/* Submit */}
-                    <div className="flex justify-start gap-2">
-                        {/* <button
+            <span>
+              I agree to the{" "}
+              <a
+                href="https://www.discover.com/credit-cards/digital-wallets/terms-conditions.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-themecolor underline "
+              >
+                Terms and Conditions
+              </a>{" "}
+              and{" "}
+              <a
+                href="https://www.securityfederalbank.com/business/digital-resources/digital-wallet-terms-and-conditions"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-themecolor underline"
+              >
+                Privacy Policy
+              </a>
+            </span>
+          </label>
+          {/* Submit */}
+          <div className="flex justify-start gap-2">
+            {/* <button
                             className=" flex items-center gap-1 gray-text small-text  button-hoverbg px-2 py-1 rounded-[10px]"
                         >
                             <ArrowLeft className="w-4 h-4 " />
                             Back
                         </button> */}
 
-                        <button
-                            type="submit"
-                            className=" py-1 px-2 rounded-lg  text-black flex items-center justify-center gap-2 sign-up-button  transition"
-                        >
-                            Complete Profile
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    );
+            <button
+              type="submit"
+              className=" py-1 px-2 rounded-lg  text-black flex items-center justify-center gap-2 sign-up-button  transition"
+            >
+              Complete Profile
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
 }
 
 export default FullKycForm;

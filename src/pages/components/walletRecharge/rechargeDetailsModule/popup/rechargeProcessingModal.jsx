@@ -1,11 +1,12 @@
 import { createPortal } from "react-dom";
 import { LoaderCircle } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
-const RechargeProcessingModal = ({ onClose }) => {
+const RechargeProcessingModal = ({ onClose, handleWalletRecharge }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       onClose();
+      handleWalletRecharge();
     }, 2000);
 
     return () => clearTimeout(timer);
@@ -13,13 +14,13 @@ const RechargeProcessingModal = ({ onClose }) => {
 
   return createPortal(
     <div className="fixed inset-0 h-full flex justify-center items-center z-50 backdrop-blur-xs">
-      <div className="bg-[#292929] rounded-lg p-6 w-full max-w-md text-white relative border inner-card-border">
-        <button
+      <div className="bg-[#292929] rounded-lg p-6 w-full max-w-md text-white relative border inner-card-border mx-3">
+        {/* <button
           className="absolute text-sm top-4 right-4 text-white hover:text-gray-400"
           onClick={onClose}
         >
           ✕
-        </button>
+        </button> */}
         <h2 className="text-[var(--primary-color)] font-bold mb-4 flex items-center gap-2">
           <LoaderCircle size="20" className="animate-spin" /> Processing
           Recharge...
