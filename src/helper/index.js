@@ -15,3 +15,6 @@ export const generateTransactionRef = () => {
 
   return `TRX${datePart}${randomPart}`;
 };
+
+export const capitalizeFirst = (text) =>
+  text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();

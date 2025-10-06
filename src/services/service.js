@@ -61,6 +61,7 @@ api.interceptors.request.use(
 export const postRequest = async (endpoint, payload) => {
   try {
     const response = await api.post(endpoint, payload);
+
     return response.data;
   } catch (error) {
     console.error("API Error:", error.response || error.message);
@@ -104,6 +105,13 @@ export const submitMinKyc = async (formData) => {
     ...formData,
   });
 };
+
+export const submitFullKyc = async (formData) => {
+  return postRequest("/cs/api/Customer/full_kyc", {
+    ...formData,
+  });
+};
+
 export const pepCheck = async ({
   firstName,
   middleName,
@@ -154,6 +162,8 @@ export const loginWithPin = async (mobileNumber, password) => {
   });
 };
 
+// wallet recharge init
+
 export const rechargeWallet = (payload) =>
   postRequest("/cs/api/Customer/recharge-wallet", {
     ...payload,
@@ -162,3 +172,6 @@ export const rechargeWallet = (payload) =>
 
 export const moveTransaction = (payload) =>
   postRequest("/cs/api/Customer/move-transaction", payload);
+
+export const debitWallet = (payload) =>
+  postRequest("/cs/api/Customer/debit-wallet", payload);

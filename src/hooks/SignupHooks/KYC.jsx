@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FileText, Shield, ArrowLeft, Lock } from "lucide-react";
 import MinKyc from "./MinKyc";
-import FullKyc from "./FullKyc/FullKycMobileverification";
+import FullKyc from "./FullKyc/index";
 import LOGO from "../../assets/logo.png";
 import { useNavigate } from "react-router-dom";
 
@@ -160,7 +160,7 @@ const KYCScreen = ({ pan }) => {
             </div>
             {/* If selected -> show form */}
             {selected === "min" && <MinKYCForm pan={pan} />}
-            {selected === "full" && <FullKYCForm />}
+            {selected === "full" && <FullKYCForm pan={pan} />}
         </div>
     );
 };

@@ -5,7 +5,6 @@ import LOGO from "../../../assets/logo.png"
 
 function FullKycMobileVerification({ onBack, onVerified }) {
   
-  console.log(onVerified)
   const [mobile, setMobile] = useState("");
   const [step, setStep] = useState("mobile");
   const [otp, setOtp] = useState("");

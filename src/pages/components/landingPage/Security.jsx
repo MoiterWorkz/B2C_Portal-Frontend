@@ -10,25 +10,52 @@ import {
 import { motion } from "framer-motion"; // ✅ Import Framer Motion
 
 const securityFeatures = [
-  { icon: <Lock color="var(--primary-color)" />, title: "256-bit SSL Encryption", description: "Bank-grade encryption" },
-  { icon: <Shield color="var(--primary-color)" />, title: "PCI DSS Compliant", description: "Highest security standards" },
-  { icon: <Eye color="var(--primary-color)" />, title: "24/7 Fraud Monitoring", description: "Real-time protection" },
-  { icon: <Award color="var(--primary-color)" />, title: "RBI Approved", description: "Regulated & trusted" },
+  {
+    icon: <Lock color="var(--primary-color)" />,
+    title: "256-bit SSL Encryption",
+    description: "Bank-grade encryption",
+  },
+  {
+    icon: <Shield color="var(--primary-color)" />,
+    title: "PCI DSS Compliant",
+    description: "Highest security standards",
+  },
+  {
+    icon: <Eye color="var(--primary-color)" />,
+    title: "24/7 Fraud Monitoring",
+    description: "Real-time protection",
+  },
+  {
+    icon: <Award color="var(--primary-color)" />,
+    title: "RBI Approved",
+    description: "Regulated & trusted",
+  },
 ];
 
 const badges = [
-  { icon: <Building2 style={{ color: "var(--primary-color)" }} size={10} />, label: "RBI Regulated" },
-  { icon: <Globe style={{ color: "var(--primary-color)" }} size={10} />, label: "ISO 27001 Certified" },
-  { icon: <Award style={{ color: "var(--primary-color)" }} size={10} />, label: "PCI DSS Level 1" },
+  {
+    icon: <Building2 style={{ color: "var(--primary-color)" }} size={10} />,
+    label: "RBI Regulated",
+  },
+  {
+    icon: <Globe style={{ color: "var(--primary-color)" }} size={10} />,
+    label: "ISO 27001 Certified",
+  },
+  {
+    icon: <Award style={{ color: "var(--primary-color)" }} size={10} />,
+    label: "PCI DSS Level 1",
+  },
 ];
 
 const Security = () => {
   return (
-    <div className="w-full h-full flex flex-col justify-center" style={{ backgroundColor: "var(--secondary-backgroundcolor)" }}>
+    <div
+      className="w-full h-full flex flex-col justify-center"
+      style={{ backgroundColor: "var(--secondary-backgroundcolor)" }}
+    >
       <div className="pt-12 pb-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            
             {/* Left portion - slide from left */}
             <motion.div
               className="space-y-8"
@@ -173,7 +200,6 @@ const Security = () => {
                 </div>
               </div>
             </motion.div>
-
           </div>
         </div>
       </div>
