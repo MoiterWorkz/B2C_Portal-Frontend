@@ -8,10 +8,12 @@ import {
   IndianRupee,
 } from "lucide-react";
 import ConfirmRechargeModal from "./confirmRechargeModal";
+import RechargeProcessingModal from "./rechargeProcessingModal";
 const WalletRecharge = () => {
   const [amount, setAmount] = useState("");
   const [activePayment, setActivePayment] = useState("UPI");
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [confirmModal, setConfirmModal] = useState(false);
+  const [processingModal, setProcessingModalModal] = useState(false);
   // const [activeQuickAmount,setActiveQuickAmount]=  useState('')
   const quickAmounts = [500, 1000, 2000, 5000, 10000, 25000];
 
@@ -52,11 +54,11 @@ const WalletRecharge = () => {
 
   const handleConfirm = () => {
     alert(`Recharge ₹${amount} confirmed`);
-    setIsModalOpen(false);
+    setConfirmModal(false);
   };
 
   return (
-    <div className="text-card-foreground rounded-xl border card-hover-effect p-6 space-y-5">
+    <div className="text-card-foreground rounded-xl border card-hover-effect-no-pointer p-6 space-y-5">
       {/* Wallet Recharge Details */}
       <section className="space-y-4">
         <h1 className="card-title flex items-center gap-2">
@@ -186,7 +188,7 @@ const WalletRecharge = () => {
           className={`${
             amount.length == 0 && "opacity-70"
           } flex-1 bg-[var(--primary-color)] p-2 rounded-lg hover:opacity-90 cursor-pointer`}
-          // onClick={() => setIsModalOpen(true)}
+          onClick={() => setConfirmModal(true)}
         >
           Recharge Wallet
         </button>
@@ -197,14 +199,22 @@ const WalletRecharge = () => {
           Clear
         </button>
       </section>
-      <ConfirmRechargeModal
-        amount={amount}
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onConfirm={handleConfirm}
-        paymentMethod={activePayment}
-        amt={amount}
-      />
+      {confirmModal && (
+        <ConfirmRechargeModal
+          amount={amount}
+          confirmModal={confirmModal}
+          onClose={() => setConfirmModal(false)}
+          onConfirm={handleConfirm}
+          paymentMethod={activePayment}
+          setProcessingModalModal={setProcessingModalModal}
+          amt={amount}
+        />
+      )}
+      {processingModal && (
+        <RechargeProcessingModal
+          onClose={() => setProcessingModalModal(false)}
+        />
+      )}
     </div>
   );
 };
