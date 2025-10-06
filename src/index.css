@@ -20,29 +20,41 @@
   --color-green-400: oklch(0.792 0.209 151.711);
   --color-red-400: oklch(0.704 0.191 22.216);
   --primary-dotted-border: hsla(39, 93%, 76%, 0.2);
-    /* Backgrounds */
-    --button-hover: color-mix(in oklab, var(--primary-color) 90%, transparent);
+  /* Backgrounds */
+  --button-hover: color-mix(in oklab, var(--primary-color) 90%, transparent);
   --transparent-color: transparent;
   --smallbutton-inside-backgound: color-mix(in oklab, #fad489 10%, transparent);
-  --smallbutton-inside-hover-backgound: color-mix(in oklab,
-      #fad489 50%,
-      transparent);
-  --secondary-backgroundcolor: color-mix(in oklab,
-      var(--card-background-color) 30%,
-      transparent);
+  --smallbutton-inside-hover-backgound: color-mix(
+    in oklab,
+    #fad489 50%,
+    transparent
+  );
+  --secondary-backgroundcolor: color-mix(
+    in oklab,
+    var(--card-background-color) 30%,
+    transparent
+  );
   --third-backgroundcolor: color-mix(in oklab, #2a2a2a 80%, transparent);
-  --smallbutton-inside-backgound: color-mix(in oklab,
-      var(--primary-color) 10%,
-      transparent);
-  --smallbutton-inside-hover-backgound: color-mix(in oklab,
-      var(--primary-color) 50%,
-      transparent);
-  --secondary-backgroundcolor: color-mix(in oklab,
-      var(--card-background-color) 30%,
-      transparent);
-  --third-backgroundcolor: color-mix(in oklab,
-      var(--card-background-color) 80%,
-      transparent);
+  --smallbutton-inside-backgound: color-mix(
+    in oklab,
+    var(--primary-color) 10%,
+    transparent
+  );
+  --smallbutton-inside-hover-backgound: color-mix(
+    in oklab,
+    var(--primary-color) 50%,
+    transparent
+  );
+  --secondary-backgroundcolor: color-mix(
+    in oklab,
+    var(--card-background-color) 30%,
+    transparent
+  );
+  --third-backgroundcolor: color-mix(
+    in oklab,
+    var(--card-background-color) 80%,
+    transparent
+  );
 
   --color-yellow-400: oklch(0.852 0.199 91.936);
   --button-boxshadow: #fad48933;
@@ -101,6 +113,9 @@
   /* Border */
   --circle-border: 3.40282e38px;
   --thin-border: 1px solid
+    color-mix(in oklab, var(--primary-color) 20%, transparent);
+
+  --thick-border: 2px solid
     color-mix(in oklab, var(--primary-color) 20%, transparent);
   /* side bar */
   --sidebar-active-text: #1a1a1a;
@@ -217,8 +232,8 @@ body {
 .primary-border-color {
   border: 2px dashed var(--primary-dotted-border);
 }
-.primary-border-color:hover{
-   border: 2px dashed var(--primary-color);
+.primary-border-color:hover {
+  border: 2px dashed var(--primary-color);
 }
 
 /* ================= Ashwin ================= */
@@ -417,7 +432,7 @@ body {
   white-space: nowrap;
   font-weight: 500;
   border: var(--thin-border);
-  color: var(--font-black);
+  color: var(--font-black) !important;
 }
 
 .sign-up-button:hover {
@@ -529,11 +544,12 @@ body {
   left: -75%;
   width: 50%;
   height: 100%;
-  background: linear-gradient(120deg,
-      rgba(255, 255, 255, 0) 0%,
-      rgba(250, 212, 137, 0.4) 50%,
-      /* golden light */
-      rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(250, 212, 137, 0.4) 50%,
+    /* golden light */ rgba(255, 255, 255, 0) 100%
+  );
   transform: skewX(-20deg);
   animation: sidebarSweep 0.7s forwards;
   pointer-events: none;
@@ -574,6 +590,11 @@ body {
   background-color: var(--card-background-color);
   /* card background */
   border: var(--thin-border);
+}
+.card-bg-br-2 {
+  background-color: var(--card-background-color);
+  /* card background */
+  border: var(--thick-border);
 }
 
 .card-hover-effect {
@@ -827,10 +848,12 @@ body {
   /* start outside from left */
   width: 50%;
   height: 100%;
-  background: linear-gradient(120deg,
-      rgba(255, 255, 255, 0) 0%,
-      rgba(250, 212, 137, 0.6) 50%,
-      rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(250, 212, 137, 0.6) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
   transform: skewX(-20deg);
   animation: sweep 0.7s forwards;
   pointer-events: none;
@@ -860,11 +883,12 @@ body {
   left: -75%;
   width: 50%;
   height: 100%;
-  background: linear-gradient(120deg,
-      rgba(255, 255, 255, 0) 0%,
-      rgba(255, 77, 79, 0.4) 50%,
-      /* match logout red tone */
-      rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 77, 79, 0.4) 50%,
+    /* match logout red tone */ rgba(255, 255, 255, 0) 100%
+  );
   transform: skewX(-20deg);
   animation: sweep 0.7s forwards;
   pointer-events: none;
@@ -1057,7 +1081,7 @@ body {
   color: var(--primary-font-color);
   border: var(--thin-border);
   @apply text-[10.5px] sm:text-[12.5px];
-  @apply h-[28px] w-[77px];
+  /* @apply h-[28px] w-[77px]; */
 }
 .backbutton:hover {
   background-color: var(--smallbutton-inside-hover-backgound);
@@ -1212,4 +1236,67 @@ body {
     color: var(--primary-color);
     font-weight: var(--font-bold);
   }
+}
+/* In your CSS file */
+@media (max-width: 320px) {
+  .circle-number,
+  .backbutton,
+  .Big-icon,
+  .group-3,
+  .flex-col-sm-override {
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center;
+  }
+  .flex-col-sm-override > .group-3 {
+    align-items: center !important;
+  }
+}
+
+.popup {
+  border: var(--thick-border);
+  background-color: var(--primary-backgroundcolor);
+
+  p {
+    @apply text-[12.5px] sm:text-[14px];
+    color: var(--subheading-color);
+  }
+  .amount {
+    color: var(--primary-color);
+    @apply text-[30px] sm:text-[40px];
+  }
+  span {
+    color: var(--subheading-color);
+    @apply text-[10px] sm:text-[12px];
+  }
+  .span-data {
+    color: var(--primary-font-color);
+    @apply text-[10px] sm:text-[12px];
+  }
+  .span-account-id {
+    color: var(--primary-color);
+    @apply text-[10px] sm:text-[12px];
+  }
+  .icon {
+    color: var(--primary-font-color);
+  }
+}
+/* Custom vertical scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px; /* scrollbar width */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #2a2a2a; /* track background */
+  border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: var(--primary-color); /* thumb color */
+  border-radius: 4px;
+  border: 2px solid #2a2a2a; /* optional: gives padding effect */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: var(--primary-color); /* hover effect */
 }

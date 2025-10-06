@@ -1,34 +1,25 @@
 import React, { useState } from "react";
 import { Building2, Hash } from "lucide-react";
-import ElectricityPayment from "./ElectricityPayment";
 
-const BillDetails = ({ provider }) => {
+const BillDetails = ({ provider, onConfirm }) => {
   const [consumerNumber, setConsumerNumber] = useState("");
   const [customerName, setCustomerName] = useState("");
   const [isFetching, setIsFetching] = useState(false);
-  const [confirmed, setConfirmed] = useState(false);
 
   const handleFetchBill = () => {
     setIsFetching(true);
 
-    // Simulate API call
     setTimeout(() => {
       setIsFetching(false);
-      setConfirmed(true); // mark as confirmed
+      onConfirm({
+        provider: provider.name,
+        consumerNumber,
+        customerName,
+        billAmount: 3097,
+      });
     }, 1000);
   };
 
-  // When bill is confirmed, render the summary
-  if (confirmed) {
-    return (
-      <ElectricityPayment
-        provider={provider.name}
-        consumerNumber={consumerNumber}
-        customerName={customerName}
-        billAmount={3097} // Replace with real amount if available from API
-      />
-    );
-  }
   return (
     <div className="max-w-7xl mx-auto space-y-6">
       {/* Provider Card */}
@@ -68,15 +59,14 @@ const BillDetails = ({ provider }) => {
             <input
               id="consumerNumber"
               type="text"
-              inputMode="numeric" // opens numeric keypad on mobile
-              pattern="[0-9]*" // HTML pattern for only numbers
+              inputMode="numeric"
+              pattern="[0-9]*"
               placeholder="Enter your consumer number"
               className="flex h-9 w-full rounded-md border px-3 text-base bg-input-background profilecard-input"
               value={consumerNumber}
-              onChange={(e) => {
-                const value = e.target.value.replace(/\D/g, ""); // remove non-digits
-                setConsumerNumber(value);
-              }}
+              onChange={(e) =>
+                setConsumerNumber(e.target.value.replace(/\D/g, ""))
+              }
             />
           </div>
 
@@ -94,18 +84,16 @@ const BillDetails = ({ provider }) => {
               placeholder="Enter name as per electricity bill"
               className="flex h-9 w-full rounded-md border px-3 text-base bg-input-background profilecard-input"
               value={customerName}
-              onChange={(e) => {
-                // Replace anything that's not a letter or space
-                const value = e.target.value.replace(/[^a-zA-Z\s]/g, "");
-                setCustomerName(value);
-              }}
+              onChange={(e) =>
+                setCustomerName(e.target.value.replace(/[^a-zA-Z\s]/g, ""))
+              }
             />
           </div>
 
           {/* Submit */}
           <button
             className="inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium w-full h-9 px-4 bg-primary hover:bg-primary/90 text-primary-foreground disabled:opacity-50"
-            disabled={!consumerNumber || !customerName || isFetching} // disabled until both filled
+            disabled={!consumerNumber || !customerName || isFetching}
             onClick={handleFetchBill}
           >
             {isFetching ? "Fetching..." : "Fetch Bill Details"}

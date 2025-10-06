@@ -87,9 +87,11 @@ const Providers = ({ onSelect }) => {
   );
 
   // Separate card component inside same file
-  const ProviderCard = ({ provider,onSelect  }) => (
-    <div className="bg-white p-4 rounded-xl border cursor-pointer flex flex-col gap-3 shadow-sm bigcards card-hover-effect" 
-      onClick={() => onSelect(provider)}>
+  const ProviderCard = ({ provider, onSelect }) => (
+    <div
+      className="bg-white p-4 rounded-xl border cursor-pointer flex flex-col gap-3 shadow-sm bigcards card-hover-effect"
+      onClick={() => onSelect(provider)}
+    >
       <div className="flex items-start gap-3 ">
         <div className="p-2 bg-primary/10 rounded-lg icon">
           <Building2 size={20} className="" />
@@ -117,10 +119,10 @@ const Providers = ({ onSelect }) => {
       {/* Search Bar */}
       <div className="relative w-full">
         {/* Search Icon */}
-        <Search
+        {/* <Search
           size={16}
           className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground pointer-events-none"
-        />
+        /> */}
 
         {/* Input Field */}
         <input
@@ -133,9 +135,13 @@ const Providers = ({ onSelect }) => {
       </div>
 
       {/* Provider Cards */}
-      <div className="grid gap-4 grid-cols-2">
+      <div className="grid gap-4 grid-cols-1 sm:grid-cols-2">
         {filteredProviders.map((provider) => (
-          <ProviderCard key={provider.id} provider={provider} onSelect={onSelect}/>
+          <ProviderCard
+            key={provider.id}
+            provider={provider}
+            onSelect={onSelect}
+          />
         ))}
         {filteredProviders.length === 0 && (
           <p className="text-muted-foreground col-span-2 text-center">
