@@ -72,7 +72,7 @@ const KYCScreen = ({ pan , setShowKyc }) => {
                                 {/* Min KYC */}
                                 <div
                                     onClick={() => setSelected("min")}
-                                    className="cursor-pointer  card-bg hover:scale-105 rounded-xl p-6 shadow-lg hover:scale-103 transition  w-full sm:w-[400px] max-w-md "
+                                    className="cursor-pointer  card-bg hover:scale-105 rounded-xl p-6 shadow-lg hover:scale-103 transition  w-full sm:w-[400px] max-w-md border-transparent"
                                 >
                                     <div className="flex flex-col sm:flex-row items-start gap-3 sm:gap-5 mb-4">
                                         <div className="icon-bg p-3 rounded-lg">
@@ -106,7 +106,7 @@ const KYCScreen = ({ pan , setShowKyc }) => {
                                 {/* Full KYC */}
                                 <div
                                     onClick={() => setSelected("full")}
-                                    className="cursor-pointer card-bg hover:scale-105 rounded-xl p-6 shadow-lg  hover:scale-103 transition w-full sm:w-[400px] max-w-md "
+                                    className="cursor-pointer card-bg hover:scale-105 rounded-xl p-6 shadow-lg  hover:scale-103 transition w-full sm:w-[400px] max-w-md border-transparent"
                                 >
                                     <div className="flex flex-col sm:flex-row items-start  gap-3 sm:gap-5 mb-4 ">
                                         <div className="icon-bg p-3 rounded-lg">

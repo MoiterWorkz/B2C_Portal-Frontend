@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { getStateAndCityByPincode, submitMinKyc, pepCheck, sanctionCheck } from "../../../services/service";
 import { v4 as uuidv4 } from "uuid"; // for generating transactionId
 import { useNavigate } from "react-router-dom";
-import LOGO from "../../../assets/logo.png"
+import LOGO from "../../../assets/logo.png";
 import { ArrowLeft, CheckIcon } from "lucide-react";
+import CustomSelect from "../../../constants/Reusable/Customdropdown";
 
 function MinKycForm({ verifiedMobile, pan, setVerified }) {
     const navigate = useNavigate();
@@ -284,17 +285,16 @@ function MinKycForm({ verifiedMobile, pan, setVerified }) {
                             </div>
                             <div>
                                 <label className="small-text font-medium flex">Gender *</label>
-                                <select
-                                    name="gender"
+                                <CustomSelect
+                                    options={[
+                                        { id: "MALE", name: "MALE" },
+                                        { id: "FEMALE", name: "FEMALE" },
+                                        { id: "OTHER", name: "OTHER" },
+                                    ]}
                                     value={formValues.gender}
-                                    onChange={handleChange}
-                                    className="golden-dropdown w-full  border full-border rounded-lg px-3 py-1  small-text"
-                                >
-                                    <option value="">Select Gender</option>
-                                    <option value="MALE">MALE</option>
-                                    <option value="FEMALE">FEMALE</option>
-                                    <option value="OTHER">OTHER</option>
-                                </select>
+                                    onChange={(val) => setFormValues(prev => ({ ...prev, gender: val }))}
+                                    placeholder="Select Gender"
+                                />
                             </div>
                             <div>
                                 <label className="small-text font-medium flex">Date of Birth *</label>
@@ -333,7 +333,7 @@ function MinKycForm({ verifiedMobile, pan, setVerified }) {
                                     name="mobileNumber"
                                     value={formValues.mobileNumber}
                                     readOnly
-                                    className="w-full  border full-border rounded-lg px-3 py-1  small-text"
+                                    className="w-full  border full-border rounded-lg px-3 py-1  small-text cursor-not-allowed"
                                 />
                             </div>
                         </div>
@@ -367,36 +367,27 @@ function MinKycForm({ verifiedMobile, pan, setVerified }) {
                             </div>
                             <div>
                                 <label className="small-text font-medium flex">State *</label>
-                                <select
-                                    name="state"
-                                    value={formValues.state}
-                                    onChange={handleChange}
-                                    className="w-full  border full-border rounded-lg px-3 py-1  small-text"
-                                >
-                                    <option value="">Select state</option>
-                                    {stateOptions.map((s) => (
-                                        <option key={s.id} value={s.id}>
-                                            {s.name}
-                                        </option>
-                                    ))}
-                                </select>
+                                <CustomSelect
+                                    options={stateOptions} // [{id, name}, ...]
+                                    value={formValues.state} // controlled value
+                                    onChange={(val) =>
+                                        setFormValues((prev) => ({ ...prev, state: val }))
+                                    } // update state
+                                    placeholder="Select state"
+                                />
                             </div>
                             <div>
                                 <label className="small-text font-medium flex">City *</label>
-                                <select
-                                    name="city"
-                                    value={formValues.city}
-                                    onChange={handleChange}
-                                    className="w-full  border full-border rounded-lg px-3 py-1  small-text"
-                                >
-                                    <option value="">Select city</option>
-                                    {cityOptions.map((c) => (
-                                        <option key={c.id} value={c.id}>
-                                            {c.name}
-                                        </option>
-                                    ))}
-                                </select>
+                                <CustomSelect
+                                    options={cityOptions} // Array of cities: [{id, name}, ...]
+                                    value={formValues.city} // Controlled value from form state
+                                    onChange={(val) =>
+                                        setFormValues((prev) => ({ ...prev, city: val }))
+                                    } // Update city in form state
+                                    placeholder="Select city" // Text shown when nothing is selected
+                                />
                             </div>
+
                         </div>
                     </section>
 
@@ -412,22 +403,21 @@ function MinKycForm({ verifiedMobile, pan, setVerified }) {
                                     name="panNumber"
                                     value={formValues.panNumber}
                                     readOnly
-                                    className="w-full  border full-border rounded-lg px-3 py-1  small-text"
+                                    className="w-full  border full-border rounded-lg px-3 py-1  small-text cursor-not-allowed"
                                 />
                             </div>
                             <div>
                                 <label className="small-text font-medium flex">Occupation *</label>
-                                <select
-                                    name="occupation"
+                                <CustomSelect
+                                    options={[
+                                        { id: "Engineer", name: "Engineer" },
+                                        { id: "Doctor", name: "Doctor" },
+                                        { id: "Teacher", name: "Teacher" },
+                                    ]}
                                     value={formValues.occupation}
-                                    onChange={handleChange}
-                                    className="w-full  border full-border rounded-lg px-3 py-1  small-text"
-                                >
-                                    <option value="">Select occupation</option>
-                                    <option value="Engineer">Engineer</option>
-                                    <option value="Doctor">Doctor</option>
-                                    <option value="Teacher">Teacher</option>
-                                </select>
+                                    onChange={(val) => setFormValues(prev => ({ ...prev, occupation: val }))}
+                                    placeholder="Select occupation"
+                                />
                             </div>
                         </div>
                     </section>
@@ -438,18 +428,17 @@ function MinKycForm({ verifiedMobile, pan, setVerified }) {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <label className="small-text font-medium flex">Choose ID Proof *</label>
-                                <select
-                                    name="documentType"
+                                <CustomSelect
+                                    options={[
+                                        { id: "Aadhaar", name: "Aadhaar" },
+                                        { id: "Passport", name: "Passport" },
+                                        { id: "Voter ID", name: "Voter ID" },
+                                        { id: "PAN", name: "PAN" },
+                                    ]}
                                     value={formValues.documentType}
-                                    onChange={handleChange}
-                                    className="w-full  border full-border rounded-lg px-3 py-1  small-text"
-                                >
-                                    <option value="">Select ID proof type</option>
-                                    <option value="Aadhar">Aadhar</option>
-                                    <option value="Passport">Passport</option>
-                                    <option value="Voter ID">Voter ID</option>
-                                    <option value="PAN">PAN</option>
-                                </select>
+                                    onChange={(val) => setFormValues(prev => ({ ...prev, documentType: val }))}
+                                    placeholder="Select ID proof type"
+                                />
                             </div>
                             <div>
                                 <label className="small-text font-medium flex">ID Proof Number *</label>
@@ -465,21 +454,22 @@ function MinKycForm({ verifiedMobile, pan, setVerified }) {
                                 />
                             </div>
 
+
                             <div>
-                                <label className="small-text font-medium flex">Select Partner *</label>
-                                <select
-                                    name="partnerId"
+                                <label className="small-text font-medium flex">
+                                    Select Partner *
+                                </label>
+                                <CustomSelect
+                                    options={partners.map((p) => ({
+                                        id: p.partnerId,
+                                        name: p.partnerName,
+                                    }))}
                                     value={formValues.partnerId}
-                                    onChange={handleChange}
-                                    className="w-full border rounded-lg px-3 py-1 small-text"
-                                >
-                                    <option value="">-- Select Partner --</option>
-                                    {partners.map((p) => (
-                                        <option key={p.partnerId} value={p.partnerId}>
-                                            {p.partnerName}
-                                        </option>
-                                    ))}
-                                </select>
+                                    onChange={(val) =>
+                                        setFormValues((prev) => ({ ...prev, partnerId: val }))
+                                    }
+                                    placeholder="-- Select Partner --"
+                                />
                             </div>
 
                         </div>
@@ -529,7 +519,7 @@ function MinKycForm({ verifiedMobile, pan, setVerified }) {
                     <div className="flex justify-start gap-2">
                         <button
                             className=" flex items-center gap-1 gray-text small-text  button-hoverbg px-2 py-1 rounded-[10px]"
-                            onClick={()=>setVerified(false)}
+                            onClick={() => setVerified(false)}
                         >
                             <ArrowLeft className="w-4 h-4 " />
                             Back
