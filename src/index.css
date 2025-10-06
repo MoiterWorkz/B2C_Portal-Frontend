@@ -20,29 +20,41 @@
   --color-green-400: oklch(0.792 0.209 151.711);
   --color-red-400: oklch(0.704 0.191 22.216);
   --primary-dotted-border: hsla(39, 93%, 76%, 0.2);
-    /* Backgrounds */
-    --button-hover: color-mix(in oklab, var(--primary-color) 90%, transparent);
+  /* Backgrounds */
+  --button-hover: color-mix(in oklab, var(--primary-color) 90%, transparent);
   --transparent-color: transparent;
   --smallbutton-inside-backgound: color-mix(in oklab, #fad489 10%, transparent);
-  --smallbutton-inside-hover-backgound: color-mix(in oklab,
-      #fad489 50%,
-      transparent);
-  --secondary-backgroundcolor: color-mix(in oklab,
-      var(--card-background-color) 30%,
-      transparent);
+  --smallbutton-inside-hover-backgound: color-mix(
+    in oklab,
+    #fad489 50%,
+    transparent
+  );
+  --secondary-backgroundcolor: color-mix(
+    in oklab,
+    var(--card-background-color) 30%,
+    transparent
+  );
   --third-backgroundcolor: color-mix(in oklab, #2a2a2a 80%, transparent);
-  --smallbutton-inside-backgound: color-mix(in oklab,
-      var(--primary-color) 10%,
-      transparent);
-  --smallbutton-inside-hover-backgound: color-mix(in oklab,
-      var(--primary-color) 50%,
-      transparent);
-  --secondary-backgroundcolor: color-mix(in oklab,
-      var(--card-background-color) 30%,
-      transparent);
-  --third-backgroundcolor: color-mix(in oklab,
-      var(--card-background-color) 80%,
-      transparent);
+  --smallbutton-inside-backgound: color-mix(
+    in oklab,
+    var(--primary-color) 10%,
+    transparent
+  );
+  --smallbutton-inside-hover-backgound: color-mix(
+    in oklab,
+    var(--primary-color) 50%,
+    transparent
+  );
+  --secondary-backgroundcolor: color-mix(
+    in oklab,
+    var(--card-background-color) 30%,
+    transparent
+  );
+  --third-backgroundcolor: color-mix(
+    in oklab,
+    var(--card-background-color) 80%,
+    transparent
+  );
 
   --color-yellow-400: oklch(0.852 0.199 91.936);
   --button-boxshadow: #fad48933;
@@ -102,6 +114,11 @@
   --circle-border: 3.40282e38px;
   --thin-border: 1px solid
     color-mix(in oklab, var(--primary-color) 20%, transparent);
+
+  --thick-border: 2px solid
+    color-mix(in oklab, var(--primary-color) 20%, transparent);
+  --thin-border: 1px solid
+    color-mix(in oklab, var(--primary-color) 20%, transparent);
   /* side bar */
   --sidebar-active-text: #1a1a1a;
   --sidebar-active-bg: #fad4891f;
@@ -118,7 +135,7 @@
   --font-heading-2: 28px;
   --font-heading-4: 25px;
   --font-heading-3: 20px;
-
+  --font-heading-extra-large: 35px;
   --bill-yellow-bg: rgba(250, 204, 21, 0.1);
   --bill-yellow-border: rgba(250, 204, 21, 0.3);
 
@@ -136,9 +153,11 @@
   --font-extra-light: 200;
   --font-light: 300;
   --font-normal: 400;
-  --font-medium: 500; /* Medium weight */
+  --font-medium: 500;
+  /* Medium weight */
   --font-semibold: 600;
-  --font-bold: 700; /* Bold weight */
+  --font-bold: 700;
+  /* Bold weight */
   --font-extra-bold: 800;
   --font-black: 900;
 
@@ -180,7 +199,9 @@ body {
 .form-heading {
   font-size: var(--font-heading-4);
 }
-
+.main-heading {
+  font-size: var(--font-heading-extra-large);
+}
 .form-heading2 {
   font-size: var(--font-heading-3);
 }
@@ -217,8 +238,9 @@ body {
 .primary-border-color {
   border: 2px dashed var(--primary-dotted-border);
 }
-.primary-border-color:hover{
-   border: 2px dashed var(--primary-color);
+
+.primary-border-color:hover {
+  border: 2px dashed var(--primary-color);
 }
 
 /* ================= Ashwin ================= */
@@ -375,12 +397,14 @@ body {
 
 .full-border {
   border: var(--thin-border);
+  /* margin-top: 5px; */
 }
 
 .full-border:focus {
+  border: 1px solid var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(var(--primary-color-rgb), 0.3);
+  /* ring effect */
   outline: none;
-  border: 1px solid #ddbc75;
-  box-shadow: 0 0 5px #c6a969, 0 0 5px #c6a969;
 }
 
 .border-thin {
@@ -417,7 +441,8 @@ body {
   white-space: nowrap;
   font-weight: 500;
   border: var(--thin-border);
-  color: var(--font-black);
+  color: var(--font-black) !important;
+  /* color: var(--font-black); */
 }
 
 .sign-up-button:hover {
@@ -529,11 +554,12 @@ body {
   left: -75%;
   width: 50%;
   height: 100%;
-  background: linear-gradient(120deg,
-      rgba(255, 255, 255, 0) 0%,
-      rgba(250, 212, 137, 0.4) 50%,
-      /* golden light */
-      rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(250, 212, 137, 0.4) 50%,
+    /* golden light */ rgba(255, 255, 255, 0) 100%
+  );
   transform: skewX(-20deg);
   animation: sidebarSweep 0.7s forwards;
   pointer-events: none;
@@ -574,6 +600,11 @@ body {
   background-color: var(--card-background-color);
   /* card background */
   border: var(--thin-border);
+}
+.card-bg-br-2 {
+  background-color: var(--card-background-color);
+  /* card background */
+  border: var(--thick-border);
 }
 
 .card-hover-effect {
@@ -841,10 +872,12 @@ body {
   /* start outside from left */
   width: 50%;
   height: 100%;
-  background: linear-gradient(120deg,
-      rgba(255, 255, 255, 0) 0%,
-      rgba(250, 212, 137, 0.6) 50%,
-      rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(250, 212, 137, 0.6) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
   transform: skewX(-20deg);
   animation: sweep 0.7s forwards;
   pointer-events: none;
@@ -874,11 +907,12 @@ body {
   left: -75%;
   width: 50%;
   height: 100%;
-  background: linear-gradient(120deg,
-      rgba(255, 255, 255, 0) 0%,
-      rgba(255, 77, 79, 0.4) 50%,
-      /* match logout red tone */
-      rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 77, 79, 0.4) 50%,
+    /* match logout red tone */ rgba(255, 255, 255, 0) 100%
+  );
   transform: skewX(-20deg);
   animation: sweep 0.7s forwards;
   pointer-events: none;
@@ -910,6 +944,7 @@ body {
   background: #fad48905;
   border: 1px solid #fad48926;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
   &::before {
     content: "";
     background: linear-gradient(90deg, #0000 0%, #fad4891a 50%, #0000 100%);
@@ -920,6 +955,7 @@ body {
     top: 0;
     left: -100%;
   }
+
   &:hover {
     background: #fad4890d;
     border-color: #fad4894d;
@@ -936,38 +972,46 @@ body {
   border: 1px solid var(--button-boxshadow);
   padding: 2px 10px;
   font-size: 14px;
+
   &:focus {
     outline: 1px solid var(--primary-color);
   }
+
   &::placeholder {
     color: var(--subheading-color);
     font-size: 12px;
   }
 }
+
 /* ///////////////////////////////////// */
 .profile-heading {
   h1 {
     color: var(--primary-font-color);
     font-weight: var(--font-semibold);
   }
+
   h4 {
     color: var(--primary-font-color);
     font-weight: var(--font-semibold);
   }
+
   span {
     color: var(--primary-font-color);
     background-color: var(--user-icon-background-color);
     border-radius: 50%;
   }
+
   label {
     color: var(--primary-font-color);
     @apply text-[10.5px] sm:text-[12.5px];
   }
+
   input {
     @apply text-[12.5px] sm:text-[14px];
     color: var(--subheading-color);
   }
 }
+
 .profilechange-buttons {
   .edit-profile {
     background-color: var(--primary-color);
@@ -976,6 +1020,7 @@ body {
     white-space: nowrap;
     @apply text-[10.5px] sm:text-[12.5px];
   }
+
   .save-changes {
     background-color: var(--primary-color);
     color: var(--font-black);
@@ -983,22 +1028,27 @@ body {
     white-space: nowrap;
     @apply text-[10.5px] sm:text-[12.5px];
   }
+
   .cancle {
     background-color: transparent;
     color: var(--primary-font-color);
     white-space: nowrap;
     @apply text-[10.5px] sm:text-[12.5px];
   }
+
   .cancle:hover {
     color: transparent;
   }
 }
+
 /* Base style for inputs */
 .profilecard-input {
   width: 100%;
   border: 0;
-  border-radius: 0.375rem; /* same as rounded-md */
-  padding: 0.25rem 0.75rem; /* py-1 px-3 */
+  border-radius: 0.375rem;
+  /* same as rounded-md */
+  padding: 0.25rem 0.75rem;
+  /* py-1 px-3 */
   font-size: 10px;
   color: var(--primary-font-color);
   background-color: transparent;
@@ -1016,7 +1066,8 @@ body {
 /* Focus effect */
 .profilecard-input:focus {
   border: 1px solid var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(var(--primary-color-rgb), 0.3); /* ring effect */
+  box-shadow: 0 0 0 3px rgba(var(--primary-color-rgb), 0.3);
+  /* ring effect */
   outline: none;
 }
 
@@ -1033,7 +1084,8 @@ body {
   width: 100%;
   border: 0;
   border-radius: 0.375rem;
-  padding: 0.5rem 0.75rem; /* py-2 px-3 */
+  padding: 0.5rem 0.75rem;
+  /* py-2 px-3 */
   font-size: 10px;
   color: var(--primary-font-color);
   background-color: transparent;
@@ -1060,9 +1112,11 @@ body {
   background-color: transparent;
   border: 0;
 }
+
 .subheading-profilecard {
   color: var(--primary-font-color) !important;
 }
+
 .profilecard-input[type="date"] {
   display: flex;
 }
@@ -1071,32 +1125,38 @@ body {
   color: var(--primary-font-color);
   border: var(--thin-border);
   @apply text-[10.5px] sm:text-[12.5px];
-  @apply h-[28px] w-[77px];
+  /* @apply h-[28px] w-[77px]; */
 }
+
 .backbutton:hover {
   background-color: var(--smallbutton-inside-hover-backgound);
   color: var(--font-black);
   transition: transform 0.2s;
 }
+
 .Big-icon {
   border: var(--thin-border);
   background-color: var(--bigicon-background-color);
 }
+
 .group-3 {
   h1 {
     @apply text-[12px] sm:text-[14px];
     color: var(--primary-font-color);
     font-weight: var(--font-medium);
   }
+
   p {
     @apply text-[12.5px] sm:text-[14px];
     color: var(--subheading-color);
   }
+
   span {
     background-color: var(--primary-color);
     color: var(--font-black);
     font-weight: var(--font-medium);
   }
+
   [data-slot="badge"]:hover {
     transform: scale(1.05);
     box-shadow: 0 2px 8px var(--button-boxshadow);
@@ -1106,107 +1166,132 @@ body {
     transition: all 0.2s ease-in-out;
   }
 }
+
 .circle-number {
   .circle {
     border: 2px solid var(--primary-border-color);
     background-color: var(--bigicon-background-color);
     color: var(--primary-color);
   }
+
   span {
     @apply text-[10px] sm:text-[12.5px];
     color: var(--primary-font-color);
   }
 }
+
 .bigcards {
   /* background-color: var(--primary-color); */
   .icon {
     background-color: var(--smallbutton-inside-backgound);
     color: var(--primary-color);
   }
+
   h3 {
     @apply text-[12px] sm:text-[14px];
     color: var(--primary-font-color);
   }
+
   p {
     @apply text-[10px] sm:text-[12.5px];
     color: var(--subheading-color);
   }
+
   .span-hover-effect {
     cursor: pointer;
     transition: all 0.3s ease-in-out;
-    display: inline-block; /* important so transform works properly */
+    display: inline-block;
+    /* important so transform works properly */
     border: var(--thin-border);
     color: var(--primary-font-color);
-    border-radius: 0.25rem; /* optional rounded corners */
+    border-radius: 0.25rem;
+    /* optional rounded corners */
     /* optional padding */
   }
+
   /* Hover effect */
   .span-hover-effect:hover {
     transform: scale(1.08);
     border-color: #fad48966;
-    box-shadow: 0 4px 8px rgba(250, 212, 137, 0.2); /* subtle glow */
+    box-shadow: 0 4px 8px rgba(250, 212, 137, 0.2);
+    /* subtle glow */
   }
 }
+
 .bill-details {
   h4 {
     @apply text-[12px] sm:text-[14px];
     color: var(--primary-font-color);
   }
+
   .icon {
     color: var(--primary-color);
   }
+
   p {
     @apply text-[10px] sm:text-[12.5px];
     color: var(--subheading-color);
   }
+
   label {
     @apply text-[12px] sm:text-[14px];
     color: var(--primary-font-color);
     font-weight: var(--font-medium);
   }
+
   button {
     background-color: var(--primary-color);
     @apply text-[10px] sm:text-[12.5px];
   }
 }
+
 .bill-details-confirm-card1 {
   h4 {
     @apply text-[12px] sm:text-[14px];
     color: var(--primary-font-color);
   }
+
   .icon {
     color: var(--color-green-400);
   }
+
   p {
     @apply text-[10px] sm:text-[12.5px];
     color: var(--subheading-color);
   }
+
   .innerpara {
     @apply text-[12px] sm:text-[14px];
     color: var(--primary-font-color);
   }
+
   .amount-para {
     @apply text-[12px] sm:text-[14px];
     color: var(--primary-color);
     font-weight: var(--font-medium);
   }
 }
+
 .bill-details-confirm-card2 {
   h4 {
     @apply text-[12px] sm:text-[14px];
     color: var(--primary-font-color);
   }
+
   .icon {
     color: var(--primary-color);
   }
+
   p {
     @apply text-[12px] sm:text-[14.5px];
     color: var(--subheading-color);
   }
+
   button {
     background-color: var(--primary-color);
     @apply text-[10px] sm:text-[12.5px];
   }
+
   .action {
     @apply text-[10px] sm:text-[12.5px];
     color: var(--subheading-color);
@@ -1221,9 +1306,73 @@ body {
     @apply text-[12px] sm:text-[14px];
     color: var(--primary-font-color);
   }
+
   .span2 {
     @apply text-[12px] sm:text-[14px];
     color: var(--primary-color);
     font-weight: var(--font-bold);
   }
+}
+/* In your CSS file */
+@media (max-width: 320px) {
+  .circle-number,
+  .backbutton,
+  .Big-icon,
+  .group-3,
+  .flex-col-sm-override {
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center;
+  }
+  .flex-col-sm-override > .group-3 {
+    align-items: center !important;
+  }
+}
+
+.popup {
+  border: var(--thick-border);
+  background-color: var(--primary-backgroundcolor);
+
+  p {
+    @apply text-[12.5px] sm:text-[14px];
+    color: var(--subheading-color);
+  }
+  .amount {
+    color: var(--primary-color);
+    @apply text-[30px] sm:text-[40px];
+  }
+  span {
+    color: var(--subheading-color);
+    @apply text-[10px] sm:text-[12px];
+  }
+  .span-data {
+    color: var(--primary-font-color);
+    @apply text-[10px] sm:text-[12px];
+  }
+  .span-account-id {
+    color: var(--primary-color);
+    @apply text-[10px] sm:text-[12px];
+  }
+  .icon {
+    color: var(--primary-font-color);
+  }
+}
+/* Custom vertical scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px; /* scrollbar width */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #2a2a2a; /* track background */
+  border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: var(--primary-color); /* thumb color */
+  border-radius: 4px;
+  border: 2px solid #2a2a2a; /* optional: gives padding effect */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: var(--primary-color); /* hover effect */
 }

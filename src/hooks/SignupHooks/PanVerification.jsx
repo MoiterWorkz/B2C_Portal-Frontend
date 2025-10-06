@@ -39,8 +39,8 @@ export default function PanVerification() {
     };
 
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center bg-primary-background text-white">
-            {showKyc ? <KYC pan={pan} /> : <>
+        <div className="min-h-screen flex flex-col items-center justify-center bg-primary-background ">
+            {showKyc ? <KYC pan={pan} setShowKyc={setShowKyc}/> : <>
                 {/* Logo */}
                 <div className="flex items-center gap-2 mb-6">
                     <img src={LOGO} alt="Moiter Workz Logo" className="h-9" />
@@ -49,26 +49,26 @@ export default function PanVerification() {
                 {/* Render KYC form inline after modal closes */}
 
                 <div className="flex flex-col items-center">
-                    <h1 className="text-xl font-semibold text-center mb-1">Welcome Back</h1>
-                    <p className="small-text text-gray-400">Enter your PAN to continue</p>
+                    <h1 className="text-xl font-semibold text-center mb-1 text-white">Welcome Back</h1>
+                    <p className="small-text text-gray-400 text-white">Enter your PAN to continue</p>
 
                     {/* Card */}
                     <div className="card-bg p-6 rounded-xl shadow-lg mt-6  w-full sm:w-[400px] max-w-md mx-auto card-hover-effect">
-                        <h2 className="flex items-center gap-2 font-semibold mb-2">
+                        <h2 className="flex items-center gap-2 font-semibold mb-2 text-white">
                             <span className="font-themecolor">  <CreditCard size={18} /></span> PAN Verification
                         </h2>
-                        <p className="small-text text-gray-400 mb-4">
+                        <p className="small-text text-gray-400 mb-4 text-white">
                             Please enter your PAN number to verify your account
                         </p>
 
-                        <label className="small-text font-medium">PAN Number</label>
+                        <label className="small-text font-medium text-white">PAN Number</label>
                         <div className="relative">
                             <input
                                 type="text"
                                 value={pan}
                                 onChange={(e) => setPan(e.target.value.toUpperCase())} // auto-uppercase
                                 placeholder="ABCDE1234F"
-                                className="w-full full-border pl-[10px] pr-[8px] py-[8px] rounded-[10px] bg-neutral-800 border small-text border-neutral-700 focus:outline-none focus:ring-1 focus:ring-yellow-200"
+                                className="w-full full-border pl-[10px] pr-[8px] py-[8px] rounded-[10px] bg-neutral-800 border small-text border-neutral-700 focus:outline-none focus:ring-1 focus:ring-yellow-200 text-white"
                             />
                             <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-neutral-400">
                                 <CreditCard size={18} />
@@ -77,7 +77,7 @@ export default function PanVerification() {
 
                         <button
                             onClick={checkPan}
-                            className="w-full py-1 px-5 rounded-lg font-semibold flex items-center justify-center gap-2 sign-up-button  text-black hover:bg-yellow-300 transition mt-3"
+                            className="w-full py-1 px-5 rounded-lg font-semibold flex items-center justify-center gap-2 sign-up-button hover:bg-yellow-300 transition mt-3"
                         >
                             Verify PAN
                         </button>
@@ -87,7 +87,7 @@ export default function PanVerification() {
                         <div className="flex justify-center">
                             <button
                                 onClick={() => navigate("/LandingPage")}
-                                className="flex items-center gap-2 small-text font-medium mt-4  hover:text-white mb-4"
+                                className="flex items-center gap-2 small-text font-medium mt-4  hover:text-white mb-4 text-white"
                             >
                                 <ArrowLeft size={16} /> Back to Home
                             </button>
@@ -113,7 +113,7 @@ export default function PanVerification() {
                                 </div>
                             </div>
 
-                            <h2 className="text-lg font-semibold text-center">Terms & Conditions</h2>
+                            <h2 className="text-lg font-semibold text-center text-white">Terms & Conditions</h2>
                             <p className="text-sm text-gray-400 text-center mt-1">
                                 Account not found. Continue with registration?
                             </p>

@@ -9,6 +9,7 @@ import CustomerReview from "./components/landingPage/CustomerReview";
 import PaymentExperience from "./components/landingPage/PaymentExperience";
 import Contact from "./components/landingPage/Contact";
 import { ArrowUp, Menu, X } from "lucide-react";
+import LOGO from "../assets/logo.png"
 
 const sections = [
   { id: "home", label: "Home", component: <HomePage /> },
@@ -82,16 +83,13 @@ const LandingPage = () => {
       <header className="fixed top-0 left-0 w-full bg-primary-background border-b border-primary-bottom z-50 shadow-md h-16">
         <div className="max-w-7xl mx-auto flex justify-between items-center h-full px-6">
           {/* Logo */}
-          <div className="flex items-center space-x-2">
+          <div className="flex flex-col items-center ">
             <img
-              src="/logo.png"
+             src={LOGO}
               alt="Moiterworkz Logo"
-              className="h-8 w-8 object-contain"
+              className=" w-60 object-contain"
             />
             <div>
-              <h1 className="text-lg font-semibold text-white leading-tight">
-                Moiterworkz
-              </h1>
               <span className="text-yellow-400 text-xs">Digital Payments</span>
             </div>
           </div>

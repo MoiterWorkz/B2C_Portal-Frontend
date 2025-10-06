@@ -10,8 +10,25 @@ function MinKycMobileVerification({ onBack, onVerified }) {
   const [otp, setOtp] = useState("");
   const [transactionId, setTransactionId] = useState(null);
   const [serverOtp, setServerOtp] = useState(""); // store OTP temporarily
+  const [counter, setCounter] = useState(20);
+  const [canResend, setCanResend] = useState(false);
+  useEffect(() => {
+    let timer;
+    if (counter > 0) {
+      timer = setTimeout(() => setCounter(counter - 1), 1000);
+    } else {
+      setCanResend(true); // show button after countdown finishes
+    }
+    return () => clearTimeout(timer);
+  }, [counter]);
 
+  const resendHandler = () => {
+    handleResendOtp();     // your function
+    setCounter(60);        // reset countdown
+    setCanResend(false);   // hide button and restart timer
+  };
   // Auto-clear OTP after 5–8 seconds
+
   useEffect(() => {
     if (serverOtp) {
       const timer = setTimeout(() => setServerOtp(""), 6000); // ⏱️ 6 seconds
@@ -118,8 +135,9 @@ function MinKycMobileVerification({ onBack, onVerified }) {
                     type="tel"
                     placeholder="Enter your mobile number"
                     value={mobile}
+                    maxLength={10}
                     onChange={(e) => setMobile(e.target.value)}
-                    className="w-full pl-10 pr-[8px] py-[8px] rounded-[20px] bg-neutral-800 border small-text border-neutral-700 focus:outline-none focus:ring-1 focus:ring-yellow-200"
+                    className="w-full pl-10 pr-[8px] py-[8px] rounded-[20px] bg-neutral-800 border small-text border full-border"
                   />
                 </div>
               </div>
@@ -190,7 +208,7 @@ function MinKycMobileVerification({ onBack, onVerified }) {
                     setOtp(newOtp.join(""));
                   }
                 }}
-                className="w-12 h-12 text-center small-text font-bold  focus:ring-2 full-border rounded-md  "
+                className="w-12 h-12 text-center small-text font-bold  border full-border rounded-md  "
               />
             ))}
           </div>
@@ -204,14 +222,19 @@ function MinKycMobileVerification({ onBack, onVerified }) {
               <CircleCheck className="w-5 h-5 mr-1" /> Verify & Continue
             </button>
           </div>
-          <div className=" w-full flex justify-center items-center">
-            <button
-              onClick={handleResendOtp}
-              className="flex justify-center items-center gap-2 gray-text small-text mb-6 button-hoverbg px-2 py-1 rounded-[10px] mt-2"
-            >
-              <RefreshCw className="w-3 h-3 mr-1" /> Resend OTP
-            </button>
-          </div>
+            <div className=" w-full flex justify-center items-center">
+              {canResend ? (
+                <button
+                  onClick={resendHandler}
+                  className="flex justify-center items-center gap-2 font-themecolor small-text mb-6 button-hoverbg px-2 py-1 rounded-[10px] mt-3"
+                >
+                  <RefreshCw className="w-3 h-3 mr-1 font-themecolor" /> Resend OTP
+                </button>
+              ) : (
+                <p className="small-text gray-text mt-3">Resend OTP in <span className="font-themecolor">{counter}s</span></p>
+              )}
+            </div>
+
           <button
             onClick={() => setStep("mobile")}
             className="mt-6 flex items-center gap-2 gray-text small-text  button-hoverbg px-2 py-1 rounded-[10px]"

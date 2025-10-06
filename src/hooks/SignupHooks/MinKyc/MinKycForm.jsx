@@ -5,14 +5,14 @@ import { useNavigate } from "react-router-dom";
 import LOGO from "../../../assets/logo.png"
 import { ArrowLeft, CheckIcon } from "lucide-react";
 
-function MinKycForm({ verifiedMobile, pan }) {
+function MinKycForm({ verifiedMobile, pan, setVerified }) {
     const navigate = useNavigate();
     const [pincode, setPincode] = useState("");
     const [stateOptions, setStateOptions] = useState([]);
     const [cityOptions, setCityOptions] = useState([]);
     const [checked, setChecked] = useState(false);
     const [errors, setErrors] = useState({});
-     const [partners, setPartners] = useState([]);
+    const [partners, setPartners] = useState([]);
     const [formValues, setFormValues] = useState({
         firstName: "",
         middleName: "",
@@ -53,22 +53,22 @@ function MinKycForm({ verifiedMobile, pan }) {
     });
     // console.log(formValues)
     useEffect(() => {
-    const fetchPartners = async () => {
-      try {
-        const res = await fetch("http://192.168.22.247/fes/api/Export/partner_summary_export");
-        const data = await res.json();
-        if (Array.isArray(data)) {
-          setPartners(data);
-        } else {
-          setPartners([data]); // in case API returns single object
-        }
-      } catch (err) {
-        console.error("❌ Error fetching partners:", err);
-      }
-    };
+        const fetchPartners = async () => {
+            try {
+                const res = await fetch("http://192.168.22.247/fes/api/Export/partner_summary_export");
+                const data = await res.json();
+                if (Array.isArray(data)) {
+                    setPartners(data);
+                } else {
+                    setPartners([data]); // in case API returns single object
+                }
+            } catch (err) {
+                console.error("❌ Error fetching partners:", err);
+            }
+        };
 
-    fetchPartners();
-  }, []);
+        fetchPartners();
+    }, []);
     // Fetch PEP flag when user fills required fields
     useEffect(() => {
         const fetchPepFlag = async () => {
@@ -205,7 +205,7 @@ function MinKycForm({ verifiedMobile, pan }) {
 
                 </div>
                 <div className=" w-1/4 flex justify-between">
-                    <p className=" gray-text medium-text">Min KYC - Personal Details</p>
+                    <p className=" gray-text small-text">Min KYC - Personal Details</p>
                     <p className="icon-color small-text">60%</p>
                 </div>
                 <div className="w-1/4 bg-gray-800 h-2 rounded-full mt-2">
@@ -225,7 +225,7 @@ function MinKycForm({ verifiedMobile, pan }) {
                 <form className="space-y-8" onSubmit={handleSubmit}>
                     {/* Personal Information */}
                     <section>
-                        <p className=" mb-4 flex pb-2 border-primary-bottom medium-text">Personal Information</p>
+                        <p className=" mb-4 flex pb-2 border-primary-bottom small-text">Personal Information</p>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                             <div>
                                 <label className="small-text font-medium flex">First Name *</label>
@@ -235,7 +235,7 @@ function MinKycForm({ verifiedMobile, pan }) {
                                     value={formValues.firstName}
                                     onChange={handleChange}
                                     placeholder="Enter middle name"
-                                    className="w-full  border full-border rounded-lg px-3 py-1  medium-text"
+                                    className="w-full  border full-border rounded-lg px-3 py-1  small-text"
                                 />
                             </div>
                             <div>
@@ -246,7 +246,7 @@ function MinKycForm({ verifiedMobile, pan }) {
                                     value={formValues.middleName}
                                     onChange={handleChange}
                                     placeholder="Enter middle name"
-                                    className="w-full  border full-border rounded-lg px-3 py-1  medium-text"
+                                    className="w-full  border full-border rounded-lg px-3 py-1  small-text"
                                 />
                             </div>
                             <div>
@@ -257,7 +257,7 @@ function MinKycForm({ verifiedMobile, pan }) {
                                     value={formValues.lastName}
                                     onChange={handleChange}
                                     placeholder="Enter last name"
-                                    className="w-full  border full-border rounded-lg px-3 py-1  medium-text"
+                                    className="w-full  border full-border rounded-lg px-3 py-1  small-text"
                                 />
                             </div>
                             <div>
@@ -268,7 +268,7 @@ function MinKycForm({ verifiedMobile, pan }) {
                                     value={formValues.fatherName}
                                     onChange={handleChange}
                                     placeholder="Enter Father Name"
-                                    className="w-full  border full-border rounded-lg px-3 py-1  medium-text"
+                                    className="w-full  border full-border rounded-lg px-3 py-1  small-text"
                                 />
                             </div>
                             <div>
@@ -279,7 +279,7 @@ function MinKycForm({ verifiedMobile, pan }) {
                                     value={formValues.motherName}
                                     onChange={handleChange}
                                     placeholder="Enter Mother Name"
-                                    className="w-full  border full-border rounded-lg px-3 py-1  medium-text"
+                                    className="w-full  border full-border rounded-lg px-3 py-1  small-text"
                                 />
                             </div>
                             <div>
@@ -288,7 +288,7 @@ function MinKycForm({ verifiedMobile, pan }) {
                                     name="gender"
                                     value={formValues.gender}
                                     onChange={handleChange}
-                                    className="golden-dropdown w-full  border full-border rounded-lg px-3 py-1  medium-text"
+                                    className="golden-dropdown w-full  border full-border rounded-lg px-3 py-1  small-text"
                                 >
                                     <option value="">Select Gender</option>
                                     <option value="MALE">MALE</option>
@@ -303,7 +303,7 @@ function MinKycForm({ verifiedMobile, pan }) {
                                     name="dateOfBirth"               // Important!
                                     value={formValues.dateOfBirth}   // Controlled input
                                     onChange={handleChange}          // Update state on change
-                                    className="w-full  border full-border rounded-lg px-3 py-1  medium-text"
+                                    className="w-full  border full-border rounded-lg px-3 py-1  small-text"
                                 />
                                 <p className="text-[10px] gray-text">You can type the date directly (DD/MM/YYYY) or click the calendar icon</p>
                             </div>
@@ -313,7 +313,7 @@ function MinKycForm({ verifiedMobile, pan }) {
 
                     {/* Contact Information */}
                     <section>
-                        <p className="mb-4 flex pb-2 border-primary-bottom medium-text">Contact Information</p>
+                        <p className="mb-4 flex pb-2 border-primary-bottom small-text">Contact Information</p>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <label className="small-text font-medium flex">Email ID *</label>
@@ -323,7 +323,7 @@ function MinKycForm({ verifiedMobile, pan }) {
                                     value={formValues.email}
                                     onChange={handleChange}
                                     placeholder="Enter email address"
-                                    className="w-full  border full-border rounded-lg px-3 py-1  medium-text"
+                                    className="w-full  border full-border rounded-lg px-3 py-1  small-text"
                                 />
                             </div>
                             <div>
@@ -333,7 +333,7 @@ function MinKycForm({ verifiedMobile, pan }) {
                                     name="mobileNumber"
                                     value={formValues.mobileNumber}
                                     readOnly
-                                    className="w-full  border full-border rounded-lg px-3 py-1  medium-text"
+                                    className="w-full  border full-border rounded-lg px-3 py-1  small-text"
                                 />
                             </div>
                         </div>
@@ -341,7 +341,7 @@ function MinKycForm({ verifiedMobile, pan }) {
 
                     {/* Address Information */}
                     <section>
-                        <p className=" mb-4 flex pb-2 border-primary-bottom medium-text">Address Information</p>
+                        <p className=" mb-4 flex pb-2 border-primary-bottom small-text">Address Information</p>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                             <div className="md:col-span-3">
                                 <label className="small-text font-medium flex">Address *</label>
@@ -351,7 +351,7 @@ function MinKycForm({ verifiedMobile, pan }) {
                                     value={formValues.permanentAddress}
                                     onChange={handleChange}
                                     placeholder="Enter complete address"
-                                    className="w-full  border full-border rounded-lg px-3 py-1  medium-text"
+                                    className="w-full  border full-border rounded-lg px-3 py-1  small-text"
                                 />
                             </div>
                             <div>
@@ -362,7 +362,7 @@ function MinKycForm({ verifiedMobile, pan }) {
                                     onChange={handlePincodeChange}
                                     maxLength={6}
                                     placeholder="Enter pincode"
-                                    className="w-full  border full-border rounded-lg px-3 py-1  medium-text"
+                                    className="w-full  border full-border rounded-lg px-3 py-1  small-text"
                                 />
                             </div>
                             <div>
@@ -371,7 +371,7 @@ function MinKycForm({ verifiedMobile, pan }) {
                                     name="state"
                                     value={formValues.state}
                                     onChange={handleChange}
-                                    className="w-full  border full-border rounded-lg px-3 py-1  medium-text"
+                                    className="w-full  border full-border rounded-lg px-3 py-1  small-text"
                                 >
                                     <option value="">Select state</option>
                                     {stateOptions.map((s) => (
@@ -387,7 +387,7 @@ function MinKycForm({ verifiedMobile, pan }) {
                                     name="city"
                                     value={formValues.city}
                                     onChange={handleChange}
-                                    className="w-full  border full-border rounded-lg px-3 py-1  medium-text"
+                                    className="w-full  border full-border rounded-lg px-3 py-1  small-text"
                                 >
                                     <option value="">Select city</option>
                                     {cityOptions.map((c) => (
@@ -402,7 +402,7 @@ function MinKycForm({ verifiedMobile, pan }) {
 
                     {/* Financial Information */}
                     <section>
-                        <p className="  mb-4 flex pb-2 border-primary-bottom medium-text">Financial Information</p>
+                        <p className="  mb-4 flex pb-2 border-primary-bottom small-text">Financial Information</p>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <label className="small-text font-medium flex">PAN Number *</label>
@@ -412,7 +412,7 @@ function MinKycForm({ verifiedMobile, pan }) {
                                     name="panNumber"
                                     value={formValues.panNumber}
                                     readOnly
-                                    className="w-full  border full-border rounded-lg px-3 py-1  medium-text"
+                                    className="w-full  border full-border rounded-lg px-3 py-1  small-text"
                                 />
                             </div>
                             <div>
@@ -421,7 +421,7 @@ function MinKycForm({ verifiedMobile, pan }) {
                                     name="occupation"
                                     value={formValues.occupation}
                                     onChange={handleChange}
-                                    className="w-full  border full-border rounded-lg px-3 py-1  medium-text"
+                                    className="w-full  border full-border rounded-lg px-3 py-1  small-text"
                                 >
                                     <option value="">Select occupation</option>
                                     <option value="Engineer">Engineer</option>
@@ -434,7 +434,7 @@ function MinKycForm({ verifiedMobile, pan }) {
 
                     {/* Identity Verification */}
                     <section>
-                        <p className=" mb-4 flex pb-2 border-primary-bottom medium-text">Identity Verification</p>
+                        <p className=" mb-4 flex pb-2 border-primary-bottom small-text">Identity Verification</p>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <label className="small-text font-medium flex">Choose ID Proof *</label>
@@ -442,7 +442,7 @@ function MinKycForm({ verifiedMobile, pan }) {
                                     name="documentType"
                                     value={formValues.documentType}
                                     onChange={handleChange}
-                                    className="w-full  border full-border rounded-lg px-3 py-1  medium-text"
+                                    className="w-full  border full-border rounded-lg px-3 py-1  small-text"
                                 >
                                     <option value="">Select ID proof type</option>
                                     <option value="Aadhar">Aadhar</option>
@@ -461,7 +461,7 @@ function MinKycForm({ verifiedMobile, pan }) {
                                     value={formValues.documentNumber}
                                     onChange={handleChange}
                                     placeholder="Enter ID proof number"
-                                    className="w-full  border full-border rounded-lg px-3 py-1  medium-text"
+                                    className="w-full  border full-border rounded-lg px-3 py-1  small-text"
                                 />
                             </div>
 
@@ -471,7 +471,7 @@ function MinKycForm({ verifiedMobile, pan }) {
                                     name="partnerId"
                                     value={formValues.partnerId}
                                     onChange={handleChange}
-                                    className="w-full border rounded-lg px-3 py-1 medium-text"
+                                    className="w-full border rounded-lg px-3 py-1 small-text"
                                 >
                                     <option value="">-- Select Partner --</option>
                                     {partners.map((p) => (
@@ -529,6 +529,7 @@ function MinKycForm({ verifiedMobile, pan }) {
                     <div className="flex justify-start gap-2">
                         <button
                             className=" flex items-center gap-1 gray-text small-text  button-hoverbg px-2 py-1 rounded-[10px]"
+                            onClick={()=>setVerified(false)}
                         >
                             <ArrowLeft className="w-4 h-4 " />
                             Back
@@ -536,7 +537,7 @@ function MinKycForm({ verifiedMobile, pan }) {
 
                         <button
                             type="submit"
-                            className=" py-1 px-2 rounded-lg  flex items-center justify-center gap-2 sign-up-button  transition"
+                            className=" py-1 px-2 rounded-lg  flex items-center justify-center gap-2 sign-up-button text-black transition"
                         >
                             Complete Profile
                         </button>

@@ -59,7 +59,7 @@ function FullKycForm({ verifiedMobile, pan }) {
     regulatoryReportingEnabled: true,
     partnerId: "",
     agentId: "",
-    kycLevel: "min",
+    kycLevel: "max",
     createdBy: "string",
   });
   console.log(formValues);
@@ -298,7 +298,7 @@ function FullKycForm({ verifiedMobile, pan }) {
           <img src={LOGO} alt="Moiter Workz Logo" className="h-9" />
         </div>
         <div className=" w-1/4 flex justify-between">
-          <p className=" gray-text medium-text">Min KYC - Personal Details</p>
+          <p className=" gray-text small-text">MAX KYC - Personal Details</p>
           <p className="icon-color small-text">60%</p>
         </div>
         <div className="w-1/4 bg-gray-800 h-2 rounded-full mt-2">
@@ -318,7 +318,7 @@ function FullKycForm({ verifiedMobile, pan }) {
         <form className="space-y-8" onSubmit={handleSubmit}>
           {/* Personal Information */}
           <section>
-            <p className=" mb-4 flex pb-2 border-primary-bottom medium-text">
+            <p className=" mb-4 flex pb-2 border-primary-bottom small-text">
               Personal Information
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -332,7 +332,7 @@ function FullKycForm({ verifiedMobile, pan }) {
                   value={formValues.firstName}
                   onChange={handleChange}
                   placeholder="Enter middle name"
-                  className="w-full  border full-border rounded-lg px-3 py-1  medium-text"
+                  className="w-full  border full-border rounded-lg px-3 py-1  small-text"
                 />
               </div>
               <div>
@@ -345,7 +345,7 @@ function FullKycForm({ verifiedMobile, pan }) {
                   value={formValues.middleName}
                   onChange={handleChange}
                   placeholder="Enter middle name"
-                  className="w-full  border full-border rounded-lg px-3 py-1  medium-text"
+                  className="w-full  border full-border rounded-lg px-3 py-1  small-text"
                 />
               </div>
               <div>
@@ -358,7 +358,7 @@ function FullKycForm({ verifiedMobile, pan }) {
                   value={formValues.lastName}
                   onChange={handleChange}
                   placeholder="Enter last name"
-                  className="w-full  border full-border rounded-lg px-3 py-1  medium-text"
+                  className="w-full  border full-border rounded-lg px-3 py-1  small-text"
                 />
               </div>
               <div>
@@ -371,7 +371,7 @@ function FullKycForm({ verifiedMobile, pan }) {
                   value={formValues.fatherName}
                   onChange={handleChange}
                   placeholder="Enter Father Name"
-                  className="w-full  border full-border rounded-lg px-3 py-1  medium-text"
+                  className="w-full  border full-border rounded-lg px-3 py-1  small-text"
                 />
               </div>
               <div>
@@ -384,7 +384,7 @@ function FullKycForm({ verifiedMobile, pan }) {
                   value={formValues.motherName}
                   onChange={handleChange}
                   placeholder="Enter Mother Name"
-                  className="w-full  border full-border rounded-lg px-3 py-1  medium-text"
+                  className="w-full  border full-border rounded-lg px-3 py-1  small-text"
                 />
               </div>
               <div>
@@ -393,7 +393,7 @@ function FullKycForm({ verifiedMobile, pan }) {
                   name="gender"
                   value={formValues.gender}
                   onChange={handleChange}
-                  className="golden-dropdown w-full  border full-border rounded-lg px-3 py-1  medium-text"
+                  className="golden-dropdown w-full  border full-border rounded-lg px-3 py-1  small-text"
                 >
                   <option value="">Select Gender</option>
                   <option value="MALE">MALE</option>
@@ -410,7 +410,7 @@ function FullKycForm({ verifiedMobile, pan }) {
                   name="dateOfBirth" // Important!
                   value={formValues.dateOfBirth} // Controlled input
                   onChange={handleChange} // Update state on change
-                  className="w-full  border full-border rounded-lg px-3 py-1  medium-text"
+                  className="w-full  border full-border rounded-lg px-3 py-1  small-text"
                 />
                 <p className="text-[10px] gray-text">
                   You can type the date directly (DD/MM/YYYY) or click the
@@ -422,7 +422,7 @@ function FullKycForm({ verifiedMobile, pan }) {
 
           {/* Contact Information */}
           <section>
-            <p className="mb-4 flex pb-2 border-primary-bottom medium-text">
+            <p className="mb-4 flex pb-2 border-primary-bottom small-text">
               Contact Information
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -436,7 +436,7 @@ function FullKycForm({ verifiedMobile, pan }) {
                   value={formValues.email}
                   onChange={handleChange}
                   placeholder="Enter email address"
-                  className="w-full  border full-border rounded-lg px-3 py-1  medium-text"
+                  className="w-full  border full-border rounded-lg px-3 py-1  small-text"
                 />
               </div>
               <div>
@@ -448,7 +448,7 @@ function FullKycForm({ verifiedMobile, pan }) {
                   name="mobileNumber"
                   value={formValues.mobileNumber}
                   readOnly
-                  className="w-full  border full-border rounded-lg px-3 py-1  medium-text"
+                  className="w-full  border full-border rounded-lg px-3 py-1  small-text"
                 />
               </div>
             </div>
@@ -456,7 +456,7 @@ function FullKycForm({ verifiedMobile, pan }) {
 
           {/* Address Information */}
           <section>
-            <p className=" mb-4 flex pb-2 border-primary-bottom medium-text">
+            <p className=" mb-4 flex pb-2 border-primary-bottom small-text">
               Address Information
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -468,7 +468,7 @@ function FullKycForm({ verifiedMobile, pan }) {
                   value={formValues.permanentAddress}
                   onChange={handleChange}
                   placeholder="Enter complete address"
-                  className="w-full  border full-border rounded-lg px-3 py-1  medium-text"
+                  className="w-full  border full-border rounded-lg px-3 py-1  small-text"
                 />
               </div>
               <div>
@@ -479,7 +479,7 @@ function FullKycForm({ verifiedMobile, pan }) {
                   onChange={handlePincodeChange}
                   maxLength={6}
                   placeholder="Enter pincode"
-                  className="w-full  border full-border rounded-lg px-3 py-1  medium-text"
+                  className="w-full  border full-border rounded-lg px-3 py-1  small-text"
                 />
               </div>
               <div>
@@ -488,7 +488,7 @@ function FullKycForm({ verifiedMobile, pan }) {
                   name="state"
                   value={formValues.state}
                   onChange={handleChange}
-                  className="w-full  border full-border rounded-lg px-3 py-1  medium-text"
+                  className="w-full  border full-border rounded-lg px-3 py-1  small-text"
                 >
                   <option value="">Select state</option>
                   {stateOptions.map((s) => (
@@ -504,7 +504,7 @@ function FullKycForm({ verifiedMobile, pan }) {
                   name="city"
                   value={formValues.city}
                   onChange={handleChange}
-                  className="w-full  border full-border rounded-lg px-3 py-1  medium-text"
+                  className="w-full  border full-border rounded-lg px-3 py-1  small-text"
                 >
                   <option value="">Select city</option>
                   {cityOptions.map((c) => (
@@ -519,7 +519,7 @@ function FullKycForm({ verifiedMobile, pan }) {
 
           {/* Financial Information */}
           <section>
-            <p className="  mb-4 flex pb-2 border-primary-bottom medium-text">
+            <p className="  mb-4 flex pb-2 border-primary-bottom small-text">
               Financial Information
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -533,7 +533,7 @@ function FullKycForm({ verifiedMobile, pan }) {
                   name="panNumber"
                   value={formValues.panNumber}
                   readOnly
-                  className="w-full  border full-border rounded-lg px-3 py-1  medium-text"
+                  className="w-full  border full-border rounded-lg px-3 py-1  small-text"
                 />
               </div>
               <div>
@@ -544,7 +544,7 @@ function FullKycForm({ verifiedMobile, pan }) {
                   name="occupation"
                   value={formValues.occupation}
                   onChange={handleChange}
-                  className="w-full  border full-border rounded-lg px-3 py-1  medium-text"
+                  className="w-full  border full-border rounded-lg px-3 py-1  small-text"
                 >
                   <option value="">Select occupation</option>
                   <option value="Engineer">Engineer</option>
@@ -557,7 +557,7 @@ function FullKycForm({ verifiedMobile, pan }) {
 
           {/* Identity Verification */}
           <section>
-            <p className="mb-4 flex pb-2 border-primary-bottom medium-text">
+            <p className="mb-4 flex pb-2 border-primary-bottom small-text">
               Identity Verification
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -574,10 +574,10 @@ function FullKycForm({ verifiedMobile, pan }) {
                       documentType: e.target.value,
                     }))
                   }
-                  className="w-full border full-border rounded-lg px-3 py-1 medium-text"
+                  className="w-full border full-border rounded-lg px-3 py-1 small-text"
                 >
                   <option value="">Select ID proof type</option>
-                  <option value="Aadhar">Aadhaar</option>
+                  <option value="Aadhaar">Aadhaar</option>
                   <option value="Passport">Passport</option>
                   <option value="Voter ID">Voter ID</option>
                   <option value="PAN">PAN</option>
@@ -598,7 +598,7 @@ function FullKycForm({ verifiedMobile, pan }) {
                     }))
                   }
                   placeholder="Enter ID proof number"
-                  className="w-full border full-border rounded-lg px-3 py-1 medium-text"
+                  className="w-full border full-border rounded-lg px-3 py-1 small-text"
                 />
               </div>
             </div>
@@ -613,7 +613,7 @@ function FullKycForm({ verifiedMobile, pan }) {
 
           {/* Address Verification */}
           <section>
-            <p className="mb-4 flex pb-2 border-primary-bottom medium-text">
+            <p className="mb-4 flex pb-2 border-primary-bottom small-text">
               🔹 Address Proof (Residence Proof)
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -630,7 +630,7 @@ function FullKycForm({ verifiedMobile, pan }) {
                       addressProofType: e.target.value,
                     }))
                   }
-                  className="w-full border full-border rounded-lg px-3 py-1 medium-text"
+                  className="w-full border full-border rounded-lg px-3 py-1 small-text"
                 >
                   <option value="">Select Address proof type</option>
                   <option value="Passport">Passport (shows address)</option>
@@ -659,7 +659,7 @@ function FullKycForm({ verifiedMobile, pan }) {
                     }))
                   }
                   placeholder="Enter ID proof number"
-                  className="w-full border full-border rounded-lg px-3 py-1 medium-text"
+                  className="w-full border full-border rounded-lg px-3 py-1 small-text"
                 />
               </div>
             </div>
@@ -680,7 +680,7 @@ function FullKycForm({ verifiedMobile, pan }) {
               name="partnerId"
               value={formValues.partnerId}
               onChange={handleChange}
-              className="w-full border rounded-lg px-3 py-1 medium-text"
+              className="w-full border rounded-lg px-3 py-1 small-text"
             >
               <option value="">-- Select Partner --</option>
               {partners.map((p) => (
@@ -736,14 +736,16 @@ function FullKycForm({ verifiedMobile, pan }) {
           </label>
           {/* Submit */}
           <div className="flex justify-start gap-2">
-            <button className=" flex items-center gap-1 gray-text small-text  button-hoverbg px-2 py-1 rounded-[10px]">
-              <ArrowLeft className="w-4 h-4 " />
-              Back
-            </button>
+            {/* <button
+                            className=" flex items-center gap-1 gray-text small-text  button-hoverbg px-2 py-1 rounded-[10px]"
+                        >
+                            <ArrowLeft className="w-4 h-4 " />
+                            Back
+                        </button> */}
 
             <button
               type="submit"
-              className=" py-1 px-2 rounded-lg  flex items-center justify-center gap-2 sign-up-button  transition"
+              className=" py-1 px-2 rounded-lg  text-black flex items-center justify-center gap-2 sign-up-button  transition"
             >
               Complete Profile
             </button>

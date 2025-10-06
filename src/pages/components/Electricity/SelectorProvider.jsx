@@ -1,105 +1,65 @@
 import React, { useState } from "react";
-import { ArrowLeft, Zap, Building2, Search } from "lucide-react";
+import { ArrowLeft, Zap, Check } from "lucide-react";
 import Providers from "./Providers";
 import BillDetails from "./BillDetails";
-
-// const providersData = [
-//   {
-//     id: 1,
-//     name: "Tamil Nadu Electricity Board (TNEB)",
-//     description: "Official electricity board of Tamil Nadu",
-//     code: "TNEB",
-//     state: "Tamil Nadu",
-//   },
-//   {
-//     id: 2,
-//     name: "Kerala State Electricity Board (KSEB)",
-//     description: "Kerala state power distribution",
-//     code: "KSEB",
-//     state: "Kerala",
-//   },
-//   {
-//     id: 3,
-//     name: "Maharashtra State Electricity Distribution Co. Ltd.",
-//     description: "Maharashtra electricity distribution",
-//     code: "MSEDCL",
-//     state: "Maharashtra",
-//   },
-//   {
-//     id: 4,
-//     name: "Bangalore Electricity Supply Company",
-//     description: "Bangalore city electricity supply",
-//     code: "BESCOM",
-//     state: "Karnataka",
-//   },
-//   {
-//     id: 5,
-//     name: "Andhra Pradesh Central Power Distribution Company",
-//     description: "Central AP power distribution",
-//     code: "APCPDCL",
-//     state: "Andhra Pradesh",
-//   },
-//   {
-//     id: 6,
-//     name: "Telangana State Southern Power Distribution",
-//     description: "South Telangana power distribution",
-//     code: "TSSPDCL",
-//     state: "Telangana",
-//   },
-//   {
-//     id: 7,
-//     name: "West Bengal State Electricity Distribution",
-//     description: "West Bengal electricity board",
-//     code: "WBSEDCL",
-//     state: "West Bengal",
-//   },
-//   {
-//     id: 8,
-//     name: "Bihar State Power Holding Company Ltd.",
-//     description: "Bihar state electricity board",
-//     code: "BSPHCL",
-//     state: "Bihar",
-//   },
-//   {
-//     id: 9,
-//     name: "Uttar Pradesh Power Corporation Ltd.",
-//     description: "UP state electricity corporation",
-//     code: "UPCL",
-//     state: "Uttar Pradesh",
-//   },
-//   {
-//     id: 10,
-//     name: "Rajasthan Rajya Vidyut Prasaran Nigam",
-//     description: "Rajasthan power transmission",
-//     code: "RRVPNL",
-//     state: "Rajasthan",
-//   },
-// ];
+import ElectricityPayment from "./ElectricityPayment";
 
 const SelectorProvider = () => {
-   const [selectedProvider, setSelectedProvider] = useState(null);
-  // const [search, setSearch] = useState("");
+  const [selectedProvider, setSelectedProvider] = useState(null);
+  const [billDetails, setBillDetails] = useState(null);
+  const [paymentSuccess, setPaymentSuccess] = useState(false);
 
-  // const filteredProviders = providersData.filter(
-  //   (p) =>
-  //     p.name.toLowerCase().includes(search.toLowerCase()) ||
-  //     p.state.toLowerCase().includes(search.toLowerCase()) ||
-  //     p.code.toLowerCase().includes(search.toLowerCase())
-  // );
+  // Handle back button
+  const handleBack = () => {
+    if (billDetails) {
+      setBillDetails(null); // Back to BillDetails
+    } else if (selectedProvider) {
+      setSelectedProvider(null); // Back to Providers
+    }
+  };
+
+  // Handle bill confirmation from BillDetails component
+  const handleBillConfirm = (details) => {
+    setBillDetails(details);
+  };
+
+  // Handle payment success
+  const handlePaymentSuccess = () => {
+    setPaymentSuccess(true);
+
+    setTimeout(() => {
+      setPaymentSuccess(false);
+      setBillDetails(null);
+      setSelectedProvider(null); // Go back to Providers automatically
+    }, 2500); // popup duration
+  };
 
   return (
-    <div className="max-w-7xl mx-auto space-y-6">
+    <div className="max-w-7xl mx-auto space-y-6 p-4 sm:p-6">
       {/* Header */}
-      <div className="flex items-center gap-4">
-        <button className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md border backbutton">
-          <ArrowLeft size={15} /> Back
-        </button>
-        <div className="flex items-center gap-3">
-          <div className="p-3 rounded-xl border Big-icon">
+      <div className="flex flex-col w-full gap-4">
+        {/* Back button always top-left */}
+        {(selectedProvider || billDetails) && (
+          <div className="self-start">
+            <button
+              onClick={handleBack}
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md border backbutton"
+            >
+              <ArrowLeft size={15} /> Back
+            </button>
+          </div>
+        )}
+
+        {/* Icon + Text */}
+        <div className="flex  sm:flex-row items-center sm:items-start gap-3 w-full">
+          {/* Big Icon */}
+          <div className="p-3 rounded-xl border Big-icon flex-shrink-0">
             <Zap size={20} className="text-yellow-400" />
           </div>
-          <div className="group-3">
-            <div className="flex items-center gap-3 mb-1">
+
+          {/* Title + Badge + Description */}
+          <div className="group-3 flex-1">
+            <div className="flex items-center gap-3 mb-1 flex-wrap">
               <h1 className="text-lg font-semibold">
                 Electricity Bill Payment
               </h1>
@@ -110,7 +70,7 @@ const SelectorProvider = () => {
                 MW Banking
               </span>
             </div>
-            <p className="text-muted-foreground text-sm">
+            <p className="text-muted-foreground text-sm text-left">
               Select your electricity provider
             </p>
           </div>
@@ -118,34 +78,100 @@ const SelectorProvider = () => {
       </div>
 
       {/* Step Indicator */}
-      <div className="flex items-center gap-4 circle-number">
-        <div className="flex items-center gap-2 text-primary">
-          <div className="w-6 h-6 rounded-full border-2 flex items-center justify-center circle">
-            1
+      <div className="flex flex-col sm:flex-row items-center gap-6 w-full circle-number">
+        {/* Step 1 */}
+        <div className="flex flex-col sm:flex-row items-center gap-2">
+          <div className="w-6 h-6 rounded-full border-2 flex items-center justify-center circle text-xs">
+            {selectedProvider || billDetails || paymentSuccess ? (
+              <Check className="text-green-500 w-4 h-4" />
+            ) : (
+              "1"
+            )}
           </div>
-          <span className="text-sm ">Select Provider</span>
+          <span
+            className={`text-sm ${
+              selectedProvider || billDetails || paymentSuccess
+                ? "text-green-500"
+                : "text-primary"
+            }`}
+          >
+            Select Provider
+          </span>
         </div>
-        <div className="flex-1 h-px bg-border"></div>
-        <div className="flex items-center gap-2 text-muted-foreground">
-          <div className="w-6 h-6 rounded-full border-2 flex items-center justify-center border-muted-foreground circle">
-            2
+
+        {/* Divider */}
+        <div className="hidden sm:block flex-1 h-px bg-border"></div>
+
+        {/* Step 2 */}
+        <div className="flex flex-col sm:flex-row items-center gap-2">
+          <div className="w-6 h-6 rounded-full border-2 flex items-center justify-center circle text-xs">
+            {billDetails || paymentSuccess ? (
+              <Check className="text-green-500 w-4 h-4" />
+            ) : (
+              "2"
+            )}
           </div>
-          <span className="text-sm ">Bill Details</span>
+          <span
+            className={`text-sm ${
+              billDetails || paymentSuccess
+                ? "text-green-500"
+                : "text-muted-foreground"
+            }`}
+          >
+            Bill Details
+          </span>
         </div>
-        <div className="flex-1 h-px bg-border"></div>
-        <div className="flex items-center gap-2 text-muted-foreground">
-          <div className="w-6 h-6 rounded-full border-2 flex items-center justify-center border-muted-foreground circle">
-            3
+
+        {/* Divider */}
+        <div className="hidden sm:block flex-1 h-px bg-border"></div>
+
+        {/* Step 3 */}
+        <div className="flex flex-col sm:flex-row items-center gap-2">
+          <div className="w-6 h-6 rounded-full border-2 flex items-center justify-center circle text-xs">
+            {paymentSuccess ? (
+              <Check className="text-green-500 w-4 h-4" />
+            ) : (
+              "3"
+            )}
           </div>
-          <span className="text-sm ">Payment</span>
+          <span
+            className={`text-sm ${
+              paymentSuccess ? "text-green-500" : "text-muted-foreground"
+            }`}
+          >
+            Payment
+          </span>
         </div>
       </div>
 
-      {/* render the componet here  */}
-       {!selectedProvider ? (
+      {/* Render Components */}
+      {!selectedProvider ? (
         <Providers onSelect={(provider) => setSelectedProvider(provider)} />
+      ) : !billDetails ? (
+        <BillDetails
+          provider={selectedProvider}
+          onConfirm={handleBillConfirm}
+        />
       ) : (
-        <BillDetails provider={selectedProvider} />
+        <ElectricityPayment
+          {...billDetails}
+          provider={selectedProvider.name}
+          onSuccess={handlePaymentSuccess}
+        />
+      )}
+
+      {/* Payment Success Popup */}
+      {paymentSuccess && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50 p-4">
+          <div className="bg-white rounded-xl p-6 text-center shadow-lg w-full max-w-sm mx-auto">
+            <h2 className="text-lg font-semibold text-green-600">
+              Payment Successful!
+            </h2>
+            <p className="text-sm text-gray-600 mt-2">
+              Redirecting to Providers...
+            </p>
+          </div>
+        </div>
       )}
     </div>
   );
