@@ -13,7 +13,7 @@ export const AlertProvider = ({ children }) => {
 
   const showAlert = (message, type = "info") => {
     setAlert({ message, type, visible: true });
-    setTimeout(() => setAlert({ ...alert, visible: false }), 3000); // auto close in 3s
+    setTimeout(() => setAlert({ ...alert, visible: false }), 300000); // auto close in 3s
   };
 
   return (
@@ -23,9 +23,12 @@ export const AlertProvider = ({ children }) => {
       {alert.visible && (
         <div className="fixed top-6 left-1/2 transform -translate-x-1/2 z-50">
           <div
-            style={{ boxShadow: "var(--alert-shadow)" }}
-            className={`relative p-6 
-    border-[var(--borderBg-color)] bg-[var(--menu-hover-bg)] backdrop-blur-md 
+            style={{
+              boxShadow:
+                "0 2px 6px rgba(0,0,0,0.3), 0 0 6px var(--primary-color)",
+            }}
+            className={`relative p-6 border border-[var(--primary-border-color)]
+      bg-[var(--menu-hover-bg)] backdrop-blur-md 
     text-teal-300 font-semibold min-w-[340px] transition-all duration-500 rounded-xl`}
           >
             {[
@@ -47,7 +50,7 @@ export const AlertProvider = ({ children }) => {
 
             {/* Title based on type */}
             <div className="flex items-center justify-between mb-2">
-              <span className="uppercase tracking-wide text-sm text-gray-400">
+              <span className="text-[var(--primary-color)] uppercase tracking-wide text-sm ">
                 {alert.type === "error"
                   ? "Error"
                   : alert.type === "success"
@@ -67,7 +70,7 @@ export const AlertProvider = ({ children }) => {
             </div>
 
             {/* Glow bar at the bottom */}
-            <div className="absolute bottom-0 left-0 w-full h-[3px] bg-gradient-to-r from-transparent  via-[var(--primary-color)] to-transparent animate-pulse"></div>
+            {/* <div className="absolute bottom-0 left-0 w-full h-[3px] bg-gradient-to-r from-transparent via-[var(--primary-color)] to-transparent animate-pulse" /> */}
           </div>
         </div>
       )}

@@ -100,7 +100,13 @@ const SelectorProvider = () => {
         </div>
 
         {/* Divider */}
-        <div className="hidden sm:block flex-1 h-px bg-border"></div>
+        <div
+          className="bg-border sm:flex-1 sm:h-px sm:w-auto w-px h-6"
+          style={{
+            // color: "var:(--primary-color)",
+            border: "var(--thin-border)",
+          }}
+        ></div>
 
         {/* Step 2 */}
         <div className="flex flex-col sm:flex-row items-center gap-2">
@@ -123,7 +129,13 @@ const SelectorProvider = () => {
         </div>
 
         {/* Divider */}
-        <div className="hidden sm:block flex-1 h-px bg-border"></div>
+        <div
+          className="bg-border sm:flex-1 sm:h-px sm:w-auto w-px h-6"
+          style={{
+            // color: "var:(--primary-color)",
+            border: "var(--thin-border)",
+          }}
+        ></div>
 
         {/* Step 3 */}
         <div className="flex flex-col sm:flex-row items-center gap-2">

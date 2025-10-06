@@ -30,12 +30,12 @@ const WalletInfo = () => {
             <label className="text-xs font-bold text-[var(--subheading-color)] mb-1">
               {item.label}
             </label>
-            <div className="relative overflow-hidden card-topup-info-box rounded-lg p-2">
+            <div className="relative overflow-hidden card-topup-info-box rounded-lg p-2 cursor-not-allowed">
               <input
                 type="text"
                 value={item.value}
                 disabled
-                className={`rounded-lg font-semibold disabled:opacity-70 ${item.color}`}
+                className={`rounded-lg font-semibold disabled:opacity-70 cursor-not-allowed ${item.color}`}
               />
             </div>
           </div>

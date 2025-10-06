@@ -66,7 +66,7 @@ const AutoRechargeSettings = () => {
       {isEnabled && (
         <div
           style={{ background: "#fad48905" }}
-          className=" rounded-md py-2 px-4  space-y-4 card-hover-effect-no-pointer"
+          className="rounded-md py-2 px-4 space-y-4 card-hover-effect-no-pointer hover:transform-none hover:shadow-none hover:border-transparent"
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {inputFields.map((field, index) => (
