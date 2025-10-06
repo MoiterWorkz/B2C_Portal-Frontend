@@ -62,6 +62,19 @@ const Charts = () => {
       datalabels: {
         display: false, // Disable data labels
       },
+      tooltip: {
+        enabled: true,
+        callbacks: {
+          label: (tooltipItem) => {
+            const dataset = tooltipItem.dataset;
+            const value = dataset.data[tooltipItem.dataIndex];
+            const total = dataset.data.reduce((a, b) => a + b, 0);
+            const percentage = ((value / total) * 100).toFixed(1);
+            const label = tooltipItem.label;
+            return `${label} (${percentage}%): ₹${value.toLocaleString()}`;
+          },
+        },
+      },
     },
   };
 
@@ -90,40 +103,85 @@ const Charts = () => {
 
   const lineOptions = {
     responsive: true,
+    interaction: {
+      mode: "index", // hover at same x-index across datasets
+      intersect: false, // allows vertical line even if not directly on point
+    },
     plugins: {
-      legend: {
-        display: false, // hide legend, since you use custom labels
+      legend: { display: false },
+      datalabels: { display: false },
+      tooltip: {
+        enabled: true, // use built-in tooltip
+        mode: "index",
+        intersect: false,
+        callbacks: {
+          title: (tooltipItems) => `Day: ${tooltipItems[0].label}`,
+          label: (tooltipItem) => {
+            if (tooltipItem.dataset.label === "Money Loading") {
+              return `Money Loading: ₹${tooltipItem.formattedValue}`;
+            }
+            if (tooltipItem.dataset.label === "Money UnLoading") {
+              return `Money UnLoading: ₹${tooltipItem.formattedValue}`;
+            }
+            return `${tooltipItem.dataset.label}: ₹${tooltipItem.formattedValue}`;
+          },
+        },
       },
-      datalabels: {
-        display: false, // Disable data labels
+      verticalLine: {
+        afterDraw: (chart) => {
+          if (chart.tooltip._active && chart.tooltip._active.length) {
+            const ctx = chart.ctx;
+            const activePoint = chart.tooltip._active[0];
+            const x = activePoint.element.x;
+            const topY = chart.scales.y.top;
+            const bottomY = chart.scales.y.bottom;
+
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(x, topY);
+            ctx.lineTo(x, bottomY);
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "rgba(34,197,94,0.7)";
+            ctx.setLineDash([4, 4]);
+            ctx.stroke();
+            ctx.restore();
+          }
+        },
       },
     },
     scales: {
       x: {
         grid: {
+          drawTicks: false,
           drawBorder: false,
-          color: "rgba(250, 212, 137, 0.1)",
-          borderColor: "transparent",
+          color: "rgba(200,200,200,0.1)",
           borderDash: [6, 6],
         },
       },
       y: {
-        ticks: {
-          callback: (value) => `₹${value / 1000}k`, // format ticks
-          stepSize: 1, // control interval
-          maxTicksLimit: 5, // allow max 5 ticks
-          count: 5,
-        },
-        beginAtZero: true, // always start from 0
+        beginAtZero: true,
         grid: {
+          drawTicks: false,
           drawBorder: false,
-          color: "rgba(250, 212, 137, 0.1)", // dashed line color
-          borderColor: "transparent",
-          borderDash: [6, 6], // dashed line style
+          color: "rgba(255, 255, 255, 0.1)",
+          borderDash: [6, 6],
+        },
+        ticks: {
+          callback: (value) => `₹${value / 1000}k`,
         },
       },
     },
+    elements: {
+      point: {
+        radius: 5, // show points on hover
+        hoverRadius: 7,
+      },
+      line: {
+        tension: 0.4,
+      },
+    },
   };
+
   const outsideLabelPlugin = {
     id: "outsideLabelPlugin",
     afterDraw: (chart) => {

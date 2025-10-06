@@ -1,14 +1,23 @@
 import React from "react";
 import { ArrowRight, CircleCheckBig } from "lucide-react";
 import { motion } from "framer-motion"; // ✅ Import Framer Motion
+import { Navigate, useNavigate } from "react-router-dom";
 
 export default function PaymentExperience() {
+  const navigate = useNavigate();
+
+  const HandleClick = () => {
+    navigate("/Sign-Up");
+  };
+  const login = () => {
+    navigate("/Customer-Login");
+  };
   return (
     <div className="w-full h-full flex flex-col justify-center my-gradient">
       <div className="pt-12 pb-12 px-4 sm:px-6 lg:px-8">
         <motion.div
           className="max-w-5xl mx-auto text-center space-y-8"
-          initial={{ opacity: 0, y: 60 }}   // start slightly below
+          initial={{ opacity: 0, y: 60 }} // start slightly below
           whileInView={{ opacity: 1, y: 0 }} // move up when in view
           viewport={{ amount: 0.2 }}
           transition={{ duration: 0.8 }}
@@ -42,11 +51,15 @@ export default function PaymentExperience() {
                 backgroundColor: "var(--primary-color)",
                 color: "var(--font-black)",
               }}
+              onClick={HandleClick}
             >
               Start Using Moiterworkz
               <ArrowRight className="arrow-icon" />
             </button>
-            <button className="inline-flex items-center justify-center gap-2 px-8 py-4 font-semibold custom-buton1 ">
+            <button
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 font-semibold custom-buton1 "
+              onClick={login}
+            >
               Already Have an Account?
             </button>
           </div>

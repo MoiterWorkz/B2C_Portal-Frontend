@@ -48,22 +48,20 @@ const SideBar = ({ isOpen, onClose }) => {
     <>
       {/* Overlay */}
       <div
-        className={`fixed inset-0 bg-black/40 z-40 lg:hidden transition-opacity duration-300 
-      ${isOpen ? "opacity-100 visible" : "opacity-0 invisible"}`}
+        className={`fixed inset-0 bg-black/40 z-40 lg:hidden transition-opacity duration-300 ${
+          isOpen ? "opacity-100 visible" : "opacity-0 invisible"
+        }`}
         onClick={onClose}
+        // style={{ backgroundColor: "var(--card-background-color)" }}
       />
 
-      {/* Sidebar */}
       <aside
-        className={`fixed top-16 left-0 z-50 h-full w-64 transform transition-transform duration-300 ease-in-out border-r
-      ${isOpen ? "translate-x-0" : "-translate-x-full"} 
-      lg:translate-x-0 lg:static lg:h-auto`}
-        style={{
-          backgroundColor: "var(--card-background-color)",
-          border: "var(--border-right)",
-        }}
+        className={`fixed top-16 left-0 z-40  w-64 transform transition-transform duration-300 ease-in-out border-right
+          ${isOpen ? "translate-x-0" : "-translate-x-full"} 
+          h-screen lg:translate-x-0 lg:static lg:h-auto`}
+        style={{ backgroundColor: "var(--card-background-color)" }}
       >
-        <nav className="p-4 space-y-2 h-full overflow-y-auto">
+        <nav className="p-4 space-y-2">
           {sidebarItems.map((item) => {
             const isActive = activeItem === item.label;
 

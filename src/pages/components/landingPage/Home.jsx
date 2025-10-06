@@ -3,6 +3,8 @@ import React from "react";
 import { ArrowRight, Play } from "lucide-react";
 import { motion } from "framer-motion"; // ✅ Import Framer Motion
 import Mobile from "./Mobile";
+import { Navigate, useNavigate } from "react-router-dom";
+// import PanVerification from "
 
 const stats = [
   { value: "10M+", label: "Active Users" },
@@ -10,6 +12,11 @@ const stats = [
 ];
 
 const HomePage = () => {
+  const navigate = useNavigate();
+
+  const HandleClick = () => {
+    navigate("/Sign-Up");
+  };
   return (
     <div className="pt-12 pb-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
@@ -79,6 +86,7 @@ const HomePage = () => {
                   backgroundColor: "var(--primary-color)",
                   color: "var(--font-black)",
                 }}
+                onClick={HandleClick}
               >
                 Get Started Free
                 <ArrowRight className="arrow-icon" />
