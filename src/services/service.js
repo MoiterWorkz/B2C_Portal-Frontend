@@ -69,6 +69,17 @@ export const postRequest = async (endpoint, payload) => {
   }
 };
 
+export const getRequest = async (endpoint) => {
+  try {
+    const response = await api.get(endpoint);
+
+    return response.data;
+  } catch (error) {
+    console.error("API Error:", error.response || error.message);
+    throw error;
+  }
+};
+
 // ✅ PAN Verification
 export const verifyPan = async (panNumber) => {
   return postRequest("/cs/api/Customer/get_pan_details", {
@@ -175,3 +186,6 @@ export const moveTransaction = (payload) =>
 
 export const debitWallet = (payload) =>
   postRequest("/cs/api/Customer/debit-wallet", payload);
+
+export const fetchDashboard = (id) =>
+  getRequest(`cs/api/Customer/dashboard?customerId=${id}`);
