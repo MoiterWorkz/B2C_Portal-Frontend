@@ -189,3 +189,6 @@ export const debitWallet = (payload) =>
 
 export const fetchDashboard = (id) =>
   getRequest(`cs/api/Customer/dashboard?customerId=${id}`);
+
+export const fetchWalletbalance = (id) =>
+  getRequest(`cs/api/Customer/wallet-balance?customerId=${id}`);
