@@ -13,7 +13,7 @@ export const AlertProvider = ({ children }) => {
 
   const showAlert = (message, type = "info") => {
     setAlert({ message, type, visible: true });
-    setTimeout(() => setAlert({ ...alert, visible: false }), 300000); // auto close in 3s
+    setTimeout(() => setAlert({ ...alert, visible: false }), 3000); // auto close in 3s
   };
 
   return (

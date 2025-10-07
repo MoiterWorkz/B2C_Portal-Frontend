@@ -17,6 +17,7 @@ import PayeeList from "./pages/fundTransfer/payeeList";
 import MyProfile from "./pages/components/MyProfile";
 import BillDetails from "./pages/components/Electricity/BillDetails";
 import SelectorProvider from "./pages/components/Electricity/SelectorProvider";
+import VideofileUpload from "./hooks/SignupHooks/FullKyc/VideoKYC/Videofileupload";
 // import MakersDashboard from "./pages/makersDashboard";
 
 function AppRoutes({ setRole }) {
@@ -28,6 +29,7 @@ function AppRoutes({ setRole }) {
       {/* Optional: if someone types /LandingPage in URL */}
       <Route path="home" element={<LandingPage />} />
       <Route path="/set-pin" element={<SetPin />} />
+      <Route path="/VideoKYC" element={<VideofileUpload />} />
       <Route path="/Customer-Login" element={<Login />} />
       {/* If you want to redirect unknown paths to LandingPage */}
 

@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { ArrowLeft, FileText, IdCard, Video, Shield } from "lucide-react";
 import LOGO from "../../../../assets/logo.png";
 import FullKycForm from "../FullKycForm";
+import VideoKycForm from "../VideoKYC/VideoKYCform";
 
 // Dummy Components (replace with your actual ones)
 const DocumentUpload = ({ verifiedMobile, pan, setVerified }) => <div ><FullKycForm verifiedMobile={verifiedMobile} pan={pan} /></div>;
 const AadhaarKYC = () => <div className="text-white text-2xl">🪪 Aadhaar KYC Page</div>;
-const VideoKYC = () => <div className="text-white text-2xl">🎥 Video KYC Page</div>;
+const VideoKYC = ({ verifiedMobile, pan, setVerified }) => <div className="text-white text-2xl"><VideoKycForm verifiedMobile={verifiedMobile} pan={pan}/></div>;
 const CKYC = () => <div className="text-white text-2xl">🛡️ CKYC Page</div>;
 
 const FullKYCOptions = ({ verifiedMobile, pan, setVerified }) => {
@@ -16,7 +17,7 @@ const FullKYCOptions = ({ verifiedMobile, pan, setVerified }) => {
   const components = {
     document: <DocumentUpload verifiedMobile={verifiedMobile} pan={pan} setVerified={setVerified} />,
     aadhaar: <AadhaarKYC />,
-    video: <VideoKYC />,
+    video: <VideoKYC  verifiedMobile={verifiedMobile} pan={pan} setVerified={setVerified}/>,
     ckyc: <CKYC />,
   };
 

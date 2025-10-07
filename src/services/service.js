@@ -160,6 +160,7 @@ export const sanctionCheck = async ({
 // ✅ Set Account PIN (Password API)
 export const setAccountPin = async (mobileNumber, pin) => {
   return postRequest("/cs/api/Customer/password", {
+    customerId,
     mobileNumber,
     password: pin,
   });
@@ -189,3 +190,8 @@ export const debitWallet = (payload) =>
 
 export const fetchDashboard = (id) =>
   getRequest(`cs/api/Customer/dashboard?customerId=${id}`);
+
+
+export const uploadVideoKyc = async (payload) => {
+  return postRequest("/api/videokyc/uploadVideoKyc", payload);
+};
