@@ -75,8 +75,7 @@ export const getRequest = async (endpoint) => {
 
     return response.data;
   } catch (error) {
-    console.error("API Error:", error.response || error.message);
-    throw error;
+    return error;
   }
 };
 
@@ -173,7 +172,7 @@ export const loginWithPin = async (mobileNumber, password) => {
   });
 };
 
-// wallet recharge init
+// wallet recharge screen init
 
 export const rechargeWallet = (payload) =>
   postRequest("/cs/api/Customer/recharge-wallet", {
@@ -186,6 +185,11 @@ export const moveTransaction = (payload) =>
 
 export const debitWallet = (payload) =>
   postRequest("/cs/api/Customer/debit-wallet", payload);
+
+export const fetchWalletBalance = (id) =>
+  getRequest(`cs/api/Customer/wallet-balance?customerId=${id}`);
+
+// wallet recharge screen end
 
 export const fetchDashboard = (id) =>
   getRequest(`cs/api/Customer/dashboard?customerId=${id}`);

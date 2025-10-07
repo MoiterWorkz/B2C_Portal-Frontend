@@ -1,16 +1,15 @@
 import { User, Lock, Database, Palette, Home, LogOut } from "lucide-react";
-import React from "react";
 import { useNavigate } from "react-router-dom"; // ✅ Import useNavigate
+import { useSignInStore } from "../../../store/useSigninStore";
 
 const UserDropdown = ({
   user = { name: "Kavin A", email: "demo@moiterworkz.com" },
 }) => {
   const navigate = useNavigate(); // ✅ Initialize navigate
+  const { setCustomerId } = useSignInStore();
 
   const handleLogout = () => {
-    // Add logout logic here (e.g., clearing tokens)
-    console.log("Logging out...");
-    // Navigate back to landing page
+    setCustomerId("");
     navigate("/");
   };
 

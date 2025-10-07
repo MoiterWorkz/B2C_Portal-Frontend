@@ -9,7 +9,8 @@ import CustomerReview from "./components/landingPage/CustomerReview";
 import PaymentExperience from "./components/landingPage/PaymentExperience";
 import Contact from "./components/landingPage/Contact";
 import { ArrowUp, Menu, X } from "lucide-react";
-import LOGO from "../assets/logo.png"
+import LOGO from "../assets/logo.png";
+import { useSignInStore } from "../store/useSigninStore";
 
 const sections = [
   { id: "home", label: "Home", component: <HomePage /> },
@@ -35,6 +36,8 @@ const LandingPage = () => {
   const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState(sections[0]?.id);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { getCustomerId } = useSignInStore();
+  console.log(getCustomerId());
 
   const handleScroll = (id) => {
     const element = document.getElementById(id);
@@ -85,7 +88,7 @@ const LandingPage = () => {
           {/* Logo */}
           <div className="flex flex-col items-center ">
             <img
-             src={LOGO}
+              src={LOGO}
               alt="Moiterworkz Logo"
               className=" w-60 object-contain"
             />
@@ -117,8 +120,9 @@ const LandingPage = () => {
                 <button
                   key={section.id}
                   onClick={() => handleScroll(section.id)}
-                  className={`subheading2-size transition-colors hover:text-gray-400 ${activeSection === section.id ? "" : "text-white"
-                    }`}
+                  className={`subheading2-size transition-colors hover:text-gray-400 ${
+                    activeSection === section.id ? "" : "text-white"
+                  }`}
                   style={
                     activeSection === section.id
                       ? { color: "var(--primary-color)" }
@@ -129,20 +133,21 @@ const LandingPage = () => {
                   {section.label}
                 </button>
               ))}
-            <button
+            {/* <button
               onClick={() => navigate("/dashboard")}
               className="subheading2-size transition-colors text-white hover:text-gray-400"
               type="button"
             >
               Dashboard
-            </button>
+            </button> */}
           </nav>
 
           {/* Desktop Auth Buttons */}
           <div className="hidden md:flex space-x-3">
-            <button  onClick={() => 
-                  navigate("/Customer-Login")
-                } className="px-4 py-1 rounded border sign-in-button transition">
+            <button
+              onClick={() => navigate("/Customer-Login")}
+              className="px-4 py-1 rounded border sign-in-button transition"
+            >
               Sign In
             </button>
             <button
@@ -166,13 +171,14 @@ const LandingPage = () => {
                     handleScroll(section.id);
                     setIsMobileMenuOpen(false);
                   }}
-                  className={`block w-full text-left text-white hover:text-gray-400 transition-colors ${activeSection === section.id ? "text-yellow-400" : ""
-                    }`}
+                  className={`block w-full text-left text-white hover:text-gray-400 transition-colors ${
+                    activeSection === section.id ? "text-yellow-400" : ""
+                  }`}
                 >
                   {section.label}
                 </button>
               ))}
-            <button
+            {/* <button
               onClick={() => {
                 navigate("/dashboard");
                 setIsMobileMenuOpen(false);
@@ -180,12 +186,10 @@ const LandingPage = () => {
               className="block w-full text-left text-white hover:text-gray-400 transition-colors"
             >
               Dashboard
-            </button>
+            </button> */}
             <div className="flex space-x-3 pt-2">
               <button
-                onClick={() => 
-                  navigate("/Customer-Login")
-                }
+                onClick={() => navigate("/Customer-Login")}
                 className="flex-1 py-1 rounded border sign-in-button transition"
               >
                 Sign In
@@ -210,8 +214,9 @@ const LandingPage = () => {
           <section
             key={section.id}
             id={section.id}
-            className={`${idx === 0 ? "min-h-screen" : "py-5"
-              } flex items-center justify-center`}
+            className={`${
+              idx === 0 ? "min-h-screen" : "py-5"
+            } flex items-center justify-center`}
           >
             <div className="w-full flex items-center justify-center">
               {section.component}

@@ -8,7 +8,7 @@ export const useSignInStore = create(
       setCustomerId: (id) => set({ customerId: btoa(id) }), // encode before saving
       getCustomerId: () => {
         const encoded = useSignInStore.getState().customerId;
-        return encoded ? Number(atob(encoded)) : null;
+        return "encoded ? Number(atob(encoded)) : null";
       },
     }),
     {

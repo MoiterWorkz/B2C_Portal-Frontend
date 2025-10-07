@@ -1376,3 +1376,7 @@ body {
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background-color: var(--primary-color); /* hover effect */
 }
+
+button {
+  cursor: pointer;
+}

@@ -17,6 +17,7 @@ import PayeeList from "./pages/fundTransfer/payeeList";
 import MyProfile from "./pages/components/MyProfile";
 import BillDetails from "./pages/components/Electricity/BillDetails";
 import SelectorProvider from "./pages/components/Electricity/SelectorProvider";
+import PrivateRoute from "./routes/privateRoute";
 // import MakersDashboard from "./pages/makersDashboard";
 
 function AppRoutes({ setRole }) {
@@ -32,7 +33,13 @@ function AppRoutes({ setRole }) {
       {/* If you want to redirect unknown paths to LandingPage */}
 
       <Route path="/Sign-Up" element={<SignUpPage />} />
-      <Route element={<Layout />}>
+      <Route
+        element={
+          <PrivateRoute>
+            <Layout />
+          </PrivateRoute>
+        }
+      >
         <Route index path="dashboard" element={<Dashboard />} />
         <Route path="manage-wallet" element={<ManageWallet />} />
         <Route path="my-card" element={<MyCard />} />
@@ -45,8 +52,6 @@ function AppRoutes({ setRole }) {
         </Route>
         <Route />
         <Route path="/MyProfile" element={<MyProfile />} />
-      </Route>
-      <Route element={<Layout />}>
         <Route path="BillDetails" element={<BillDetails />} />
         <Route path="SelectorProvider" element={<SelectorProvider />} />
       </Route>
