@@ -18,6 +18,7 @@ import MyProfile from "./pages/components/MyProfile";
 import BillDetails from "./pages/components/Electricity/BillDetails";
 import SelectorProvider from "./pages/components/Electricity/SelectorProvider";
 import VideofileUpload from "./hooks/SignupHooks/FullKyc/VideoKYC/Videofileupload";
+import ChangePin from "./pages/components/changepin";
 // import MakersDashboard from "./pages/makersDashboard";
 
 function AppRoutes({ setRole }) {
@@ -47,6 +48,7 @@ function AppRoutes({ setRole }) {
         </Route>
         <Route />
         <Route path="/MyProfile" element={<MyProfile />} />
+        <Route path="/change-pin" element={<ChangePin />} />
       </Route>
       <Route element={<Layout />}>
         <Route path="BillDetails" element={<BillDetails />} />

@@ -37,14 +37,24 @@ ChartJS.register(
   Filler
 );
 
-const Charts = () => {
+const Charts = ({ dashBoardData }) => {
+  const monthlyFlow = dashBoardData?.monthlyFlow || [];
+
+  const spendBreakdown = dashBoardData?.spendBreakdown || [];
   // Pie chart data (Spend Breakdown)
   const pieData = {
-    labels: ["Food", "Fuel", "ATM", "Others"],
+    labels: spendBreakdown.map((item) => item.category),
     datasets: [
       {
-        data: [8500, 4200, 2800, 1500],
-        backgroundColor: ["#3b82f6", "#f97316", "#8b5cf6", "#06b6d4"],
+        data: spendBreakdown.map((item) => item.total_spent),
+        backgroundColor: [
+          "#3b82f6", // blue
+          "#f97316", // orange
+          "#8b5cf6", // purple
+          "#06b6d4", // cyan
+          "#10b981", // green
+          "#ef4444", // red
+        ],
         borderColor: "#fff",
         borderWidth: 1,
         radius: "70%",
@@ -78,13 +88,18 @@ const Charts = () => {
     },
   };
 
-  // Line chart data (Monthly Money Flow)
+  // ------------------ LINE CHART (Dynamic using API) ------------------
+  const labels = monthlyFlow.map((item) => item.day_of_month);
+  const loadingData = monthlyFlow.map((item) => item.loading);
+  const unloadingData = monthlyFlow.map((item) => item.unloading);
+
   const lineData = {
-    labels: ["1", "5", "10", "15", "20", "25", "30"],
+    labels:
+      labels.length > 0 ? labels : ["1", "5", "10", "15", "20", "25", "30"],
     datasets: [
       {
         label: "Money Loading",
-        data: [7400, 8200, 6000, 5000, 7000, 9000, 8500],
+        data: loadingData.length > 0 ? loadingData : [0, 0, 0, 0, 0, 0, 0],
         fill: true,
         borderColor: "#22c55e",
         backgroundColor: "rgba(34, 197, 94, 0.2)",
@@ -92,7 +107,7 @@ const Charts = () => {
       },
       {
         label: "Money Unloading",
-        data: [2000, 3200, 4000, 4600, 3900, 5500, 20000],
+        data: unloadingData.length > 0 ? unloadingData : [0, 0, 0, 0, 0, 0, 0],
         fill: true,
         borderColor: "#ef4444",
         backgroundColor: "rgba(239, 68, 68, 0.2)",

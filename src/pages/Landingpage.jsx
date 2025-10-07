@@ -9,7 +9,7 @@ import CustomerReview from "./components/landingPage/CustomerReview";
 import PaymentExperience from "./components/landingPage/PaymentExperience";
 import Contact from "./components/landingPage/Contact";
 import { ArrowUp, Menu, X } from "lucide-react";
-import LOGO from "../assets/logo.png"
+import LOGO from "../assets/logo.png";
 
 const sections = [
   { id: "home", label: "Home", component: <HomePage /> },
@@ -78,14 +78,14 @@ const LandingPage = () => {
   }, []);
 
   return (
-    <div className="bg-primary-background text-white min-h-screen">
+    <div className="bg-primary-background min-h-screen">
       {/* Header */}
       <header className="fixed top-0 left-0 w-full bg-primary-background border-b border-primary-bottom z-50 shadow-md h-16">
         <div className="max-w-7xl mx-auto flex justify-between items-center h-full px-6">
           {/* Logo */}
           <div className="flex flex-col items-center ">
             <img
-             src={LOGO}
+              src={LOGO}
               alt="Moiterworkz Logo"
               className=" w-60 object-contain"
             />
@@ -117,8 +117,9 @@ const LandingPage = () => {
                 <button
                   key={section.id}
                   onClick={() => handleScroll(section.id)}
-                  className={`subheading2-size transition-colors hover:text-gray-400 ${activeSection === section.id ? "" : "text-white"
-                    }`}
+                  className={`subheading2-size transition-colors hover:text-gray-400 ${
+                    activeSection === section.id ? "" : "text-white"
+                  }`}
                   style={
                     activeSection === section.id
                       ? { color: "var(--primary-color)" }
@@ -130,7 +131,10 @@ const LandingPage = () => {
                 </button>
               ))}
             <button
-              onClick={() => navigate("/dashboard")}
+              onClick={() => {
+                navigate("/dashboard");
+                window.scrollTo({ top: 0, left: 0, behavior: "smooth" }); // scroll to top after navigation
+              }}
               className="subheading2-size transition-colors text-white hover:text-gray-400"
               type="button"
             >
@@ -140,9 +144,10 @@ const LandingPage = () => {
 
           {/* Desktop Auth Buttons */}
           <div className="hidden md:flex space-x-3">
-            <button  onClick={() => 
-                  navigate("/Customer-Login")
-                } className="px-4 py-1 rounded border sign-in-button transition">
+            <button
+              onClick={() => navigate("/Customer-Login")}
+              className="px-4 py-1 rounded border sign-in-button transition"
+            >
               Sign In
             </button>
             <button
@@ -166,8 +171,9 @@ const LandingPage = () => {
                     handleScroll(section.id);
                     setIsMobileMenuOpen(false);
                   }}
-                  className={`block w-full text-left text-white hover:text-gray-400 transition-colors ${activeSection === section.id ? "text-yellow-400" : ""
-                    }`}
+                  className={`block w-full text-left text-white hover:text-gray-400 transition-colors ${
+                    activeSection === section.id ? "text-yellow-400" : ""
+                  }`}
                 >
                   {section.label}
                 </button>
@@ -183,9 +189,7 @@ const LandingPage = () => {
             </button>
             <div className="flex space-x-3 pt-2">
               <button
-                onClick={() => 
-                  navigate("/Customer-Login")
-                }
+                onClick={() => navigate("/Customer-Login")}
                 className="flex-1 py-1 rounded border sign-in-button transition"
               >
                 Sign In
@@ -210,8 +214,9 @@ const LandingPage = () => {
           <section
             key={section.id}
             id={section.id}
-            className={`${idx === 0 ? "min-h-screen" : "py-5"
-              } flex items-center justify-center`}
+            className={`${
+              idx === 0 ? "min-h-screen" : "py-5"
+            } flex items-center justify-center`}
           >
             <div className="w-full flex items-center justify-center">
               {section.component}

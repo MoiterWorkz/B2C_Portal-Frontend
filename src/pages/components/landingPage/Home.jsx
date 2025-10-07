@@ -94,11 +94,11 @@ const HomePage = () => {
 
               <button
                 className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-md border-2 transition custom-buton1"
-                style={{
-                  backgroundColor: "var(--backgroundcolor)",
-                  border: "var(--transparent-color)",
-                  color: "var(--primary-color)",
-                }}
+                // style={{
+                //   backgroundColor: "var(--backgroundcolor)",
+                //   border: "var(--transparent-color)",
+                //   color: "var(--primary-color)",
+                // }}
               >
                 <Play className="h-5 w-5 mr-2" />
                 See How It Works

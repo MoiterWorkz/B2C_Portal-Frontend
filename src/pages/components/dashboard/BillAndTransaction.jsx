@@ -86,6 +86,8 @@ const BillAndTransaction = () => {
 
   const handleBillClick = (bill) => {
     if (bill.title === "TNEB") {
+      window.scrollTo(0, 0);
+
       // Navigate to the SelectProvider route
       navigate("/SelectorProvider");
     }

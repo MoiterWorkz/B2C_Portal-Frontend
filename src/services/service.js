@@ -195,3 +195,5 @@ export const fetchDashboard = (id) =>
 export const uploadVideoKyc = async (payload) => {
   return postRequest("/api/videokyc/uploadVideoKyc", payload);
 };
+export const fetchWalletbalance = (id) =>
+  getRequest(`cs/api/Customer/wallet-balance?customerId=${id}`);

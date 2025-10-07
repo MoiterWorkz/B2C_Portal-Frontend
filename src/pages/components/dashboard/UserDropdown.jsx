@@ -1,12 +1,14 @@
 import { User, Lock, Database, Palette, Home, LogOut } from "lucide-react";
 import React from "react";
 import { useNavigate } from "react-router-dom"; // ✅ Import useNavigate
+import DashBoardHooks from "../../../hooks/dashBoardHooks";
 
-const UserDropdown = ({
-  user = { name: "Kavin A", email: "demo@moiterworkz.com" },
-}) => {
+const UserDropdown = ({ user }) => {
+  const { dashBoardData } = DashBoardHooks();
+
   const navigate = useNavigate(); // ✅ Initialize navigate
-
+  const username = user?.name || dashBoardData?.customerName || "";
+  const email = user?.email || "";
   const handleLogout = () => {
     // Add logout logic here (e.g., clearing tokens)
     console.log("Logging out...");
@@ -22,9 +24,9 @@ const UserDropdown = ({
     <div className="bg-popover text-popover-foreground z-50 w-56 rounded-md border p-2 shadow-md dropdown-glass card-bg-br UserDropdown">
       {/* User Info */}
       <div className="flex flex-col space-y-1 p-2 main">
-        <p className="text-sm font-medium leading-none name">{user.name}</p>
+        <p className="text-sm font-medium leading-none name">{username}</p>
         <p className="text-xs leading-none text-muted-foreground mail">
-          {user.email}
+          {email}
         </p>
       </div>
 

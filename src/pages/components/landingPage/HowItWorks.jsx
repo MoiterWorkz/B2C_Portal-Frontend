@@ -6,8 +6,8 @@ const HowItWorks = () => {
     {
       icon: (
         <Download
-          className="h-12 w-12 text-primary-foreground"
-          color="var(--font-black)"
+          className="h-12 w-12 text-black"
+          style={{ color: "var(--font-black)" }}
         />
       ),
       title: "Download & Sign Up",
@@ -18,8 +18,8 @@ const HowItWorks = () => {
     {
       icon: (
         <CreditCard
-          className="h-12 w-12 text-primary-foreground"
-          color="var(--font-black)"
+          className="h-12 w-12 "
+          style={{ color: "var(--font-black)" }}
         />
       ),
       title: "Add Your Bank Account",
@@ -29,10 +29,7 @@ const HowItWorks = () => {
     },
     {
       icon: (
-        <Zap
-          className="h-12 w-12 text-primary-foreground"
-          color="var(--font-black)"
-        />
+        <Zap className="h-12 w-12 " style={{ color: "var(--font-black)" }} />
       ),
       title: "Start Paying Instantly",
       description:
@@ -40,7 +37,7 @@ const HowItWorks = () => {
       step: "3",
     },
   ];
-   const handleScrollToTop = () => {
+  const handleScrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -133,10 +130,8 @@ const HowItWorks = () => {
             </motion.div>
           ))}
         </div>
-        
       </div>
     </div>
-    
   );
 };
 
