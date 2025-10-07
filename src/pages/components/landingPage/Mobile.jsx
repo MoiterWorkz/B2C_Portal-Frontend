@@ -21,8 +21,16 @@ const Mobile = () => {
           <div className="h-12 bg-gradient-to-r from-white via-gray-50 to-white flex items-center justify-between px-6 text-xs relative border-b border-gray-100">
             <div className="flex items-center gap-3">
               <span className="font-semibold text-black">9:41</span>
-              <div className="w-1 h-1 bg-primary rounded-full"></div>
-              <span className="text-primary text-xs font-bold">●</span>
+              <div
+                className="w-1 h-1 rounded-full"
+                style={{ color: "var(--primary-color)" }}
+              ></div>
+              <span
+                className="text-primary text-xs font-bold"
+                style={{ color: "var(--primary-color)" }}
+              >
+                ●
+              </span>
             </div>
             <div className="absolute left-1/2 top-3 transform -translate-x-1/2 w-24 h-6 bg-black rounded-full border border-gray-200"></div>
             <div className="flex items-center gap-3">

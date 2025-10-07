@@ -1,12 +1,22 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Eye, EyeOff, Clock } from "lucide-react";
 
-const DashboardHeader = ({ hideBalance, setHideBalance }) => {
+const DashboardHeader = ({ hideBalance, setHideBalance, dashBoardData }) => {
+  const formatuserName = (fullName) => {
+    if (!fullName) return "";
+    const parts = fullName.trim().split(" ");
+    if (parts.length <= 2) return fullName;
+    return parts.slice(0, -1).join(" ");
+  };
+
+  const username = dashBoardData
+    ? formatuserName(dashBoardData.customerName)
+    : "";
   return (
     <div className="flex items-center justify-between">
       {/* Left Side: Welcome message */}
       <div>
-        <h1 className="second-normal-heading">Welcome back, Kavin! 👋</h1>
+        <h1 className="second-normal-heading">Welcome back, {username}! 👋</h1>
         <p className="text-sm subheading2-size">
           Here's what's happening with your money today.
         </p>
@@ -32,7 +42,7 @@ const DashboardHeader = ({ hideBalance, setHideBalance }) => {
             gap-1 overflow-hidden px-2 py-1 smallbutton"
         >
           <Clock className="h-3 w-3 mr-1" />
-          25/09/2025
+          {new Date().toLocaleDateString("en-GB")} {/* ✅ dynamic date */}
         </span>
       </div>
     </div>

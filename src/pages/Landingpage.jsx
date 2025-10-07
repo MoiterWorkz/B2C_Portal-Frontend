@@ -10,7 +10,6 @@ import PaymentExperience from "./components/landingPage/PaymentExperience";
 import Contact from "./components/landingPage/Contact";
 import { ArrowUp, Menu, X } from "lucide-react";
 import LOGO from "../assets/logo.png";
-import { useSignInStore } from "../store/useSigninStore";
 
 const sections = [
   { id: "home", label: "Home", component: <HomePage /> },
@@ -81,7 +80,7 @@ const LandingPage = () => {
   }, []);
 
   return (
-    <div className="bg-primary-background text-white min-h-screen">
+    <div className="bg-primary-background min-h-screen">
       {/* Header */}
       <header className="fixed top-0 left-0 w-full bg-primary-background border-b border-primary-bottom z-50 shadow-md h-16">
         <div className="max-w-7xl mx-auto flex justify-between items-center h-full px-6">
@@ -134,7 +133,10 @@ const LandingPage = () => {
                 </button>
               ))}
             {/* <button
-              onClick={() => navigate("/dashboard")}
+              onClick={() => {
+                navigate("/dashboard");
+                window.scrollTo({ top: 0, left: 0, behavior: "smooth" }); // scroll to top after navigation
+              }}
               className="subheading2-size transition-colors text-white hover:text-gray-400"
               type="button"
             >

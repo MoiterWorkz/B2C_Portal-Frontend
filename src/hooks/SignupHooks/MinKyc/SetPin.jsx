@@ -7,7 +7,8 @@ import { CircleCheck, CircleCheckBig, Eye, EyeClosed, EyeOff, Lock, Shield } fro
 const SetPin = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const mobileNumber = location.state?.mobileNumber;
+  // const mobileNumber = location.state?.mobileNumber;
+    const mobileNumber = "9849646516";
   const [pin, setPin] = useState("");
   const [showPin, setShowPin] = useState(false);
 
@@ -39,6 +40,7 @@ const SetPin = () => {
     try {
       const encodedPin = btoa(pin); // 🔒 encode
       await setAccountPin(mobileNumber, encodedPin);
+      console.log(mobileNumber,encodedPin)
       alert("Accouct created Successfully , You May Login now with your Registered Mobile Number and Pin")
       navigate("/Customer-Login");
     } catch (err) {
@@ -77,12 +79,14 @@ const SetPin = () => {
         </div>
 
         <h2 className="form-heading2 font-semibold text-center mb-2 white-letter-color">Set Account PIN</h2>
-        <p className="text-center medium-text gray-text mb-6">
-          Create a secure 4-digit PIN for your account<br />
-          <p className="text-center medium-text gray-text mt-3">  Setting up PIN for{" "}</p>
-
-          <span className="font-themecolor font-semibold">{mobileNumber}</span>
-        </p>
+        <div className="text-center small-text gray-text mb-6">
+          <div>
+            Create a secure 4-digit PIN for your account
+          </div>
+          <div className="text-center small-text gray-text mt-3">
+            Setting up PIN for <span className="font-themecolor font-semibold">{mobileNumber}</span>
+          </div>
+        </div>
         <label className="small-text font-medium white-letter-color">Enter 4-digit PIN</label>
         {/* Input */}
         <div className="relative mb-4">
@@ -128,13 +132,13 @@ const SetPin = () => {
 
         {/* Footer note */}
         <p className="small-text px-5 py-2 gray-text text-center  rounded-[5px] mt-5 full-border flex items-center">
-          <span className="font-themecolor"><Lock size={14}/></span>
+          <span className="font-themecolor"><Lock size={14} /></span>
           Your PIN is encrypted and securely stored. Never share your PIN with anyone.
         </p>
       </div>
     </div>
 
-    
+
   );
 };
 

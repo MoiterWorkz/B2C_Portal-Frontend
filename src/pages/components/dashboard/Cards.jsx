@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Wallet,
   ArrowUpRight,
   ArrowDownRight,
   CircleCheckBig,
 } from "lucide-react";
+// import { fetchDashboard } from "../../../services/service";
+// import { useSignInStore } from "../../../store/useSigninStore";
 
-const Cards = ({ hideBalance }) => {
+const Cards = ({ hideBalance, dashBoardData }) => {
   const defaultColors = [
     "var(--primary-font-color)",
     "var(--color-green-400)",
@@ -24,26 +26,29 @@ const Cards = ({ hideBalance }) => {
   const cards = [
     {
       title: "Current Balance",
-      value: 45720,
+      value: dashBoardData.currentBalance,
       subtext: "Available in wallet",
       icon: <Wallet className="card-icon h-6 w-6" />,
     },
     {
       title: "Total Loading",
-      value: 5000,
+      value: dashBoardData.totalLoading, // fallback if missing
       subtext: "Money loaded this month",
       icon: <ArrowUpRight className="card-icon h-6 w-6" />,
     },
     {
       title: "Total Unloading",
-      value: -4408,
+      value: dashBoardData.totalUnloading, // fallback if missing
       subtext: "Money spent this month",
       icon: <ArrowDownRight className="card-icon h-6 w-6" />,
     },
     {
       title: "KYC Status",
-      value: "Full KYC",
-      subtext: "Monthly limit: ₹2,00,000",
+      value: dashBoardData.kycStatus,
+      subtext: `Monthly limit: ₹${dashBoardData.monthlyLoadLimit?.toLocaleString(
+        "en-IN"
+      )}`,
+
       icon: <CircleCheckBig className="card-icon h-6 w-6" />,
     },
   ];
@@ -61,15 +66,23 @@ const Cards = ({ hideBalance }) => {
           >
             <div className="p-6 cards rounded-xl">
               <div className="flex items-center justify-between">
-                <div className="space-y-2 ">
+                <div className="space-y-2">
                   <p>{card.title}</p>
                   <p className="text-2xl font-medium" style={{ color }}>
-                    {/* If first card and hideBalance = true => mask */}
-                    {index === 0 && hideBalance
-                      ? "*******"
-                      : typeof card.value === "number" && card.value < 0
-                      ? `-${Math.abs(card.value).toLocaleString()}`
-                      : card.value}
+                    {/* Mask balance for first card */}
+                    {index === 0 && hideBalance ? (
+                      "*******"
+                    ) : typeof card.value === "number" ? (
+                      card.value < 0 ? (
+                        <span className="text-red-500">
+                          -{Math.abs(card.value).toLocaleString()}
+                        </span>
+                      ) : (
+                        card.value.toLocaleString()
+                      )
+                    ) : (
+                      card.value
+                    )}
                   </p>
                   <p className="text-xs text-muted-foreground">
                     {card.subtext}
