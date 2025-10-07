@@ -32,7 +32,7 @@ const WalletRecharge = () => {
   const handleWalletRecharge = async () => {
     const channelId = "web";
     const basePayload = {
-      customerId: 2000069,
+      customerId,
       logId,
       amount,
       channelId,

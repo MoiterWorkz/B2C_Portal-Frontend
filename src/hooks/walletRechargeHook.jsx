@@ -6,14 +6,12 @@ const WalletRechargeHook = () => {
   const { getCustomerId } = useSignInStore();
   const customerId = getCustomerId();
   const getWalletBalance = async () => {
-    const data = await fetchWalletBalance(2000069);
+    const data = await fetchWalletBalance(customerId);
     setWalletDatas(data);
   };
 
   useEffect(() => {
     walletDatas?.message && alert("Failed to Load Wallet Recharge Datas");
-  }, []);
-  useEffect(() => {
     getWalletBalance();
   }, []);
   return { walletDatas, getWalletBalance };

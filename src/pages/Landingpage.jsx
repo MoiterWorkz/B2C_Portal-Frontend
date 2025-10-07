@@ -35,8 +35,6 @@ const LandingPage = () => {
   const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState(sections[0]?.id);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { getCustomerId } = useSignInStore();
-  console.log(getCustomerId());
 
   const handleScroll = (id) => {
     const element = document.getElementById(id);
