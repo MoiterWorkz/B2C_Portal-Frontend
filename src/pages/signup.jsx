@@ -1,5 +1,5 @@
 import React from "react";
-import PanVerification from "../hooks/SignupHooks/PanVerification"
+import PanVerification from "../pages/components/Signup/PanVerification"
 
 const Signup = () => {
   return (

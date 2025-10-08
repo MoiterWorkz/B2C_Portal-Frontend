@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { ArrowLeft, FileText, IdCard, Video, Shield } from "lucide-react";
-import LOGO from "../../../../assets/logo.png";
+import LOGO from "../../../../../assets/logo.png";
 import FullKycForm from "../FullKycForm";
 import VideoKycForm from "../VideoKYC/VideoKYCform";
 

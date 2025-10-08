@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { getStateAndCityByPincode, submitMinKyc, pepCheck, sanctionCheck } from "../../../services/service";
+import { getStateAndCityByPincode, submitMinKyc, pepCheck, sanctionCheck } from "../../../../services/service";
 import { v4 as uuidv4 } from "uuid"; // for generating transactionId
 import { useNavigate } from "react-router-dom";
-import LOGO from "../../../assets/logo.png";
+import LOGO from "../../../../assets/logo.png";
 import { ArrowLeft, CheckIcon } from "lucide-react";
-import CustomSelect from "../../../constants/Reusable/Customdropdown";
+import CustomSelect from "../../../../constants/Reusable/Customdropdown";
 
 function MinKycForm({ verifiedMobile, pan, setVerified }) {
     const navigate = useNavigate();
@@ -188,7 +188,15 @@ function MinKycForm({ verifiedMobile, pan, setVerified }) {
             // console.log(payload)
             const response = await submitMinKyc(payload);
             // console.log("✅ Min KYC Submitted:", response);
-            navigate("/set-pin", { state: { mobileNumber: formValues.mobileNumber } });
+             const message = response?.message || "";
+        const match = message.match(/New Customer Created:\s*(\d+)/);
+        const customerId = match ? match[1] : null;
+            navigate("/set-pin", {
+                state: {
+                    mobileNumber: formValues.mobileNumber,
+                    customerId: customerId
+                }
+            });
         } catch (err) {
             console.error("❌ KYC Submission Failed:", err.response?.data || err.message);
         }

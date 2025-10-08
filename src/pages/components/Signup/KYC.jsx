@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FileText, Shield, ArrowLeft } from "lucide-react";
 import MinKyc from "./MinKyc";
 import FullKyc from "./FullKyc/index";
-import LOGO from "../../assets/logo.png";
+import LOGO from "../../../assets/logo.png";
 import { useNavigate } from "react-router-dom";
 
 // Example components for next step

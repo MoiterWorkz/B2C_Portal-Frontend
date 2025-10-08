@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { getStateAndCityByPincode, submitMinKyc, pepCheck, sanctionCheck } from "../../../../services/service";
+import { getStateAndCityByPincode, submitMinKyc, pepCheck, sanctionCheck } from "../../../../../services/service";
 import { v4 as uuidv4 } from "uuid"; // for generating transactionId
 import { useNavigate } from "react-router-dom";
-import LOGO from "../../../../assets/logo.png";
+import LOGO from "../../../../../assets/logo.png";
 import { ArrowLeft, CheckIcon } from "lucide-react";
-import CustomSelect from "../../../../constants/Reusable/Customdropdown";
+import CustomSelect from "../../../../../constants/Reusable/Customdropdown";
 
 function VideoKycForm({ verifiedMobile, pan, setVerified }) {
     const navigate = useNavigate();

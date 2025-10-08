@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
-import { verifyPan } from "../../services/service"; // ✅ import the API function
-import KYC from "../SignupHooks/KYC";
-import LOGO from "../../assets/logo.png"
+import { verifyPan } from "../../../services/service"; // ✅ import the API function
+import KYC from "./KYC";
+import LOGO from "../../../assets/logo.png"
 import { ArrowLeft, CreditCard, FileText, X } from "lucide-react";
 
 export default function PanVerification() {

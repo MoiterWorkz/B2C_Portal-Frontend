@@ -8,10 +8,11 @@ const SetPin = () => {
   const location = useLocation();
   const navigate = useNavigate();
   // const mobileNumber = location.state?.mobileNumber;
-    const mobileNumber = "9849646516";
+  const customerID = location.state?.mobileNumber
+  const mobileNumber = "9849646516";
   const [pin, setPin] = useState("");
   const [showPin, setShowPin] = useState(false);
-
+  console.log(location)
   // Validation functions
   const isFourDigits = /^\d{4}$/.test(pin);
   const onlyNumbers = /^\d*$/.test(pin);
@@ -36,17 +37,21 @@ const SetPin = () => {
 
   const allValid = Object.values(validations).every(Boolean);
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (customerID) => {
     try {
       const encodedPin = btoa(pin); // 🔒 encode
-      await setAccountPin(mobileNumber, encodedPin);
-      console.log(mobileNumber,encodedPin)
-      alert("Accouct created Successfully , You May Login now with your Registered Mobile Number and Pin")
+      const customerIdValue = parseInt(customerID); // make sure it's a number
+      await setAccountPin(customerIdValue, mobileNumber, encodedPin);
+
+      console.log("CustomerID:", customerIdValue, "Mobile:", mobileNumber, "PIN:", encodedPin);
+      alert("Account created successfully. You may login now with your registered mobile number and PIN.");
       navigate("/Customer-Login");
     } catch (err) {
+      
       console.error("Error setting PIN:", err);
     }
   };
+
 
   return (
     <div className="flex flex-col items-center justify-center  bg-primary-background  w-full">

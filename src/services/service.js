@@ -158,7 +158,7 @@ export const sanctionCheck = async ({
 };
 
 // ✅ Set Account PIN (Password API)
-export const setAccountPin = async (mobileNumber, pin) => {
+export const setAccountPin = async (customerId,mobileNumber, pin) => {
   return postRequest("/cs/api/Customer/password", {
     customerId,
     mobileNumber,

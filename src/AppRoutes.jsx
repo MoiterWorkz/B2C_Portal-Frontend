@@ -2,7 +2,7 @@ import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import LandingPage from "./pages/Landingpage";
 import SignUpPage from "./pages/signup";
-import SetPin from "./hooks/SignupHooks/MinKyc/SetPin";
+import SetPin from "./pages/components/Signup/SetPin";
 import Login from "./pages/Login";
 import Layout from "./components/layout/Layout";
 import Dashboard from "./pages/Dashboard";
@@ -17,7 +17,7 @@ import PayeeList from "./pages/fundTransfer/payeeList";
 import MyProfile from "./pages/components/MyProfile";
 import BillDetails from "./pages/components/Electricity/BillDetails";
 import SelectorProvider from "./pages/components/Electricity/SelectorProvider";
-import VideofileUpload from "./hooks/SignupHooks/FullKyc/VideoKYC/Videofileupload";
+import VideofileUpload from "./pages/components/Signup/FullKyc/VideoKYC/Videofileupload";
 import ChangePin from "./pages/components/changepin";
 // import MakersDashboard from "./pages/makersDashboard";
 

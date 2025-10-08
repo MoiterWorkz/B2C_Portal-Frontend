@@ -1,10 +1,10 @@
 import React, { useState, useRef } from "react";
 import { ArrowLeft, VideoIcon } from "lucide-react";
-import LOGO from "../../../../assets/logo.png";
+import LOGO from "../../../../../assets/logo.png";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { uploadVideoKyc } from "../../../../services/service";
-import { createVideoPayload } from "../../../../utils/fileUtils";
+import { uploadVideoKyc } from "../../../../../services/service";
+import { createVideoPayload } from "../../../../../utils/fileUtils";
 
 const VideofileUpload = () => {
   const [isRecording, setIsRecording] = useState(false);
