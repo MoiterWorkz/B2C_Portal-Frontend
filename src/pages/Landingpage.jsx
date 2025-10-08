@@ -130,7 +130,7 @@ const LandingPage = () => {
                   {section.label}
                 </button>
               ))}
-            <button
+            {/* <button
               onClick={() => {
                 navigate("/dashboard");
                 window.scrollTo({ top: 0, left: 0, behavior: "smooth" }); // scroll to top after navigation
@@ -139,7 +139,7 @@ const LandingPage = () => {
               type="button"
             >
               Dashboard
-            </button>
+            </button> */}
           </nav>
 
           {/* Desktop Auth Buttons */}
@@ -178,7 +178,7 @@ const LandingPage = () => {
                   {section.label}
                 </button>
               ))}
-            <button
+            {/* <button
               onClick={() => {
                 navigate("/dashboard");
                 setIsMobileMenuOpen(false);
@@ -186,7 +186,7 @@ const LandingPage = () => {
               className="block w-full text-left text-white hover:text-gray-400 transition-colors"
             >
               Dashboard
-            </button>
+            </button> */}
             <div className="flex space-x-3 pt-2">
               <button
                 onClick={() => navigate("/Customer-Login")}

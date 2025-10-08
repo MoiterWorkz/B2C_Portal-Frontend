@@ -19,6 +19,7 @@ import BillDetails from "./pages/components/Electricity/BillDetails";
 import SelectorProvider from "./pages/components/Electricity/SelectorProvider";
 import VideofileUpload from "./pages/components/Signup/FullKyc/VideoKYC/Videofileupload";
 import ChangePin from "./pages/components/changepin";
+import PrivateRoute from "./routes/privateRoute";
 // import MakersDashboard from "./pages/makersDashboard";
 
 function AppRoutes({ setRole }) {
@@ -35,7 +36,13 @@ function AppRoutes({ setRole }) {
       {/* If you want to redirect unknown paths to LandingPage */}
 
       <Route path="/Sign-Up" element={<SignUpPage />} />
-      <Route element={<Layout />}>
+      <Route
+        element={
+          <PrivateRoute>
+            <Layout />
+          </PrivateRoute>
+        }
+      >
         <Route index path="dashboard" element={<Dashboard />} />
         <Route path="manage-wallet" element={<ManageWallet />} />
         <Route path="my-card" element={<MyCard />} />
@@ -49,8 +56,6 @@ function AppRoutes({ setRole }) {
         <Route />
         <Route path="/MyProfile" element={<MyProfile />} />
         <Route path="/change-pin" element={<ChangePin />} />
-      </Route>
-      <Route element={<Layout />}>
         <Route path="BillDetails" element={<BillDetails />} />
         <Route path="SelectorProvider" element={<SelectorProvider />} />
       </Route>

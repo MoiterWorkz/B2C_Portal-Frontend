@@ -2,7 +2,15 @@ import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { setAccountPin } from "../../../services/service";
 import LOGO from "../../../assets/logo.png";
-import { CircleCheck, CircleCheckBig, Eye, EyeClosed, EyeOff, Lock, Shield } from "lucide-react";
+import {
+  CircleCheck,
+  CircleCheckBig,
+  Eye,
+  EyeClosed,
+  EyeOff,
+  Lock,
+  Shield,
+} from "lucide-react";
 
 const SetPin = () => {
   const location = useLocation();
@@ -22,7 +30,7 @@ const SetPin = () => {
     const digits = pin.split("").map(Number);
     return (
       digits.every((d, i) => i === 0 || d === digits[i - 1] + 1) || // ascending
-      digits.every((d, i) => i === 0 || d === digits[i - 1] - 1)    // descending
+      digits.every((d, i) => i === 0 || d === digits[i - 1] - 1) // descending
     );
   };
 
@@ -60,14 +68,12 @@ const SetPin = () => {
         {/* Logo */}
         <div className="flex items-center gap-2 mb-6">
           <img src={LOGO} alt="Moiter Workz Logo" className="h-9" />
-
         </div>
         <div className=" w-1/2 flex justify-between">
           <p className=" font-themecolor medium-text ">Set Account Pin</p>
           <p className="icon-color small-text">90%</p>
         </div>
         <div className="w-1/2 bg-gray-800 h-2 rounded-full mt-2">
-
           <div
             className="sign-up-button h-2 rounded-full"
             style={{ width: "90%" }}
@@ -83,16 +89,21 @@ const SetPin = () => {
           </div>
         </div>
 
-        <h2 className="form-heading2 font-semibold text-center mb-2 white-letter-color">Set Account PIN</h2>
+        <h2 className="form-heading2 font-semibold text-center mb-2 white-letter-color">
+          Set Account PIN
+        </h2>
         <div className="text-center small-text gray-text mb-6">
-          <div>
-            Create a secure 4-digit PIN for your account
-          </div>
+          <div>Create a secure 4-digit PIN for your account</div>
           <div className="text-center small-text gray-text mt-3">
-            Setting up PIN for <span className="font-themecolor font-semibold">{mobileNumber}</span>
+            Setting up PIN for{" "}
+            <span className="font-themecolor font-semibold">
+              {mobileNumber}
+            </span>
           </div>
         </div>
-        <label className="small-text font-medium white-letter-color">Enter 4-digit PIN</label>
+        <label className="small-text font-medium white-letter-color">
+          Enter 4-digit PIN
+        </label>
         {/* Input */}
         <div className="relative mb-4">
           <input
@@ -112,12 +123,25 @@ const SetPin = () => {
           </button>
         </div>
 
-        <label className="small-text font-medium white-letter-color">PIN Requirements:</label>
+        <label className="small-text font-medium white-letter-color">
+          PIN Requirements:
+        </label>
         {/* Validations */}
         <div className="space-y-1 mb-6 text-sm">
           {Object.entries(validations).map(([rule, passed]) => (
-            <p key={rule} className={`flex  small-text items-center gap-2 ${passed ? "text-green-400" : "text-neutral-400"}`}>
-              <span>{passed ? <CircleCheckBig size={12} /> : <CircleCheckBig size={12} />}</span>
+            <p
+              key={rule}
+              className={`flex  small-text items-center gap-2 ${
+                passed ? "text-green-400" : "text-neutral-400"
+              }`}
+            >
+              <span>
+                {passed ? (
+                  <CircleCheckBig size={12} />
+                ) : (
+                  <CircleCheckBig size={12} />
+                )}
+              </span>
               {rule}
             </p>
           ))}
@@ -127,23 +151,25 @@ const SetPin = () => {
         <button
           onClick={handleSubmit}
           disabled={!allValid}
-          className={`w-full py-2 rounded-lg font-semibold transition ${allValid
-            ? "sign-up-button text-black hover:bg-yellow-300"
-            : "bg-neutral-700 text-neutral-500 cursor-not-allowed"
-            }`}
+          className={`w-full py-2 rounded-lg font-semibold transition ${
+            allValid
+              ? "sign-up-button text-black hover:bg-yellow-300"
+              : "bg-neutral-700 text-neutral-500 cursor-not-allowed"
+          }`}
         >
           Continue
         </button>
 
         {/* Footer note */}
         <p className="small-text px-5 py-2 gray-text text-center  rounded-[5px] mt-5 full-border flex items-center">
-          <span className="font-themecolor"><Lock size={14} /></span>
-          Your PIN is encrypted and securely stored. Never share your PIN with anyone.
+          <span className="font-themecolor">
+            <Lock size={14} />
+          </span>
+          Your PIN is encrypted and securely stored. Never share your PIN with
+          anyone.
         </p>
       </div>
     </div>
-
-
   );
 };
 

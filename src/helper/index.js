@@ -18,3 +18,5 @@ export const generateTransactionRef = () => {
 
 export const capitalizeFirst = (text) =>
   text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+
+export const ruppeeWithComma = (value) => value?.toLocaleString("en-IN");
