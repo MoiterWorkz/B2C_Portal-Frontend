@@ -9,7 +9,6 @@ const Login = () => {
   const [phone, setPhone] = useState("");
   const [pin, setPin] = useState("");
   const { setCustomerId } = useSignInStore();
-
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -19,7 +18,12 @@ const Login = () => {
       const res = await loginWithPin(phone, encodedPin);
       console.error("Login success:", res);
       setCustomerId(res?.customerId);
-      navigate("/dashboard");
+      const customerId = res?.customerId || "";
+      const dataToEncode = JSON.stringify({ mobileNumber: phone, ID: customerId });
+
+      // Encode the JSON as Base64
+      const encodedData = btoa(dataToEncode);
+      navigate("/dashboard", { state: { encoded: encodedData,encodedPin  } });
     } catch (err) {
       console.error("Login failed:", err.response?.data || err.message);
       alert("Login failed. Check your phone number and PIN.");

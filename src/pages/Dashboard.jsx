@@ -10,10 +10,11 @@ import { useSignInStore } from "../store/useSigninStore";
 // import { fetchDashboard } from "../../../services/service";
 // import { useSignInStore } from "../../../store/useSigninStore";
 import DashBoardHooks from "../hooks/dashBoardHooks";
+import { useLocation } from "react-router-dom";
 
 const Dashboard = () => {
   const [hideBalance, setHideBalance] = useState(false);
-
+  const storage = useLocation()
   const { dashBoardData } = DashBoardHooks();
 
   if (!dashBoardData) {

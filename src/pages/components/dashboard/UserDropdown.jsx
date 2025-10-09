@@ -2,8 +2,11 @@ import { User, Lock, Database, Palette, Home, LogOut } from "lucide-react";
 import { useNavigate } from "react-router-dom"; // ✅ Import useNavigate
 import DashBoardHooks from "../../../hooks/dashBoardHooks";
 import { useSignInStore } from "../../../store/useSigninStore";
+import { useState } from "react";
 
-const UserDropdown = ({ user }) => {
+const UserDropdown = ({ user, storage, userDetail }) => {
+  const [userstorage] = useState(userDetail)
+  const { encoded, encodedPin } = storage.state || {};
   const { dashBoardData } = DashBoardHooks();
 
   const navigate = useNavigate(); // ✅ Initialize navigate
@@ -15,8 +18,12 @@ const UserDropdown = ({ user }) => {
     navigate("/");
   };
 
-  const handleNavigate = (to) => {
-    navigate(to); // Navigate to the page
+  const handleNavigate = (to, data) => {
+    const mergedData = {
+      encoded,
+      encodedPin,
+    };
+    navigate(to, { state: { userstorage: mergedData } }); // ✅ pass via state
   };
 
   return (
@@ -41,7 +48,7 @@ const UserDropdown = ({ user }) => {
         <DropdownItem
           icon={<Lock size={15} />}
           label="Change Pin"
-          onClick={() => handleNavigate("/change-pin")}
+          onClick={() => handleNavigate("/change-pin", userstorage)}
         />
         <DropdownItem
           icon={<Database size={15} />}

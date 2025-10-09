@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { Lock, Eye, EyeOff } from "lucide-react";
-
+import { useLocation } from "react-router-dom";
+import { setAccountPin } from "../../services/service";
 const ChangePin = () => {
+ 
   const [oldPin, setOldPin] = useState("");
   const [newPin, setNewPin] = useState("");
   const [confirmPin, setConfirmPin] = useState("");
@@ -9,24 +11,54 @@ const ChangePin = () => {
   const [showNew, setShowNew] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
 
+  const location = useLocation();
+
+  const decodedPin = atob(location?.state?.userstorage?.encoded || "");
+  const decodedLoginPin = atob (location?.state?.userstorage?.encodedPin)
+  const parsedData = JSON.parse(decodedPin);
+  const mobileNumber = parsedData.mobileNumber;
+  const customerId = parsedData.ID;
+
   // ✅ Function to allow only digits and max 4 chars
   const handlePinChange = (setter) => (e) => {
     const value = e.target.value;
     if (/^\d{0,4}$/.test(value)) setter(value); // only digits up to 4
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (newPin !== confirmPin) {
-      alert("New PIN and Confirm PIN must match");
-      return;
-    }
-    if (!/^\d{4}$/.test(newPin)) {
-      alert("PIN must be exactly 4 digits");
-      return;
-    }
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  // ✅ Check if old PIN matches decoded PIN
+  if (oldPin !== decodedLoginPin) {
+    alert("Old PIN is incorrect");
+    return;
+  }
+
+  // Check if new PIN matches confirm PIN
+  if (newPin !== confirmPin) {
+    alert("New PIN and Confirm PIN must match");
+    return;
+  }
+
+  // Check if new PIN is exactly 4 digits
+  if (!/^\d{4}$/.test(newPin)) {
+    alert("PIN must be exactly 4 digits");
+    return;
+  }
+
+  try {
+    const encodedPin = btoa(newPin); // encode new PIN
+    const customerIdValue = parseInt(customerId); // ensure it's a number
+    await setAccountPin(customerIdValue, mobileNumber, encodedPin);
+
+    // console.log("CustomerID:", customerIdValue, "Mobile:", mobileNumber, "PIN:", encodedPin);
     alert("PIN successfully changed!");
-  };
+  } catch (err) {
+    console.error("Error setting PIN:", err);
+  }
+};
+
+
 
   return (
     <div className="max-w-7xl mx-auto px-6 lg:px-8 py-6 lg:py-8">
