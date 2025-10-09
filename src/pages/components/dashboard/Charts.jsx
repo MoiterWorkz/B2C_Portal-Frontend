@@ -38,6 +38,14 @@ ChartJS.register(
 );
 
 const Charts = ({ dashBoardData }) => {
+  if (!dashBoardData || typeof dashBoardData !== "object") {
+    return (
+      <div className="max-w-7xl mx-auto px-6 py-6 text-center text-red-500 font-semibold">
+        ⚠️ Unable to load dashboard data. Please try again later.
+      </div>
+    );
+  }
+
   const monthlyFlow = dashBoardData?.monthlyFlow || [];
 
   const spendBreakdown = dashBoardData?.spendBreakdown || [];
@@ -238,28 +246,39 @@ const Charts = ({ dashBoardData }) => {
         </h4>
 
         <div className="h-64 w-full max-w-md mx-auto flex items-center justify-center">
-          <Pie
-            data={pieData}
-            options={pieOptions}
-            plugins={[outsideLabelPlugin]}
-          />
+          {spendBreakdown && spendBreakdown.length > 0 ? (
+            <Pie
+              data={pieData}
+              options={pieOptions}
+              plugins={[outsideLabelPlugin]}
+            />
+          ) : (
+            <p
+              className="text-center"
+              style={{ color: "var(--primary-color)" }}
+            >
+              ⚠️ Unable to load spend breakdown data
+            </p>
+          )}
         </div>
 
         <div className="mt-4 grid grid-cols-2 gap-2">
-          {pieData.labels.map((label, i) => (
-            <div key={i} className="flex items-center gap-2">
-              <div
-                className="w-2 h-2 rounded-full"
-                style={{
-                  backgroundColor: pieData.datasets[0].backgroundColor[i],
-                }}
-              />
-              <span className="text-sm text-muted-foreground">{label}</span>
-              <span className="text-sm font-medium text-foreground">
-                ₹{pieData.datasets[0].data[i].toLocaleString()}
-              </span>
-            </div>
-          ))}
+          {spendBreakdown && spendBreakdown.length > 0
+            ? pieData.labels.map((label, i) => (
+                <div key={i} className="flex items-center gap-2">
+                  <div
+                    className="w-2 h-2 rounded-full"
+                    style={{
+                      backgroundColor: pieData.datasets[0].backgroundColor[i],
+                    }}
+                  />
+                  <span className="text-sm text-muted-foreground">{label}</span>
+                  <span className="text-sm font-medium text-foreground">
+                    ₹{pieData.datasets[0].data[i].toLocaleString()}
+                  </span>
+                </div>
+              ))
+            : null}
         </div>
       </div>
 
@@ -269,9 +288,17 @@ const Charts = ({ dashBoardData }) => {
           <BarChart3 style={{ color: "var(--primary-color)" }} />
           Monthly Money Flow
         </h4>
-        <div className="h-64 w-full max-w-md mx-auto flex items-center justify-center">
-          <Line data={lineData} options={lineOptions} />
+
+        <div className="h-auto sm:h-64 w-full max-w-md mx-auto flex items-center justify-center">
+          {monthlyFlow && monthlyFlow.length > 0 ? (
+            <Line data={lineData} options={lineOptions} />
+          ) : (
+            <p className="text-red-500 text-center">
+              ⚠️ Unable to load monthly money flow data
+            </p>
+          )}
         </div>
+
         <div className="mt-4 flex items-center justify-center gap-6">
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 rounded-full bg-green-400"></div>

@@ -20,6 +20,9 @@
   --color-green-400: oklch(0.792 0.209 151.711);
   --color-red-400: oklch(0.704 0.191 22.216);
   --primary-dotted-border: hsla(39, 93%, 76%, 0.2);
+  --guid-background: #34332f;
+  --text-yellow-400: oklch(0.852 0.199 91.936);
+
   /* Backgrounds */
   --button-hover: color-mix(in oklab, var(--primary-color) 90%, transparent);
   --transparent-color: transparent;
@@ -55,7 +58,11 @@
     var(--card-background-color) 80%,
     transparent
   );
-
+  --alertcard-background-color: color-mix(
+    in oklab,
+    var(--color-yellow-400) 5%,
+    transparent
+  );
   --color-yellow-400: oklch(0.852 0.199 91.936);
   --button-boxshadow: #fad48933;
 
@@ -1415,5 +1422,79 @@ button {
   }
   .change-button:hover {
     background-color: var(--button-hover);
+  }
+}
+
+.Addpay {
+  svg {
+    color: var(--primary-color);
+  }
+  h1 {
+    @apply text-[17px] sm:text-[21px];
+    color: var(--primary-font-color);
+  }
+  p,
+  li {
+    @apply text-[10px] sm:text-[12.25px];
+    color: var(--subheading-color);
+  }
+  .enterdetailsbutton {
+    background-color: var(--primary-color);
+    @apply text-[10px] sm:text-[14.25px];
+  }
+  .verifydetailsbutton {
+    background-color: var(--user-icon-background-color);
+    color: var(--subheading-color);
+    @apply text-[10px] sm:text-[14.25px];
+  }
+  h3 {
+    color: var(--primary-color);
+    @apply text-[13px] sm:text-[15.25px];
+  }
+  label {
+    color: var(--primary-font-color);
+    @apply text-[10px] sm:text-[12.25px];
+  }
+  .valid-guid {
+    background-color: var(--guid-background);
+    border: var(--thin-border);
+  }
+  .button-submit {
+    background-color: var(--primary-color);
+    @apply text-[10px] sm:text-[12.25px];
+    font-weight: var(--font-semibold);
+  }
+  .extra-card {
+    background-color: var(--secondary-backgroundcolor);
+    border: var(--thin-border);
+  }
+  .validate-button {
+    background-color: var(--primary-color);
+    @apply text-[10px] sm:text-[12.25px];
+  }
+}
+.input-border-error {
+  border: 1px solid red !important;
+}
+
+.input-border-valid {
+  border: 1px solid green !important;
+}
+
+.text-error {
+  color: red !important;
+}
+
+.text-valid {
+  color: green !important;
+}
+.alert-card {
+  background-color: var(--alertcard-background-color);
+
+  h3 {
+    color: var(--text-yellow-400);
+  }
+  .error-red {
+    color: var(--color-red-400);
   }
 }
