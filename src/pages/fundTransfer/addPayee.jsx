@@ -1,7 +1,12 @@
 import React from "react";
+import AddEditPayee from "../components/addPayee/addEditPayee";
 
-const AddPayee = () => {
-  return <div>AddPayee</div>;
+const addPayee = () => {
+  return (
+    <div>
+      <AddEditPayee />
+    </div>
+  );
 };
 
-export default AddPayee;
+export default addPayee;

@@ -18,7 +18,7 @@ const Dashboard = () => {
   const { dashBoardData } = DashBoardHooks();
 
   if (!dashBoardData) {
-    return <p>Loading...</p>;
+    return <p style={{ color: "var(--primary-color)" }}>Loading...</p>;
   }
   return (
     <div className="space-y-6">
