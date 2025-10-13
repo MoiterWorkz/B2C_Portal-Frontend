@@ -35,6 +35,8 @@
     transparent
   );
   --third-backgroundcolor: color-mix(in oklab, #2a2a2a 80%, transparent);
+  --payment-bg: color-mix(in oklab, #3a3a3a 50%, transparent);
+
   --smallbutton-inside-backgound: color-mix(
     in oklab,
     var(--primary-color) 10%,
@@ -84,6 +86,11 @@
     var(--primary-color) 50%,
     transparent
   );
+  --receipt-yellow-bg: color-mix(
+    in srgb,
+    oklch(0.795 0.184 86.047) 5%,
+    transparent
+  );
 
   --third-backgroundcolor: color-mix(
     in oklab,
@@ -100,6 +107,25 @@
     var(--primary-color) 5%,
     transparent
   );
+
+  --success-icon-bg: color-mix(
+    in oklab,
+    oklch(0.723 0.219 149.579) 20%,
+    transparent
+  );
+
+  --wallet-updated-bg: color-mix(
+    in oklab,
+    oklch(0.623 0.214 259.815) 5%,
+    transparent
+  );
+
+  --wallet-updated-bg-border: color-mix(
+    in srgb,
+    oklch(0.623 0.214 259.815) 20%,
+    transparent
+  );
+
   /* Shadows */
   --card-hover-shadow: 0 20px 40px #fad48926, 0 8px 16px #fad4891a;
   --small-cards-shadow: 0px 0px 0px 1px
@@ -224,6 +250,9 @@ body {
 /* Card Background */
 .card-bg {
   background-color: var(--card-background-color);
+}
+.blue-border {
+  border-color: var(--wallet-updated-bg-border);
 }
 
 .card-bg:hover {
@@ -661,6 +690,20 @@ body {
   }
 }
 
+.payments-card {
+  transition: all 0.3s ease-in-out;
+  position: relative;
+  border: 1px solid transparent; /* default border */
+  border-radius: 1rem; /* optional rounded corners */
+  background-color: var(--card-background-color); /* card background */
+  border: var(--thin-border);
+  &:hover {
+    border-color: var(--primary-color);
+    transform: scale(1.02);
+    background: var(--card-settings-bg);
+  }
+}
+
 .chart-heading {
   h4 {
     color: var(--primary-font-color);
@@ -975,21 +1018,6 @@ body {
 
 .card-bottom-border {
   @apply border-b border-[var(--button-boxshadow)] mt-6;
-}
-
-.input-field-style {
-  border: 1px solid var(--button-boxshadow);
-  padding: 2px 10px;
-  font-size: 14px;
-
-  &:focus {
-    outline: 1px solid var(--primary-color);
-  }
-
-  &::placeholder {
-    color: var(--subheading-color);
-    font-size: 12px;
-  }
 }
 
 /* ///////////////////////////////////// */
@@ -1416,4 +1444,32 @@ button {
   .change-button:hover {
     background-color: var(--button-hover);
   }
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.submit-btn {
+  @apply bg-[var(--primary-color)] opacity-50 hover:opacity-100 text-sm text-black font-semibold cursor-pointer px-4 py-2 rounded-md;
+}
+
+.select-input {
+  width: 100%;
+  border: var(--white-border);
+  border-radius: 0.375rem;
+  padding: 0.25rem 0.75rem;
+  font-size: 12px;
+  color: var(--primary-font-color);
+  background: var(--card-background-color);
+  outline: none;
+  transition: all 0.2s ease-in-out;
+  &:focus {
+    border: 1px solid var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(var(--primary-color-rgb), 0.3);
+    outline: none;
+  }
+}
+.receipt-boxshadow {
+  box-shadow: 0 0 #0000, 0 0 #0000, 0 0 #0000, 0 0 #0000, 0 8px 25px #fad48926;
 }

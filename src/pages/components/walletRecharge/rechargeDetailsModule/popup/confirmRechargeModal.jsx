@@ -1,14 +1,14 @@
 import { createPortal } from "react-dom";
 import { CircleAlert } from "lucide-react";
 import { useEffect, useState } from "react";
+import { calculatePercentage } from "../../../../../helper";
 
 const ConfirmRechargeModal = ({
   amt,
   paymentMethod,
-  processingFee = "FREE",
   confirmModal,
   onClose,
-  setProcessingModalModal,
+  setProcessingModal,
 }) => {
   const details = [
     {
@@ -18,10 +18,27 @@ const ConfirmRechargeModal = ({
     { label: "Payment Method", value: paymentMethod },
     {
       label: "Processing Fee",
-      value: processingFee,
+      value: `₹${calculatePercentage(Number(amt), 0.5)}.00`,
       valueClass: "text-green-400",
     },
   ];
+
+  const formattedAmount = () => {
+    // Convert to numbers
+    const amtNumber = parseFloat(details?.[0]?.value.replace(/[^0-9.]/g, ""));
+    const feeNumber = parseFloat(details?.[2]?.value.replace(/[^0-9.]/g, ""));
+
+    // Add them
+    const finalAmount = amtNumber + feeNumber;
+
+    const formatted = `₹${finalAmount.toLocaleString("en-IN", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })}`;
+
+    return formatted;
+  };
+  const formattedFinalAmt = formattedAmount();
 
   const handleOverlayClick = (e) => {
     if (e.target === e.currentTarget) onClose();
@@ -71,9 +88,7 @@ const ConfirmRechargeModal = ({
             <hr className="my-2 inner-card-border" />
             <div className="flex justify-between font-semibold">
               <span className="text-sm">Total Amount:</span>
-              <span className="text-yellow-400">
-                ₹{Number(amt).toLocaleString("en-IN")}.00
-              </span>
+              <span className="text-yellow-400">{formattedFinalAmt}</span>
             </div>
           </div>
 
@@ -108,11 +123,11 @@ const ConfirmRechargeModal = ({
             <button
               className="px-4 py-2 rounded bg-[var(--primary-color)] text-black hover:opacity-90 font-semibold cursor-pointer"
               onClick={() => {
-                setProcessingModalModal(true);
+                setProcessingModal(true);
                 onClose();
               }}
             >
-              Confirm & Pay ₹{amt.toLocaleString()}
+              Confirm & Pay {formattedFinalAmt}
             </button>
           </div>
         </div>

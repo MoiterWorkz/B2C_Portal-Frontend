@@ -1,4 +1,5 @@
 import { IndianRupee } from "lucide-react";
+import { toWords } from "number-to-words";
 const CustomAmounts = ({ amount, handleChange }) => {
   return (
     <section>
@@ -13,19 +14,17 @@ const CustomAmounts = ({ amount, handleChange }) => {
           ₹
         </span>
         <input
-          style={{ padding: "2px 24px", color: "white" }}
+          style={{ padding: "2px 24px" }}
           type="text"
           value={amount}
           onChange={handleChange}
           placeholder="Enter amount (Min: ₹100, Max: ₹50,000)"
-          className="w-full rounded-md input-field-style"
+          className="profilecard-input"
         />
       </div>
 
       <p className="text-[var(--primary-color)] text-xs mt-[2px] min-h-[18px]">
-        {amount
-          ? `Amount in words: ₹${Number(amount).toLocaleString("en-IN")}.00`
-          : ""}
+        {amount ? `Amount in words: ${toWords(amount)} rupees only` : ""}
       </p>
     </section>
   );

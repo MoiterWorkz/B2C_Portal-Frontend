@@ -1,17 +1,15 @@
 import { User, Lock, Database, Palette, Home, LogOut } from "lucide-react";
 import { useNavigate } from "react-router-dom"; // ✅ Import useNavigate
 import DashBoardHooks from "../../../hooks/dashBoardHooks";
-import { useSignInStore } from "../../../store/useSigninStore";
 
 const UserDropdown = ({ user }) => {
   const { dashBoardData } = DashBoardHooks();
 
   const navigate = useNavigate(); // ✅ Initialize navigate
-  const { setCustomerId } = useSignInStore();
   const username = user?.name || dashBoardData?.customerName || "";
   const email = user?.email || "";
   const handleLogout = () => {
-    setCustomerId("");
+    localStorage.removeItem("customerId");
     navigate("/");
   };
 

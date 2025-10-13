@@ -20,3 +20,18 @@ export const capitalizeFirst = (text) =>
   text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
 
 export const ruppeeWithComma = (value) => value?.toLocaleString("en-IN");
+
+export const calculatePercentage = (value, percent) => (percent / 100) * value;
+
+export const numberToWords = (num) => {
+  if (typeof num === "string") num = parseInt(num, 10);
+  if (isNaN(num)) return "Invalid number";
+
+  const formatter = new Intl.NumberFormat("en-IN", {
+    style: "currency",
+    currency: "INR",
+  });
+
+  const words = require("number-to-words").toWords(num);
+  return words.replace(/\b\w/g, (c) => c.toUpperCase()) + " Rupees Only";
+};
