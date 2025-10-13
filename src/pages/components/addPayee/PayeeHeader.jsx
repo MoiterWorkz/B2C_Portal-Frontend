@@ -26,7 +26,10 @@ const PayeeHeader = ({ step }) => {
               step === "addEdit" ? "bg-primary text-white" : "bg-muted"
             }`}
           >
-            <Circle className="h-4 w-4 fill-current" />
+            <Circle
+              className="h-4 w-4 fill-current"
+              style={{ color: "var(--text)" }}
+            />
             <span>Enter Details</span>
           </div>
 
