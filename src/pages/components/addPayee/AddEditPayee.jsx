@@ -7,19 +7,7 @@ import {
   TriangleAlert,
 } from "lucide-react";
 
-const AddEditPayee = () => {
-  const [formData, setFormData] = useState({
-    payeeName: "",
-    ifscCode: "",
-    accountNumber: "",
-    retypeAccountNumber: "",
-    payeeMobile: "",
-    payMode: "IMPS",
-    knowIfsc: "yes",
-    payeeCity: "",
-    isCityValidated: false,
-  });
-
+const AddEditPayee = ({ onSubmit, formData, setFormData }) => {
   const payeeNameRef = useRef();
   const ifscCodeRef = useRef();
   const accountNumberRef = useRef();
@@ -77,6 +65,7 @@ const AddEditPayee = () => {
     // If all validations pass
     console.log("Submitted Data:", formData);
     alert("Payee details submitted successfully!");
+    onSubmit(formData);
   };
   const [touched, setTouched] = useState({
     ifscCode: false,
@@ -122,42 +111,9 @@ const AddEditPayee = () => {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-6 lg:px-8 py-6 lg:py-8 space-y-6 Addpay">
-      {/* Header */}
-      <div className="flex items-center gap-3">
-        <UserPlus className="h-8 w-8 text-primary" />
-        <div>
-          <h1 className="text-foreground text-xl font-semibold">
-            Add / Edit Payee
-          </h1>
-          <p className="text-muted-foreground">
-            Add a new payee for quick transfers
-          </p>
-        </div>
-      </div>
-
-      {/* Step Indicator */}
-      <div className="rounded-lg border bg-card text-card-foreground shadow-sm card-hover-effect">
-        <div className="p-4 flex items-center gap-4">
-          <div className="flex items-center gap-2 px-4 py-2 rounded-lg enterdetailsbutton">
-            <Circle
-              className="h-4 w-4 fill-current"
-              style={{ color: "var(--font-black)" }}
-            />
-            <span>Enter Details</span>
-          </div>
-          <div className="h-0.5 flex-1 bg-muted"></div>
-          <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-muted verifydetailsbutton">
-            <Circle
-              className="h-4 w-4"
-              style={{ color: "var(--subheading-color)" }}
-            />
-            <span>Verify Details</span>
-          </div>
-        </div>
-      </div>
+    <div className="Addpay">
       {errors.length > 0 && (
-        <div className="p-4 rounded-lg border alert-card card-bg-br ">
+        <div className="p-4 rounded-lg border alert-card card-bg-br mb-4 ">
           <div className="flex items-start gap-3">
             <TriangleAlert className="h-5 w-5 text-yellow-500 mt-0.5" />
             <div className="flex-1">
@@ -182,7 +138,7 @@ const AddEditPayee = () => {
       {/* Form */}
       <form
         onSubmit={handleSubmit}
-        className="rounded-lg border bg-card text-card-foreground shadow-sm card-hover-effect"
+        className="rounded-lg border bg-card text-card-foreground shadow-sm card-bg-br"
       >
         <div className="p-6 space-y-6">
           <h3 className="font-semibold text-primary text-lg">

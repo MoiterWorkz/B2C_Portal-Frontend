@@ -22,6 +22,7 @@
   --primary-dotted-border: hsla(39, 93%, 76%, 0.2);
   --guid-background: #34332f;
   --text-yellow-400: oklch(0.852 0.199 91.936);
+  --color-green-500: oklch(0.723 0.219 149.579);
 
   /* Backgrounds */
   --button-hover: color-mix(in oklab, var(--primary-color) 90%, transparent);
@@ -63,6 +64,7 @@
     var(--color-yellow-400) 5%,
     transparent
   );
+  --footerinfo-background-color: #00c9510d;
   --color-yellow-400: oklch(0.852 0.199 91.936);
   --button-boxshadow: #fad48933;
 
@@ -1441,6 +1443,9 @@ button {
   .enterdetailsbutton {
     background-color: var(--primary-color);
     @apply text-[10px] sm:text-[14.25px];
+    svg {
+      color: var(--font-black);
+    }
   }
   .verifydetailsbutton {
     background-color: var(--user-icon-background-color);
@@ -1496,5 +1501,99 @@ button {
   }
   .error-red {
     color: var(--color-red-400);
+  }
+}
+.Verify-Payee-Details {
+  h3 {
+    @apply text-[13px] sm:text-[15px];
+    color: var(--primary-color);
+  }
+  label {
+    @apply text-[10.5px] sm:text-[12.5px];
+    color: var(--subheading-color);
+  }
+  p {
+    @apply text-[10.5px] sm:text-[12.25px];
+    color: var(--primary-font-color);
+    font-weight: var(--font-semibold);
+  }
+  .back-to-edit {
+    color: var(--primary-font-color);
+    background-color: var(--primary-backgroundcolor);
+    border: var(--thin-border);
+    transition: all 0.3s ease-in-out;
+  }
+  .back-to-edit:hover {
+    background-color: var(--user-icon-background-color);
+    color: var(--primary-backgroundcolor);
+  }
+  .confirm-to-pay {
+    background-color: var(--primary-color);
+  }
+  .confirm-to-pay:hover {
+    background-color: var(--button-hover);
+  }
+}
+.payeeAdd {
+  /* background-color: var(--color-green-400); */
+  background-color: var(--footerinfo-background-color);
+  h3 {
+    @apply text-[12.5px] sm:text-[15.25px];
+    color: var(--color-green-400);
+  }
+  p {
+    color: var(--subheading-color);
+    @apply text-[10.5px] sm:text-[12.25px];
+  }
+  label {
+    color: var(--color-green-400);
+    @apply text-[10.5px] sm:text-[12.25px];
+  }
+  .addbutton {
+    .button1 {
+      svg {
+        color: var(--primary-color);
+      }
+      background-color: var(--primary-backgroundcolor);
+      border: var(--thin-border);
+      color: var(--primary-color);
+      @apply text-[10.5px] sm:text-[12.5px];
+    }
+    .button1:hover {
+      color: var(--primary-backgroundcolor);
+      background-color: var(--smallbutton-inside-backgound);
+      svg {
+        color: var(--primary-backgroundcolor);
+      }
+    }
+    .button2 {
+      svg {
+        color: var(--font-black);
+      }
+      background-color: var(--primary-color);
+      border: var(--thin-border);
+      color: var(--font-black);
+      @apply text-[10.5px] sm:text-[12.5px];
+    }
+    .button3 {
+      svg {
+        color: var(--primary-font-color);
+      }
+      background-color: var(--primary-backgroundcolor);
+      border: var(--thin-border);
+      color: var(--primary-font-color);
+      @apply text-[10.5px] sm:text-[12.5px];
+    }
+    .button3:hover {
+      color: var(--primary-backgroundcolor);
+      background-color: var(--user-icon-background-color);
+      svg {
+        color: var(--primary-backgroundcolor);
+      }
+    }
+  }
+  .InfoFooter {
+    background-color: #19231d;
+    border: var(--thin-border);
   }
 }
