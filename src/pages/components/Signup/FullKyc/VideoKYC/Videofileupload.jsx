@@ -50,7 +50,7 @@ const VideofileUpload = () => {
       try {
         const payload = await createVideoPayload({ blob, customerId: customerID, mobileNumber });
         const res = await uploadVideoKyc(payload);
-        console.log("✅ Video KYC Upload Success:", res.data);
+        // console.log("✅ Video KYC Upload Success:", res.data);
         alert("Video KYC submitted successfully!");
         navigate("/set-pin", { state: { customerId: customerID, mobileNumber } });
       } catch (err) {
@@ -95,7 +95,7 @@ const VideofileUpload = () => {
       }
     };
 
-    console.log("📤 Sending Dummy Payload:", payload);
+    // console.log("📤 Sending Dummy Payload:", payload);
 
     try {
       const res = await axios.post(
@@ -103,7 +103,7 @@ const VideofileUpload = () => {
         payload,
         { headers: { "Content-Type": "application/json" } }
       );
-      console.log("✅ Dummy Video KYC Success:", res.data);
+      // console.log("✅ Dummy Video KYC Success:", res.data);
       alert("Dummy Video KYC submitted successfully!");
       navigate("/set-pin", { state: { customerId: customerID, mobileNumber } });
     } catch (err) {

@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginWithPin } from "../services/service"; // API service
-import { ArrowLeft, Phone, LogIn, Shield } from "lucide-react";
+import { ArrowLeft, Phone, LogIn, Shield, Building2, User2Icon } from "lucide-react";
 import LOGO from "../assets/logo.png";
 import { useSignInStore } from "../store/useSigninStore";
+import axios from "axios";
+import { saveAuthToken } from "../utils/authManager";
 
 const Login = () => {
   const [phone, setPhone] = useState("");
@@ -14,7 +16,21 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+
       const encodedPin = btoa(pin); // encode if backend expects Base64
+
+      const authResponse = await axios.post(
+       `${import.meta.env.VITE_AUTH_API_BASE_URL}/api/AuthService/mobile-login`,
+        {
+          mobileNumber: phone,
+          password: pin,
+        }
+      );
+
+      const { accessToken } = authResponse.data;
+      // Step 2️⃣: Save + authorize Swagger
+      saveAuthToken(accessToken);
+      // const data = await loginToken(phone, pin);
       const res = await loginWithPin(phone, encodedPin);
       console.error("Login success:", res);
       setCustomerId(res?.customerId);
@@ -23,7 +39,7 @@ const Login = () => {
 
       // Encode the JSON as Base64
       const encodedData = btoa(dataToEncode);
-      navigate("/dashboard", { state: { encoded: encodedData,encodedPin  } });
+      navigate("/dashboard", { state: { encoded: encodedData, encodedPin } });
     } catch (err) {
       console.error("Login failed:", err.response?.data || err.message);
       alert("Login failed. Check your phone number and PIN.");

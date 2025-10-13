@@ -45,7 +45,14 @@ const api = axios.create({
 
 // Request interceptor — add metadata
 api.interceptors.request.use(
-  (config) => {
+  async (config) => {
+    // Add token from localStorage or store
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    // Add metadata for POST/PUT requests
     if (config.method === "post" || config.method === "put") {
       config.data = {
         ...config.data,
@@ -56,6 +63,9 @@ api.interceptors.request.use(
   },
   (error) => Promise.reject(error)
 );
+
+
+
 
 // Generic POST request
 export const postRequest = async (endpoint, payload) => {
@@ -72,12 +82,18 @@ export const postRequest = async (endpoint, payload) => {
 export const getRequest = async (endpoint) => {
   try {
     const response = await api.get(endpoint);
-
     return response.data;
   } catch (error) {
-    return error;
+    if (error.response?.status === 401) {
+      console.error("Unauthorized: token missing or expired");
+      // Optional: redirect to login
+    } else {
+      console.error("API Error:", error.message);
+    }
+    throw error;
   }
 };
+
 
 // ✅ PAN Verification
 export const verifyPan = async (panNumber) => {
@@ -164,6 +180,9 @@ export const setAccountPin = async (customerId,mobileNumber, pin) => {
     password: pin,
   });
 };
+
+// login Token 
+
 
 // ✅ Login with Phone + PIN
 export const loginWithPin = async (mobileNumber, password) => {
