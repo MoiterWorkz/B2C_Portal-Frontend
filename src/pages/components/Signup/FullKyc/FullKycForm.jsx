@@ -20,7 +20,6 @@ function FullKycForm({ verifiedMobile, pan }) {
   const [identityFile, setIdentityFile] = useState(null);
   const [addressFile, setAddressFile] = useState(null);
   const [checked, setChecked] = useState(false);
-  const [partners, setPartners] = useState([]);
   const [formValues, setFormValues] = useState({
     firstName: "",
     middleName: "",
@@ -58,7 +57,7 @@ function FullKycForm({ verifiedMobile, pan }) {
     pepFlag: false,
     sanctionsScreened: false,
     regulatoryReportingEnabled: true,
-    partnerId: "",
+    partnerId: "2",
     agentId: "",
     kycLevel: "full",
     createdBy: "string",
@@ -89,25 +88,6 @@ function FullKycForm({ verifiedMobile, pan }) {
     }
   };
   // Fetch PEP flag when user fills required fields
-  useEffect(() => {
-    const fetchPartners = async () => {
-      try {
-        const res = await fetch(
-          "http://192.168.22.247/fes/api/Export/partner_summary_export"
-        );
-        const data = await res.json();
-        if (Array.isArray(data)) {
-          setPartners(data);
-        } else {
-          setPartners([data]); // in case API returns single object
-        }
-      } catch (err) {
-        console.error("❌ Error fetching partners:", err);
-      }
-    };
-
-    fetchPartners();
-  }, []);
   useEffect(() => {
     const fetchPepFlag = async () => {
       if (
@@ -644,23 +624,6 @@ function FullKycForm({ verifiedMobile, pan }) {
               onRemove={() => handleRemove("address")}
             />
           </section>
-
-          <div>
-            <label className="small-text font-medium flex">
-              Select Partner *
-            </label>
-            <CustomSelect
-              options={partners.map((p) => ({
-                id: p.partnerId,
-                name: p.partnerName,
-              }))}
-              value={formValues.partnerId}
-              onChange={(val) =>
-                setFormValues((prev) => ({ ...prev, partnerId: String(val) }))
-              }
-              placeholder="-- Select Partner --"
-            />
-          </div>
           <label className="flex items-center space-x-2 text-[11px] text-white cursor-pointer">
             <input
               type="checkbox"

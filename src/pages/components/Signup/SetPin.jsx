@@ -15,12 +15,11 @@ import {
 const SetPin = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  // const mobileNumber = location.state?.mobileNumber;
-  const customerID = location.state?.mobileNumber
-  const mobileNumber = "9849646516";
+  // const data = location
+  const mobileNumber = location?.state?.mobileNumber;
+  const customerID = location?.state?.customerId
   const [pin, setPin] = useState("");
   const [showPin, setShowPin] = useState(false);
-  console.log(location)
   // Validation functions
   const isFourDigits = /^\d{4}$/.test(pin);
   const onlyNumbers = /^\d*$/.test(pin);
@@ -45,13 +44,13 @@ const SetPin = () => {
 
   const allValid = Object.values(validations).every(Boolean);
 
-  const handleSubmit = async (customerID) => {
+  const handleSubmit = async () => {
     try {
       const encodedPin = btoa(pin); // 🔒 encode
       const customerIdValue = parseInt(customerID); // make sure it's a number
       await setAccountPin(customerIdValue, mobileNumber, encodedPin);
 
-      console.log("CustomerID:", customerIdValue, "Mobile:", mobileNumber, "PIN:", encodedPin);
+      // console.log("CustomerID:", customerIdValue, "Mobile:", mobileNumber, "PIN:", encodedPin);
       alert("Account created successfully. You may login now with your registered mobile number and PIN.");
       navigate("/Customer-Login");
     } catch (err) {

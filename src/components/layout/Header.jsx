@@ -4,8 +4,12 @@ import UserDropdown from "../../pages/components/dashboard/UserDropdown";
 import LOGO from "../../assets/logo.png";
 import DashBoardHooks from "../../hooks/dashBoardHooks";
 
-const Header = ({ toggleSidebar }) => {
+import { useLocation } from "react-router-dom";
+
+const Header = ({ toggleSidebar,userDetail }) => {
   const { dashBoardData } = DashBoardHooks(); // ✅ use the hook
+
+  const storage = useLocation()
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -96,7 +100,7 @@ const Header = ({ toggleSidebar }) => {
               ref={dropdownRef}
               className="absolute right-0 top-full mt-2 z-50"
             >
-              <UserDropdown />
+              <UserDropdown storage={storage} userDetail={userDetail}/>
             </div>
           )}
         </div>
