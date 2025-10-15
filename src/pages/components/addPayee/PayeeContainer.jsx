@@ -18,6 +18,8 @@ const PayeeContainer = () => {
     payeeCity: "",
     mobileNumber: "",
     isCityValidated: false,
+    bank: "", // ✅ added
+    branch: "", // ✅ added
   });
   const handleAddEditSubmit = (data) => {
     setPayeeData(data);
@@ -43,6 +45,8 @@ const PayeeContainer = () => {
       payeeCity: "",
       mobileNumber: "",
       isCityValidated: false,
+      bank: "", // ✅ reset bank
+      branch: "",
     });
     setActiveStep("addEdit");
   };

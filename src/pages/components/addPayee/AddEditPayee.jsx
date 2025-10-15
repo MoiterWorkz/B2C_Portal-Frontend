@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+
 import {
   UserPlus,
   Circle,
@@ -6,6 +7,7 @@ import {
   ChevronDown,
   TriangleAlert,
 } from "lucide-react";
+import CustomSelect from "../../../constants/Reusable/Customdropdown";
 
 const AddEditPayee = ({ onSubmit, formData, setFormData }) => {
   const payeeNameRef = useRef();
@@ -14,7 +16,52 @@ const AddEditPayee = ({ onSubmit, formData, setFormData }) => {
   const retypeAccountNumberRef = useRef();
   const payeeMobileRef = useRef();
   const payeeCityRef = useRef();
+  const [selectedBank, setSelectedBank] = useState("");
+  const [selectedBranch, setSelectedBranch] = useState("");
+  const [selectedModes, setSelectedModes] = useState(["IMPS (IFSC)"]); // IMPS default
 
+  const handleCheckboxChange = (mode) => {
+    setSelectedModes((prev) => {
+      // If already selected and at least one more is selected, allow unselect
+      if (prev.includes(mode)) {
+        if (prev.length === 1) return prev; // prevent all from being unticked
+        return prev.filter((m) => m !== mode);
+      } else {
+        // Otherwise add the mode
+        return [...prev, mode];
+      }
+    });
+  };
+
+  // Create heading like "IMPS (IFSC) + NEFT - Bank Details"
+  const heading = `${selectedModes.join(" + ")} - Bank Details`;
+
+  const bankOptions = [
+    { id: "SBI", name: "State Bank of India" },
+    { id: "HDFC", name: "HDFC Bank" },
+    { id: "ICICI", name: "ICICI Bank" },
+    { id: "PNB", name: "Punjab National Bank" },
+    { id: "AXIS", name: "Axis Bank" },
+    { id: "KOTAK", name: "Kotak Mahindra Bank" },
+  ];
+
+  const branchOptions = [
+    { id: "Mumbai", name: "Mumbai Branch" },
+    { id: "Delhi", name: "Delhi Branch" },
+    { id: "Bangalore", name: "Bangalore Branch" },
+    { id: "Chennai", name: "Chennai Branch" },
+    { id: "Kolkata", name: "Kolkata Branch" },
+  ];
+  const cityOptions = [
+    { id: "Mumbai", name: "Mumbai" },
+    { id: "Delhi", name: "Delhi" },
+    { id: "Bangalore", name: "Bangalore" },
+    { id: "Chennai", name: "Chennai" },
+    { id: "Kolkata", name: "Kolkata" },
+    { id: "Hyderabad", name: "Hyderabad" },
+    { id: "Pune", name: "Pune" },
+    { id: "Ahmedabad", name: "Ahmedabad" },
+  ];
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
@@ -78,10 +125,14 @@ const AddEditPayee = ({ onSubmit, formData, setFormData }) => {
   const errors = [];
 
   if (formData.knowIfsc === "yes" && touched.ifscCode) {
+    const ifsc = formData.ifscCode;
+
     if (formData.ifscCode.length !== 11)
       errors.push("• IFSC: IFSC code must be exactly 11 characters long");
     else if (formData.ifscCode[4] !== "0")
       errors.push("• IFSC: Fifth character must be 0");
+    else if (!/^[A-Za-z]{4}/.test(ifsc))
+      errors.push("• IFSC: First 4 characters must be letters (bank code)");
   }
 
   if (
@@ -168,11 +219,12 @@ const AddEditPayee = ({ onSubmit, formData, setFormData }) => {
           <div>
             <label className="text-sm font-medium block mb-1">Pay Mode</label>
             <div className="flex gap-6 items-center">
+              {/* IMPS (IFSC) */}
               <div className="flex items-center gap-2">
                 <input
                   type="checkbox"
-                  checked
-                  readOnly
+                  checked={selectedModes.includes("IMPS (IFSC)")}
+                  onChange={() => handleCheckboxChange("IMPS (IFSC)")}
                   className="h-4 w-4 rounded cursor-pointer"
                   style={{ accentColor: "var(--primary-color)" }}
                 />
@@ -180,18 +232,34 @@ const AddEditPayee = ({ onSubmit, formData, setFormData }) => {
                   IMPS (IFSC)
                 </label>
               </div>
+
+              {/* NEFT */}
+              <div className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  checked={selectedModes.includes("NEFT")}
+                  onChange={() => handleCheckboxChange("NEFT")}
+                  className="h-4 w-4 rounded cursor-pointer"
+                  style={{ accentColor: "var(--primary-color)" }}
+                />
+                <label className="text-sm font-medium text-foreground">
+                  NEFT
+                </label>
+              </div>
             </div>
           </div>
 
           {/* IFSC Radio */}
+
           <div className="pt-4 border-t border-border space-y-3 border-top">
-            <h3 className="text-primary font-medium">
-              IMPS (IFSC) - Bank Details
-            </h3>
+            <h3 className="text-primary font-medium">{heading}</h3>
+
+            {/* IFSC Radio Buttons */}
             <label className="text-sm font-medium">
               Do you know payee IFSC Code?
             </label>
             <div className="flex gap-6">
+              {/* Yes */}
               <label className="flex items-center gap-2">
                 <input
                   type="radio"
@@ -211,6 +279,7 @@ const AddEditPayee = ({ onSubmit, formData, setFormData }) => {
                 <span>Yes</span>
               </label>
 
+              {/* No */}
               <label className="flex items-center gap-2">
                 <input
                   type="radio"
@@ -222,6 +291,10 @@ const AddEditPayee = ({ onSubmit, formData, setFormData }) => {
                     setFormData({
                       ...formData,
                       knowIfsc: "no",
+                      payeeCity: "",
+                      bank: "",
+                      branch: "",
+                      autoIfsc: "",
                     })
                   }
                 />
@@ -231,89 +304,82 @@ const AddEditPayee = ({ onSubmit, formData, setFormData }) => {
           </div>
 
           {/* City Input & Validation - only if knowIfsc is "no" */}
-          {formData.knowIfsc === "no" && (
-            <div className="pt-4 border-t border-border space-y-3 border-top">
-              <h3 className="text-primary font-medium">Enter City</h3>
-              <div className="flex gap-2">
-                <input
-                  id="payeeCity"
-                  type="text"
-                  value={formData.payeeCity}
-                  onChange={handleChange}
-                  placeholder="Enter city name (e.g., Mumbai, Delhi, Bangalore)"
-                  className="flex-1 h-9 w-full rounded-md border px-3 py-1 bg-input-background border-border profilecard-input"
-                />
-                <button
-                  type="button"
-                  className="bg-primary hover:bg-primary/90 text-white rounded-md px-4 py-2 text-sm validate-button"
-                  onClick={() => {
-                    const isValid = /^[A-Za-z\s]+$/.test(
-                      formData.payeeCity.trim()
-                    );
-                    if (isValid) {
-                      setFormData({ ...formData, isCityValidated: true });
-                    } else {
-                      alert("Please enter a valid city name (letters only).");
-                    }
-                  }}
-                >
-                  ✓ Validated
-                </button>
-              </div>
-
-              {/* Show dropdown only if validation is true */}
-              {formData.isCityValidated && (
-                <div className="city-dropdown-container mt-4 p-3 bg-muted/30 rounded-lg border border-primary/20 extra-card">
-                  <label htmlFor="selectedCity" className="text-sm font-medium">
-                    Select City from List
-                  </label>
-
-                  <button
-                    type="button"
-                    className="flex justify-between items-center w-full h-9 mt-2 px-3 py-2 border rounded-md profilecard-input"
-                  >
-                    <span>Choose your city from the dropdown</span>
-                    <ChevronDown className="h-4 w-4 opacity-50" />
-                  </button>
-
-                  <p className="text-xs text-muted-foreground mt-2">
-                    Please select your city from the available options above
-                  </p>
-                </div>
-              )}
-            </div>
-          )}
 
           {/* Payee Bank & Branch Dropdowns */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
+          <div className="flex flex-col gap-4">
+            {/* Payee Bank */}
+            <div className="text-[var(--primary-font-color)] dropdown">
               <label htmlFor="bank" className="text-sm font-medium block mb-1">
                 Payee Bank
               </label>
-              <button
-                type="button"
-                className="flex justify-between items-center w-full h-9 px-3 py-2 border rounded-md profilecard-input"
-              >
-                <span>Select bank</span>
-                <ChevronDown className="h-4 w-4 opacity-50" />
-              </button>
+              <CustomSelect
+                options={bankOptions}
+                value={formData.bank}
+                onChange={(val) => setFormData({ ...formData, bank: val })}
+                placeholder="Select bank"
+                className="dropdown"
+              />
             </div>
 
-            <div>
+            {/* Payee City - only if knowIfsc is "no" */}
+            {formData.knowIfsc === "no" && (
+              <div className="text-[var(--primary-font-color)] dropdown">
+                <label
+                  htmlFor="payeeCity"
+                  className="text-sm font-medium block mb-1"
+                >
+                  Payee City
+                </label>
+
+                <CustomSelect
+                  options={cityOptions}
+                  value={formData.payeeCity}
+                  onChange={(val) =>
+                    setFormData({ ...formData, payeeCity: val })
+                  }
+                  placeholder="Select city"
+                  className="dropdown"
+                />
+              </div>
+            )}
+
+            {/* Payee Branch */}
+            <div className="text-[var(--primary-font-color)] dropdown">
               <label
                 htmlFor="branch"
                 className="text-sm font-medium block mb-1"
               >
                 Payee Branch
               </label>
-              <button
-                type="button"
-                className="flex justify-between items-center w-full h-9 px-3 py-2 border rounded-md profilecard-input"
-              >
-                <span>Select branch</span>
-                <ChevronDown className="h-4 w-4 opacity-50" />
-              </button>
+              <CustomSelect
+                options={branchOptions}
+                value={formData.branch}
+                onChange={(val) => setFormData({ ...formData, branch: val })}
+                placeholder="Select branch"
+              />
             </div>
+
+            {/* Auto-Generated IFSC - show only if all 3 are filled */}
+            {formData.knowIfsc === "no" &&
+              formData.bank &&
+              formData.branch &&
+              formData.payeeCity && (
+                <div className="p-4 bg-primary/10 border border-primary/30 rounded-lg space-y-2 transition-all duration-300">
+                  <div className="flex items-center gap-2">
+                    <CircleCheck className="h-5 w-5 text-primary" />
+                    <label className="flex items-center gap-2 text-sm font-medium text-primary">
+                      Auto-Generated IFSC Code
+                    </label>
+                  </div>
+                  <p className="text-lg font-mono text-foreground">
+                    {formData.autoIfsc || "HDFC0000456"}
+                  </p>
+                  <p className="text-xs text-muted-foreground">
+                    This IFSC code was automatically generated based on your
+                    bank and branch selection
+                  </p>
+                </div>
+              )}
           </div>
 
           {/* IFSC Code Section */}
@@ -331,7 +397,7 @@ const AddEditPayee = ({ onSubmit, formData, setFormData }) => {
                 type="text"
                 value={formData.ifscCode}
                 onChange={(e) => {
-                  const value = e.target.value.toUpperCase(); // uppercase
+                  const value = e.target.value.toUpperCase(); // convert to uppercase
                   if (value.length <= 11) {
                     setFormData({ ...formData, ifscCode: value });
                     setTouched({ ...touched, ifscCode: true });
@@ -342,10 +408,12 @@ const AddEditPayee = ({ onSubmit, formData, setFormData }) => {
                 maxLength="11"
                 className={`w-full h-9 rounded-md border px-3 py-1 bg-input-background profilecard-input ${
                   formData.ifscCode.length > 0 &&
-                  (formData.ifscCode.length !== 11 ||
+                  (!/^[A-Z]{4}/.test(formData.ifscCode) ||
+                    formData.ifscCode.length !== 11 ||
                     formData.ifscCode[4] !== "0")
                     ? "input-border-error"
                     : formData.ifscCode.length === 11 &&
+                      /^[A-Z]{4}/.test(formData.ifscCode) &&
                       formData.ifscCode[4] === "0"
                     ? "input-border-valid"
                     : "border-border"
@@ -356,13 +424,16 @@ const AddEditPayee = ({ onSubmit, formData, setFormData }) => {
               {formData.ifscCode.length > 0 && (
                 <p
                   className={`text-xs mt-1 ${
+                    !/^[A-Z]{4}/.test(formData.ifscCode) ||
                     formData.ifscCode.length !== 11 ||
                     formData.ifscCode[4] !== "0"
                       ? "text-error"
                       : "text-valid"
                   }`}
                 >
-                  {formData.ifscCode.length !== 11
+                  {!/^[A-Z]{4}/.test(formData.ifscCode)
+                    ? "First 4 characters must be letters (bank code)"
+                    : formData.ifscCode.length !== 11
                     ? "IFSC code must be exactly 11 characters long"
                     : formData.ifscCode[4] !== "0"
                     ? "Fifth character must be 0"

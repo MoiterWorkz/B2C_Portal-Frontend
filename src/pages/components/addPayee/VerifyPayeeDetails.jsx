@@ -1,7 +1,8 @@
 import React from "react";
+import { CircleCheck } from "lucide-react"; // make sure lucide-react is installed
 
 const VerifyPayeeDetails = ({ payeeData, onBack, onConfirm, formData }) => {
-  // Example: fallback if payeeData is missing
+  // Show city section only if user selected "no" for IFSC
   const showCitySection =
     formData.knowIfsc === "no" && formData.payeeCity?.trim() !== "";
 
@@ -21,10 +22,22 @@ const VerifyPayeeDetails = ({ payeeData, onBack, onConfirm, formData }) => {
           <Detail label="Pay Mode" value={formData.payMode} />
           <Detail label="Bank" value={formData.bank} />
           <Detail label="Branch" value={formData.branch} />
-          {/* <Detail label="IFSC Code" value={formData.ifscCode} /> */}
+
+          {/* IFSC logic */}
+          <Detail
+            label={
+              formData.knowIfsc === "yes"
+                ? "IFSC Code"
+                : "Auto-Generated IFSC Code"
+            }
+            value={formData.ifscCode || "-"}
+          />
+
           <Detail label="Account Number" value={formData.accountNumber} />
           <Detail label="Mobile Number" value={formData.payeeMobile} />
-          {showCitySection && (
+
+          {/* City section only for "no" */}
+          {/* {showCitySection && (
             <>
               <Detail label="Entered City" value={formData.payeeCity} />
               <Detail
@@ -36,6 +49,25 @@ const VerifyPayeeDetails = ({ payeeData, onBack, onConfirm, formData }) => {
                 }
               />
             </>
+          )} */}
+
+          {/* Auto-generated IFSC Box */}
+          {formData.knowIfsc === "no" && formData.ifscCode && (
+            <div className="col-span-1 md:col-span-2 p-4 bg-primary/10 border border-primary/30 rounded-lg space-y-2 transition-all duration-300">
+              <div className="flex items-center gap-2">
+                <CircleCheck className="h-5 w-5 text-primary" />
+                <label className="flex items-center gap-2 text-sm font-medium text-primary">
+                  Auto-Generated IFSC Code
+                </label>
+              </div>
+              <p className="text-lg font-mono text-foreground">
+                {formData.ifscCode}
+              </p>
+              <p className="text-xs text-muted-foreground">
+                This IFSC code was automatically generated based on your bank,
+                branch, and city selection
+              </p>
+            </div>
           )}
         </div>
 
@@ -49,7 +81,7 @@ const VerifyPayeeDetails = ({ payeeData, onBack, onConfirm, formData }) => {
         <div className="flex gap-4">
           <button
             onClick={onBack}
-            className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm  flex-1 h-9 px-4 py-2 border-border back-to-edit"
+            className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm flex-1 h-9 px-4 py-2 border-border back-to-edit"
           >
             Back to Edit
           </button>
@@ -66,7 +98,7 @@ const VerifyPayeeDetails = ({ payeeData, onBack, onConfirm, formData }) => {
   );
 };
 
-// ✅ Small helper subcomponent for cleaner markup
+// ✅ Small helper subcomponent
 const Detail = ({ label, value }) => (
   <div className="space-y-2">
     <label className="text-sm font-medium text-muted-foreground">{label}</label>

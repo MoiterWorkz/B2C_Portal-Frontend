@@ -1501,11 +1501,19 @@ button {
     svg {
       color: var(--font-black);
     }
+    color: var(--font-black);
   }
   .verifydetailsbutton {
     background-color: var(--user-icon-background-color);
     color: var(--subheading-color);
     @apply text-[10px] sm:text-[14.25px];
+    svg {
+      color: var(--subheading-color);
+    }
+  }
+  .enterdetailsbutton {
+    background-color: var(--primary-color);
+    color: var(--font-black);
   }
   h3 {
     color: var(--primary-color);
@@ -1604,6 +1612,7 @@ button {
     color: var(--color-green-400);
     @apply text-[10.5px] sm:text-[12.25px];
   }
+
   .addbutton {
     .button1 {
       svg {
@@ -1650,5 +1659,15 @@ button {
   .InfoFooter {
     background-color: #19231d;
     border: var(--thin-border);
+  }
+}
+.dropdown {
+  color: var(--primary-font-color) !important;
+
+  li {
+    color: var(--primary-font-color) !important;
+  }
+  li:hover {
+    color: var(--font-black) !important;
   }
 }
