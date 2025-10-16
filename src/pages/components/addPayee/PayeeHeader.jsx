@@ -22,8 +22,8 @@ const PayeeHeader = ({ step }) => {
         <div className="p-4 flex items-center gap-4 ">
           {/* Step 1 - Enter Details */}
           <div
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg enterdetailsbutton ${
-              step === "addEdit" ? "bg-primary text-white" : "bg-muted"
+            className={`flex items-center gap-2 px-4 py-2 rounded-lg enterdetailsbutton enterdetailsbutton ${
+              step === "addEdit" ? "active" : ""
             }`}
           >
             <Circle
@@ -35,7 +35,10 @@ const PayeeHeader = ({ step }) => {
 
           <div
             className="h-0.5 flex-1"
-            style={{ backgroundColor: "var(--primary-color)" }}
+            style={{
+              backgroundColor:
+                step === "addEdit" ? "GREY" : "var(--primary-color)",
+            }}
           ></div>
 
           {/* Step 2 - Verify Details */}
@@ -44,7 +47,7 @@ const PayeeHeader = ({ step }) => {
               step === "verify" ? "bg-primary text-white" : "bg-muted"
             }`}
           >
-            <Circle className="h-4 w-4 fill-current" />
+            <Circle className="h-4 w-4 " />
             <span>Verify Details</span>
           </div>
         </div>
