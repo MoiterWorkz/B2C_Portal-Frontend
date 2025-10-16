@@ -35,9 +35,9 @@ const AutoRechargeSettings = () => {
   };
 
   return (
-    <div className="p-6 rounded-xl card-hover-effect-no-pointer">
+    <div className="p-4 rounded-xl border card-hover-effect-no-pointer">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between mb-4">
         <div>
           <h1 className="card-title flex items-center gap-2 mb-5">
             <Settings size="18" />
@@ -66,7 +66,7 @@ const AutoRechargeSettings = () => {
       {isEnabled && (
         <div
           style={{ background: "#fad48905" }}
-          className="rounded-md p-4 space-y-4 bg-[#fad48905] border border-thin relative rounded-lg mt-4"
+          className="rounded-md py-2 px-4 space-y-4 bg-[#fad48905] border border-thin relative rounded-lg"
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {inputFields.map((field, index) => (
@@ -79,9 +79,9 @@ const AutoRechargeSettings = () => {
                     ₹
                   </span>
                   <input
-                    style={{ padding: "2px 24px" }}
+                    style={{ padding: "2px 24px", color: "white" }}
                     type="text"
-                    className="profilecard-input"
+                    className="w-full rounded-md input-field-style"
                     name={field.name}
                     value={amount[field.name]}
                     onChange={handleChange}
@@ -92,7 +92,10 @@ const AutoRechargeSettings = () => {
           </div>
 
           {/* Save Button */}
-          <button onClick={handleSubmit} className="submit-btn">
+          <button
+            onClick={handleSubmit}
+            className="bg-[var(--primary-color)] hover:opacity-90 text-sm font-semibold cursor-pointer px-4 py-2 rounded-md"
+          >
             Save Auto Recharge Settings
           </button>
         </div>

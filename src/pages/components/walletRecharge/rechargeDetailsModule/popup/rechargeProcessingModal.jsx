@@ -1,22 +1,19 @@
 import { createPortal } from "react-dom";
 import { LoaderCircle } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
-const RechargeProcessingModal = ({
-  handleWalletRecharge,
-  setIsProceedtoPay,
-}) => {
+const RechargeProcessingModal = ({ onClose, handleWalletRecharge }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
-      setIsProceedtoPay(false);
-      // handleWalletRecharge();
+      onClose();
+      handleWalletRecharge();
     }, 2000);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [onClose]);
 
   return createPortal(
-    <div className="fixed inset-0 h-full flex justify-center items-center z-55 backdrop-blur-xs">
+    <div className="fixed inset-0 h-full flex justify-center items-center z-50 backdrop-blur-xs">
       <div className="bg-[#292929] rounded-lg p-6 w-full max-w-md text-white relative border inner-card-border mx-3">
         {/* <button
           className="absolute text-sm top-4 right-4 text-white hover:text-gray-400"

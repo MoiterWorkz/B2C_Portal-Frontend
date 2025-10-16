@@ -1,21 +1,14 @@
-import { useState } from "react";
-
-const Buttons = ({
-  amount,
-  setConfirmModal,
-  setAmount,
-  setIsMethodPayment,
-}) => {
+const Buttons = ({ amount, setConfirmModal, setAmount }) => {
   return (
     <section className="flex gap-4">
       <button
-        style={{ cursor: !amount && "not-allowed" }}
         disabled={!amount}
         className={`${
-          amount ? "hover:opacity-90 cursor-pointer" : "opacity-50 "
+          !amount
+            ? "opacity-50 cursor-not-allowed hover:opacity-50"
+            : "hover:opacity-90 cursor-pointer"
         } flex-1 bg-[var(--primary-color)] p-2 rounded-lg `}
-        onClick={() => setIsMethodPayment(true)}
-        // onClick={() => setConfirmModal(true)}
+        onClick={() => setConfirmModal(true)}
       >
         Recharge Wallet
       </button>

@@ -1,20 +1,26 @@
 import { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 import ConfirmRechargeModal from "./rechargeDetailsModule/popup/confirmRechargeModal";
 import RechargeProcessingModal from "./rechargeDetailsModule/popup/rechargeProcessingModal";
+import { generateTransactionRef } from "../../../helper/index";
+import { useSignInStore } from "../../../store/useSigninStore";
+import { moveTransaction, rechargeWallet } from "../../../services/service";
+import PaymentMethod from "./rechargeDetailsModule/paymentMethod";
 import QuickRecharge from "./rechargeDetailsModule/quickRecharge";
 import CustomAmounts from "./rechargeDetailsModule/customAmounts";
 import Buttons from "./rechargeDetailsModule/buttons";
 import WalletRechargeHook from "../../../hooks/walletRechargeHook";
 import WalletInfo from "./rechargeDetailsModule/walletInfo";
-const WalletRecharge = ({
-  setIsMethodPayment,
-  amount,
-  setAmount,
-  activePayment,
-}) => {
+const WalletRecharge = () => {
+  const [amount, setAmount] = useState("");
+  const [activePayment, setActivePayment] = useState("UPI");
   const [confirmModal, setConfirmModal] = useState(false);
-  const [processingModal, setProcessingModal] = useState(false);
-  const { walletDatas } = WalletRechargeHook();
+  const [processingModal, setProcessingModalModal] = useState(false);
+  const [logId] = useState(() => uuidv4());
+  const [transactionRef] = useState(() => generateTransactionRef());
+  const { getCustomerId } = useSignInStore();
+  const { walletDatas, getWalletBalance } = WalletRechargeHook();
+  const customerId = getCustomerId();
 
   const handleChange = (e) => {
     const value = e.target.value.replace(/,/g, ""); // Remove commas
@@ -23,13 +29,53 @@ const WalletRecharge = ({
     }
   };
 
+  const handleWalletRecharge = async () => {
+    const channelId = 1;
+    const basePayload = {
+      customerId,
+      logId,
+      amount,
+      channelId,
+      referenceNumber: transactionRef,
+      processingFee: 0,
+      transactionType:1,
+      ipAddress:"strings",
+    };
+
+    try {
+      // Step 1: Recharge Wallet
+      const res = await rechargeWallet(basePayload);
+
+      // Step 2: Move Transaction
+      await moveTransaction({
+        trackerId: res?.tracker_id,
+        apiStatus: res?.status,
+      });
+
+      // Step 3: Debit Wallet
+      // const debitRes = await debitWallet(basePayload);
+      // const firstLetterCap = capitalizeFirst(debitRes?.status);
+
+      alert(`Wallet recharge completed Successfully! 🎉`);
+    } catch (error) {
+      // Show a generic failure message
+      alert("An error occurred. Please try again later.");
+    } finally {
+      getWalletBalance();
+      setTimeout(() => {
+        setAmount("");
+        setActivePayment("");
+      }, 1000);
+    }
+  };
+
   return (
-    <div className="rounded-xl card-hover-effect-no-pointer p-6 space-y-5">
+    <div className="text-card-foreground rounded-xl border card-hover-effect-no-pointer p-6 space-y-5">
       <WalletInfo walletDatas={walletDatas} />
-      {/* <PaymentMethod
+      <PaymentMethod
         activePayment={activePayment}
         setActivePayment={setActivePayment}
-      /> */}
+      />
       <QuickRecharge setAmount={setAmount} amount={amount} />
       <CustomAmounts handleChange={handleChange} amount={amount} />
       {/* Buttons */}
@@ -37,21 +83,21 @@ const WalletRecharge = ({
         amount={amount}
         setConfirmModal={setConfirmModal}
         setAmount={setAmount}
-        setIsMethodPayment={setIsMethodPayment}
       />
       {confirmModal && (
         <ConfirmRechargeModal
+          amount={amount}
           confirmModal={confirmModal}
           onClose={() => setConfirmModal(false)}
           paymentMethod={activePayment}
-          setProcessingModal={setProcessingModal}
+          setProcessingModalModal={setProcessingModalModal}
           amt={amount}
         />
       )}
       {processingModal && (
         <RechargeProcessingModal
-          onClose={() => setProcessingModal(false)}
-          // handleWalletRecharge={handleWalletRecharge}
+          onClose={() => setProcessingModalModal(false)}
+          handleWalletRecharge={handleWalletRecharge}
         />
       )}
     </div>
