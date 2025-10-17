@@ -13,12 +13,12 @@ const CustomAmounts = ({ amount, handleChange }) => {
           ₹
         </span>
         <input
-          style={{ padding: "2px 24px", color: "white" }}
+          style={{ padding: "0.25rem 24px" }}
           type="text"
           value={amount}
           onChange={handleChange}
           placeholder="Enter amount (Min: ₹100, Max: ₹50,000)"
-          className="w-full rounded-md input-field-style"
+          className="profilecard-input"
         />
       </div>
 

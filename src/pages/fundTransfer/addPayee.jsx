@@ -1,10 +1,11 @@
 import React from "react";
-import AddEditPayee from "../components/addPayee/addEditPayee";
+
+import PayeeContainer from "../components/addPayee/PayeeContainer";
 
 const addPayee = () => {
   return (
     <div>
-      <AddEditPayee />
+      <PayeeContainer />
     </div>
   );
 };

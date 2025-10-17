@@ -11,28 +11,12 @@ import {
   Receipt,
   ChevronDown,
 } from "lucide-react";
-import { useNavigate } from "react-router";
-
-const sidebarItems = [
-  { label: "Dashboard", icon: Home, url: "dashboard" },
-  { label: "Manage Wallet", icon: Banknote, url: "manage-wallet" },
-  { label: "My Card", icon: CreditCard, url: "my-card" },
-  { label: "Bill & Recharges", icon: Receipt, url: "bill-recharges" },
-  { label: "Transaction History", icon: History, url: "transaction-history" },
-  { label: "Wallet Recharge", icon: Wallet, url: "wallet-recharge" },
-  {
-    label: "Fund Transfer",
-    icon: ArrowRightLeft,
-    dropdown: [
-      { label: "Add Payee", icon: UserPlus, url: "fund-transfer/add-payee" },
-      { label: "Payee List", icon: Users, url: "fund-transfer/payee-list" },
-    ],
-  },
-];
+import { useNavigate, useLocation } from "react-router";
+import UseIconsData from "../../hooks/useIconsData";
 
 const SideBar = ({ isOpen, onClose }) => {
   const [openDropdown, setOpenDropdown] = useState(null);
-  const [activeItem, setActiveItem] = useState("Dashboard");
+  const { sidebarItems } = UseIconsData();
   const navigate = useNavigate();
   const toggleDropdown = (label) => {
     setOpenDropdown(openDropdown === label ? null : label);
@@ -40,10 +24,10 @@ const SideBar = ({ isOpen, onClose }) => {
 
   const handleItemClick = (label, hasDropdown = false, url) => {
     navigate(url);
-    setActiveItem(label);
     if (!hasDropdown) onClose(); // close sidebar on mobile
   };
 
+  const location = useLocation();
   return (
     <>
       {/* Overlay */}
@@ -63,7 +47,7 @@ const SideBar = ({ isOpen, onClose }) => {
       >
         <nav className="p-4 space-y-2">
           {sidebarItems.map((item) => {
-            const isActive = activeItem === item.label;
+            const isActive = location.pathname === item.url;
 
             return (
               <div key={item.label}>
@@ -105,7 +89,7 @@ const SideBar = ({ isOpen, onClose }) => {
                 {item.dropdown && openDropdown === item.label && (
                   <div className="sidebar-dropdown">
                     {item.dropdown.map((subItem) => {
-                      const isSubActive = activeItem === subItem.label;
+                      const isSubActive = location.pathname === item.url;
                       return (
                         <button
                           key={subItem.label}

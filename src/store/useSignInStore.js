@@ -27,3 +27,15 @@ export const useSignInStore = create(
     }
   )
 );
+
+export const usePaymentStore = create((set) => ({
+  paymentFormData: {},
+  setPaymentFormData: (data) =>
+    set((prev) => ({ paymentFormData: { ...prev.paymentFormData, ...data } })),
+
+  paymentFormDataErr: {},
+  setPaymentFormDataErr: (data) =>
+    set((prev) => ({
+      paymentFormDataErr: { ...prev.paymentFormDataErr, ...data },
+    })),
+}));
