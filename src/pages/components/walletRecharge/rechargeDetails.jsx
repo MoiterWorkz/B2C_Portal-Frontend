@@ -30,13 +30,16 @@ const WalletRecharge = () => {
   };
 
   const handleWalletRecharge = async () => {
-    const channelId = "web";
+    const channelId = 1;
     const basePayload = {
       customerId,
       logId,
       amount,
       channelId,
       referenceNumber: transactionRef,
+      processingFee: 0,
+      transactionType:1,
+      ipAddress:"strings",
     };
 
     try {

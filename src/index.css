@@ -22,95 +22,79 @@
   --primary-dotted-border: hsla(39, 93%, 76%, 0.2);
   --guid-background: #34332f;
   --text-yellow-400: oklch(0.852 0.199 91.936);
+  --list-blue-text: rgb(96 165 250);
+  --list-blue-text-border-color: rgb(30 64 175);
+  --list-blue-text-bg-color: rgb(23 37 84 / 0.4);
+  --list-red-text: #ef4444;
+  --list-red-bg-color: #2b1515;
+  --list-red-border-color: #4a1a1a;
+  --list-red-hover-bg-color: #401c1c;
+  --list-gold-text-color: #d4b25e;
+  --list-gold-bg-color: rgba(212, 178, 94, 0.2);
+  --list-gold-border-color: rgba(212, 178, 94, 0.4);
+  --list-gold-hover-bg-color: rgba(212, 178, 94, 0.3);
+  --list-green-bg-color: rgba(34, 197, 94, 0.05);
+  --list-green-border-color: rgba(34, 197, 94, 0.2);
+  --list-green-text-color: #22c55e;
 
-  /* Backgrounds */
   --button-hover: color-mix(in oklab, var(--primary-color) 90%, transparent);
   --transparent-color: transparent;
   --smallbutton-inside-backgound: color-mix(in oklab, #fad489 10%, transparent);
-  --smallbutton-inside-hover-backgound: color-mix(
-    in oklab,
-    #fad489 50%,
-    transparent
-  );
-  --secondary-backgroundcolor: color-mix(
-    in oklab,
-    var(--card-background-color) 30%,
-    transparent
-  );
+  --smallbutton-inside-hover-backgound: color-mix(in oklab,
+      #fad489 50%,
+      transparent);
+  --secondary-backgroundcolor: color-mix(in oklab,
+      var(--card-background-color) 30%,
+      transparent);
   --third-backgroundcolor: color-mix(in oklab, #2a2a2a 80%, transparent);
-  --smallbutton-inside-backgound: color-mix(
-    in oklab,
-    var(--primary-color) 10%,
-    transparent
-  );
-  --smallbutton-inside-hover-backgound: color-mix(
-    in oklab,
-    var(--primary-color) 50%,
-    transparent
-  );
-  --secondary-backgroundcolor: color-mix(
-    in oklab,
-    var(--card-background-color) 30%,
-    transparent
-  );
-  --third-backgroundcolor: color-mix(
-    in oklab,
-    var(--card-background-color) 80%,
-    transparent
-  );
-  --alertcard-background-color: color-mix(
-    in oklab,
-    var(--color-yellow-400) 5%,
-    transparent
-  );
+  --smallbutton-inside-backgound: color-mix(in oklab,
+      var(--primary-color) 10%,
+      transparent);
+  --smallbutton-inside-hover-backgound: color-mix(in oklab,
+      var(--primary-color) 50%,
+      transparent);
+  --secondary-backgroundcolor: color-mix(in oklab,
+      var(--card-background-color) 30%,
+      transparent);
+  --third-backgroundcolor: color-mix(in oklab,
+      var(--card-background-color) 80%,
+      transparent);
+  --alertcard-background-color: color-mix(in oklab,
+      var(--color-yellow-400) 5%,
+      transparent);
   --color-yellow-400: oklch(0.852 0.199 91.936);
   --button-boxshadow: #fad48933;
 
   --button-hover: color-mix(in oklab, var(--primary-color) 90%, transparent);
   --transparent-color: transparent;
   --smallbutton-inside-backgound: color-mix(in oklab, #fad489 10%, transparent);
-  --smallbutton-inside-hover-backgound: color-mix(
-    in oklab,
-    #fad489 50%,
-    transparent
-  );
-  --secondary-backgroundcolor: color-mix(
-    in oklab,
-    var(--card-background-color) 30%,
-    transparent
-  );
+  --smallbutton-inside-hover-backgound: color-mix(in oklab,
+      #fad489 50%,
+      transparent);
+  --secondary-backgroundcolor: color-mix(in oklab,
+      var(--card-background-color) 30%,
+      transparent);
   --third-backgroundcolor: color-mix(in oklab, #2a2a2a 80%, transparent);
-  --smallbutton-inside-backgound: color-mix(
-    in oklab,
-    var(--primary-color) 10%,
-    transparent
-  );
+  --smallbutton-inside-backgound: color-mix(in oklab,
+      var(--primary-color) 10%,
+      transparent);
   --card-settings-bg: color-mix(in oklab, var(--primary-color) 5%, transparent);
-  --smallbutton-inside-hover-backgound: color-mix(
-    in oklab,
-    var(--primary-color) 50%,
-    transparent
-  );
+  --smallbutton-inside-hover-backgound: color-mix(in oklab,
+      var(--primary-color) 50%,
+      transparent);
 
-  --third-backgroundcolor: color-mix(
-    in oklab,
-    var(--card-background-color) 80%,
-    transparent
-  );
-  --bigicon-background-color: color-mix(
-    in oklab,
-    var(--color-yellow-400) 20%,
-    transparent
-  );
-  --dark-primarybackground-color: color-mix(
-    in oklab,
-    var(--primary-color) 5%,
-    transparent
-  );
+  --third-backgroundcolor: color-mix(in oklab,
+      var(--card-background-color) 80%,
+      transparent);
+  --bigicon-background-color: color-mix(in oklab,
+      var(--color-yellow-400) 20%,
+      transparent);
+  --dark-primarybackground-color: color-mix(in oklab,
+      var(--primary-color) 5%,
+      transparent);
   /* Shadows */
   --card-hover-shadow: 0 20px 40px #fad48926, 0 8px 16px #fad4891a;
-  --small-cards-shadow: 0px 0px 0px 1px
-      color-mix(in srgb, var(--primary-color) 4%, transparent),
+  --small-cards-shadow: 0px 0px 0px 1px color-mix(in srgb, var(--primary-color) 4%, transparent),
     0px 1px 1px -0.5px color-mix(in srgb, var(--primary-color) 4%, transparent),
     0px 3px 3px -1.5px color-mix(in srgb, var(--primary-color) 4%, transparent),
     0px 6px 6px -3px color-mix(in srgb, var(--primary-color) 4%, transparent),
@@ -119,15 +103,11 @@
 
   /* Border */
   --circle-border: 3.40282e38px;
-  --thin-border: 1px solid
-    color-mix(in oklab, var(--primary-color) 20%, transparent);
+  --thin-border: 1px solid color-mix(in oklab, var(--primary-color) 20%, transparent);
 
-  --thick-border: 2px solid
-    color-mix(in oklab, var(--primary-color) 20%, transparent);
-  --thin-border: 1px solid
-    color-mix(in oklab, var(--primary-color) 20%, transparent);
-  --white-border: 1px solid
-    color-mix(in oklab, var(--primary-font-color) 20%, transparent);
+  --thick-border: 2px solid color-mix(in oklab, var(--primary-color) 20%, transparent);
+  --thin-border: 1px solid color-mix(in oklab, var(--primary-color) 20%, transparent);
+  --white-border: 1px solid color-mix(in oklab, var(--primary-font-color) 20%, transparent);
 
   /* side bar */
   --sidebar-active-text: #1a1a1a;
@@ -174,6 +154,53 @@
   /* side bar  */
 }
 
+.my-blue-box {
+  color: var(--list-blue-text);
+  background-color: var(--list-blue-text-bg-color);
+  border-width: 1px;
+  border-color: var(--list-blue-text-border-color);
+}
+
+.my-red-box {
+  color: var(--list-red-text);
+  background-color: var(--list-red-bg-color);
+  border-width: 1px;
+  border-color: var(--list-red-border-color);
+  border-style: solid;
+  border-radius: 0.5rem;
+  transition: background-color 0.25s ease;
+}
+
+.my-red-box:hover {
+  background-color: var(--list-red-hover-bg-color);
+}
+
+.my-gold-box {
+  background-color: var(--list-gold-bg-color);
+  border-width: 1px;
+  border-color: var(--list-gold-border-color);
+  border-style: solid;
+  color: var(--list-gold-text-color);
+  border-radius: 0.5rem;
+  transition: background-color 0.25s ease;
+}
+
+.my-gold-box:hover {
+  background-color: var(--list-gold-hover-bg-color);
+}
+.green-border{
+    border: 2px solid var(--list-green-border-color);
+}
+.my-green-box {
+  background-color: var(--list-green-bg-color);
+  border-width: 1px;
+  border-style: solid;
+  border-color: var(--list-green-border-color);
+  color: var(--list-green-text-color);
+  border-radius: 0.5rem;
+  transition: background-color 0.25s ease;
+}
+
 /* ========== Utility Classes ========== */
 body {
   background-color: var(--primary-backgroundcolor);
@@ -198,8 +225,7 @@ body {
 
 .primary-input {
   background-color: #3a3a3a;
-  border: 2px solid
-    color-mix(in oklab, var(--primary-border-color) 30%, transparent);
+  border: 2px solid color-mix(in oklab, var(--primary-border-color) 30%, transparent);
 }
 
 .Small-Heading {
@@ -209,9 +235,11 @@ body {
 .form-heading {
   font-size: var(--font-heading-4);
 }
+
 .main-heading {
   font-size: var(--font-heading-extra-large);
 }
+
 .form-heading2 {
   font-size: var(--font-heading-3);
 }
@@ -234,15 +262,13 @@ body {
 }
 
 .card-bg:hover {
-  border: 1px solid
-    color-mix(in oklab, var(--primary-border-color) 30%, transparent);
+  border: 1px solid color-mix(in oklab, var(--primary-border-color) 30%, transparent);
   box-shadow: var(--card-hover-shadow);
 }
 
 /* Border */
 .border-primary-bottom {
-  border-bottom: 1px solid
-    color-mix(in oklab, var(--primary-border-color) 30%, transparent);
+  border-bottom: 1px solid color-mix(in oklab, var(--primary-border-color) 30%, transparent);
 }
 
 .primary-border-color {
@@ -312,12 +338,14 @@ body {
 .custom-button:hover .arrow-icon {
   transform: translateX(4px);
 }
+
 .custom-buton1 {
   border: 2px solid var(--primary-border-color);
   background-color: var(--primary-backgroundcolor);
   color: var(--primary-color);
   border-radius: 8px;
 }
+
 .custom-buton1:hover {
   color: var(--font-black) !important;
   background-color: var(--smallbutton-inside-backgound);
@@ -330,8 +358,7 @@ body {
 /* Small Cards */
 .small-cards {
   background-color: var(--card-background-color);
-  border: 2px solid
-    color-mix(in oklab, var(--primary-border-color) 30%, transparent);
+  border: 2px solid color-mix(in oklab, var(--primary-border-color) 30%, transparent);
   transition: all 0.3s ease;
   box-shadow: none;
 }
@@ -347,8 +374,7 @@ body {
 
 .small-cards-icon {
   background-color: var(--smallbutton-inside-backgound);
-  border: 1px solid
-    color-mix(in oklab, var(--primary-border-color) 30%, transparent);
+  border: 1px solid color-mix(in oklab, var(--primary-border-color) 30%, transparent);
   transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
@@ -392,12 +418,9 @@ body {
 
 /* Define a custom gradient using OKLab and color-mix */
 .my-gradient {
-  --tw-gradient-stops: color-mix(
-        in oklab,
-        var(--primary-color) 20%,
-        transparent
-      )
-      0%,
+  --tw-gradient-stops: color-mix(in oklab,
+      var(--primary-color) 20%,
+      transparent) 0%,
     color-mix(in oklab, var(--primary-color) 10%, transparent) 100%;
 
   background-image: linear-gradient(to bottom right, var(--tw-gradient-stops));
@@ -570,12 +593,11 @@ body {
   left: -75%;
   width: 50%;
   height: 100%;
-  background: linear-gradient(
-    120deg,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(250, 212, 137, 0.4) 50%,
-    /* golden light */ rgba(255, 255, 255, 0) 100%
-  );
+  background: linear-gradient(120deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(250, 212, 137, 0.4) 50%,
+      /* golden light */
+      rgba(255, 255, 255, 0) 100%);
   transform: skewX(-20deg);
   animation: sidebarSweep 0.7s forwards;
   pointer-events: none;
@@ -617,10 +639,24 @@ body {
   /* card background */
   border: var(--thin-border);
 }
+
 .card-bg-br-2 {
   background-color: var(--card-background-color);
   /* card background */
   border: var(--thick-border);
+}
+
+.bg-card {
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  position: relative;
+  border: 1px solid transparent;
+  /* default border */
+  border-radius: 1rem;
+  /* optional rounded corners */
+  background-color: var(--card-background-color);
+  /* card background */
+  border: var(--thin-border);
 }
 
 .card-hover-effect {
@@ -657,10 +693,14 @@ body {
 .card-hover-effect-no-pointer {
   transition: all 0.3s ease-in-out;
   position: relative;
-  border: 1px solid transparent; /* default border */
-  border-radius: 1rem; /* optional rounded corners */
-  background-color: var(--card-background-color); /* card background */
+  border: 1px solid transparent;
+  /* default border */
+  border-radius: 1rem;
+  /* optional rounded corners */
+  background-color: var(--card-background-color);
+  /* card background */
   border: var(--thin-border);
+
   &:hover {
     border-color: #fad48966;
     transform: translateY(-8px) scale(1.02);
@@ -888,12 +928,10 @@ body {
   /* start outside from left */
   width: 50%;
   height: 100%;
-  background: linear-gradient(
-    120deg,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(250, 212, 137, 0.6) 50%,
-    rgba(255, 255, 255, 0) 100%
-  );
+  background: linear-gradient(120deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(250, 212, 137, 0.6) 50%,
+      rgba(255, 255, 255, 0) 100%);
   transform: skewX(-20deg);
   animation: sweep 0.7s forwards;
   pointer-events: none;
@@ -923,12 +961,11 @@ body {
   left: -75%;
   width: 50%;
   height: 100%;
-  background: linear-gradient(
-    120deg,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 77, 79, 0.4) 50%,
-    /* match logout red tone */ rgba(255, 255, 255, 0) 100%
-  );
+  background: linear-gradient(120deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 77, 79, 0.4) 50%,
+      /* match logout red tone */
+      rgba(255, 255, 255, 0) 100%);
   transform: skewX(-20deg);
   animation: sweep 0.7s forwards;
   pointer-events: none;
@@ -1197,6 +1234,7 @@ body {
 }
 
 .bigcards {
+
   /* background-color: var(--primary-color); */
   .icon {
     background-color: var(--smallbutton-inside-backgound);
@@ -1329,8 +1367,10 @@ body {
     font-weight: var(--font-bold);
   }
 }
+
 /* In your CSS file */
 @media (max-width: 320px) {
+
   .circle-number,
   .backbutton,
   .Big-icon,
@@ -1340,7 +1380,8 @@ body {
     align-items: center !important;
     text-align: center;
   }
-  .flex-col-sm-override > .group-3 {
+
+  .flex-col-sm-override>.group-3 {
     align-items: center !important;
   }
 }
@@ -1353,73 +1394,91 @@ body {
     @apply text-[12.5px] sm:text-[14px];
     color: var(--subheading-color);
   }
+
   .amount {
     color: var(--primary-color);
     @apply text-[30px] sm:text-[40px];
   }
+
   span {
     color: var(--subheading-color);
     @apply text-[10px] sm:text-[12px];
   }
+
   .span-data {
     color: var(--primary-font-color);
     @apply text-[10px] sm:text-[12px];
   }
+
   .span-account-id {
     color: var(--primary-color);
     @apply text-[10px] sm:text-[12px];
   }
+
   .icon {
     color: var(--primary-font-color);
   }
 }
+
 /* Custom vertical scrollbar */
 .custom-scrollbar::-webkit-scrollbar {
-  width: 8px; /* scrollbar width */
+  width: 8px;
+  /* scrollbar width */
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: #2a2a2a; /* track background */
+  background: #2a2a2a;
+  /* track background */
   border-radius: 4px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background-color: var(--primary-color); /* thumb color */
+  background-color: var(--primary-color);
+  /* thumb color */
   border-radius: 4px;
-  border: 2px solid #2a2a2a; /* optional: gives padding effect */
+  border: 2px solid #2a2a2a;
+  /* optional: gives padding effect */
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background-color: var(--primary-color); /* hover effect */
+  background-color: var(--primary-color);
+  /* hover effect */
 }
 
 button {
   cursor: pointer;
 }
+
 .Changepin {
   h1 {
     @apply text-[20px] sm:text-[26px];
     color: var(--primary-font-color);
   }
+
   p {
     @apply text-[12.5px] sm:text-[14px];
     color: var(--subheading-color);
   }
+
   label {
     @apply text-[10.25px] sm:text-[12.25px];
     color: var(--primary-font-color);
   }
+
   li {
     @apply text-[10.5px] sm:text-[12px];
     color: var(--subheading-color);
   }
+
   .change-button {
     background-color: var(--primary-color);
     @apply text-[10.5px] sm:text-[12px];
   }
+
   svg {
     color: var(--subheading-color);
   }
+
   .change-button:hover {
     background-color: var(--button-hover);
   }
@@ -1429,50 +1488,61 @@ button {
   svg {
     color: var(--primary-color);
   }
+
   h1 {
     @apply text-[17px] sm:text-[21px];
     color: var(--primary-font-color);
   }
+
   p,
   li {
     @apply text-[10px] sm:text-[12.25px];
     color: var(--subheading-color);
   }
+
   .enterdetailsbutton {
     background-color: var(--primary-color);
     @apply text-[10px] sm:text-[14.25px];
   }
+
   .verifydetailsbutton {
     background-color: var(--user-icon-background-color);
     color: var(--subheading-color);
     @apply text-[10px] sm:text-[14.25px];
   }
+
   h3 {
     color: var(--primary-color);
     @apply text-[13px] sm:text-[15.25px];
   }
+
   label {
     color: var(--primary-font-color);
     @apply text-[10px] sm:text-[12.25px];
   }
+
   .valid-guid {
     background-color: var(--guid-background);
     border: var(--thin-border);
   }
+
   .button-submit {
     background-color: var(--primary-color);
     @apply text-[10px] sm:text-[12.25px];
     font-weight: var(--font-semibold);
   }
+
   .extra-card {
     background-color: var(--secondary-backgroundcolor);
     border: var(--thin-border);
   }
+
   .validate-button {
     background-color: var(--primary-color);
     @apply text-[10px] sm:text-[12.25px];
   }
 }
+
 .input-border-error {
   border: 1px solid red !important;
 }
@@ -1488,12 +1558,14 @@ button {
 .text-valid {
   color: green !important;
 }
+
 .alert-card {
   background-color: var(--alertcard-background-color);
 
   h3 {
     color: var(--text-yellow-400);
   }
+
   .error-red {
     color: var(--color-red-400);
   }

@@ -3,16 +3,27 @@ import { persist } from "zustand/middleware";
 
 export const useSignInStore = create(
   persist(
-    (set) => ({
+    (set, get) => ({
       customerId: "",
-      setCustomerId: (id) => set({ customerId: btoa(id) }), // encode before saving
+      
+      // Save login session (encoded)
+      setCustomerId: (id) => set({ customerId: btoa(id) }),
+
+      // Decode and return customerId
       getCustomerId: () => {
-        const encoded = useSignInStore.getState().customerId;
+        const encoded = get().customerId;
         return encoded ? Number(atob(encoded)) : null;
+      },
+
+      // 🔹 Logout function (clear store + localStorage)
+      logout: () => {
+        localStorage.removeItem("customerId"); // remove persisted key
+        localStorage.removeItem("authToken");  // optional: clear token
+        set({ customerId: "" }); // reset store
       },
     }),
     {
-      name: "customerId", // key in localStorage
+      name: "customerId", // key name for persistence
     }
   )
 );

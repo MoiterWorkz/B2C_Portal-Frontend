@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   User,
   Banknote,
@@ -11,6 +11,8 @@ import {
   Shield,
   CreditCard,
 } from "lucide-react";
+import TransferModal from "./TransferModal";
+import SuccessModal from "./SuccessModal";
 
 const payees = [
   {
@@ -63,17 +65,41 @@ const payees = [
   },
 ];
 
+
 const PayeeDirectory = () => {
+  const [selectedPayee, setSelectedPayee] = useState(null);
+  const [showTransferModal, setShowTransferModal] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [transferAmount, setTransferAmount] = useState("");
+
+  const openTransferModal = (payee) => {
+    setSelectedPayee(payee);
+    setShowTransferModal(true);
+  };
+
+  const closeTransferModal = () => {
+    setShowTransferModal(false);
+  };
+
+  const handleTransferSuccess = (amount) => {
+    setTransferAmount(amount); // save entered amount
+    setShowTransferModal(false); // close transfer modal
+    setShowSuccessModal(true); // open success modal
+  };
+
+  const closeSuccessModal = () => {
+    setShowSuccessModal(false);
+  };
   return (
     <div className="rounded-lg border bg-card text-card-foreground shadow-sm full-border rounded-t-2xl">
       {/* Header */}
       <div className="flex justify-between items-center   px-6 py-4 shadow-lg">
-        <h2 className="flex items-center gap-2 text-lg font-semibold text-[#d4b25e]">
+        <h2 className="flex items-center gap-2 text-lg font-semibold font-themecolor">
           <CreditCard size={18} className="font-themecolor" />
           Payee Directory
         </h2>
         <button className="flex items-center gap-2 sign-up-button  transition px-4 py-2 rounded-xl text-sm font-medium">
-          <Plus size={16} className="text-black"/>
+          <Plus size={16} className="text-black" />
           Add Payee
         </button>
       </div>
@@ -81,7 +107,7 @@ const PayeeDirectory = () => {
       {/* Table */}
       <div className="overflow-x-auto  full-border rounded-t-2xl">
         <table className="w-full text-sm">
-          <thead className="text-[#d4b25e] bg-[#1d1d1d] text-xs uppercase">
+          <thead className="font-themecolor  small-text  uppercase">
             <tr>
               <th className="text-left py-3 px-4 full-border">
                 Payee Information
@@ -113,8 +139,8 @@ const PayeeDirectory = () => {
                 className="full-border hover:bg-[#232323] transition"
               >
                 {/* Payee Info */}
-                <td className="py-4 px-4 flex items-center gap-3 full-border">
-                  <div className="w-8 h-8 flex items-center justify-center rounded-full bg-[#d4b25e]/20 text-[#d4b25e] font-semibold">
+                <td className="py-4 px-4 flex items-center gap-3 ">
+                  <div className="w-8 h-8 flex items-center justify-center rounded-full font-semibold font-themecolor icon-bg full-border">
                     {p.initials}
                   </div>
                   <div>
@@ -123,52 +149,52 @@ const PayeeDirectory = () => {
                 </td>
 
                 {/* Bank Details */}
-                <td className="py-4 px-4">
+                <td className="py-4 px-4 full-border">
                   <p className="font-medium text-gray-100 flex items-center gap-1">
-                    <Building2 size={14} className="text-[#d4b25e]" /> {p.bank}
+                    <Building2 size={14} className="font-themecolor" /> {p.bank}
                   </p>
-                  <p className="text-xs text-gray-400">{p.branch}</p>
-                  <span className="inline-block mt-1 text-xs text-blue-400 bg-blue-950/40 border border-blue-800 rounded-md px-2 py-0.5">
+                  <p className="small-text  gray-text">{p.branch}</p>
+                  <span className="inline-block mt-1 small-text  my-blue-box rounded-md px-2 py-0.5">
                     {p.ifsc}
                   </span>
                 </td>
 
                 {/* Account Number */}
-                <td className="py-4 px-4">
-                  <div className="bg-[#101010] border border-[#2a2a2a] rounded-md px-3 py-1 text-gray-200">
+                <td className="py-4 px-4 full-border">
+                  <div className="icon-bg full-border rounded-md px-3 py-1 text-white small-text">
                     {p.account}
                   </div>
                 </td>
 
                 {/* Contact */}
-                <td className="py-4 px-4 flex items-center gap-2 text-gray-300">
-                  <Phone size={14} className="text-[#d4b25e]" />
+                <td className="py-4 px-4 flex items-center gap-2  text-white">
+                  <Phone size={14} className="font-themecolor" />
                   {p.contact}
                 </td>
 
                 {/* Transfer Mode */}
-                <td className="py-4 px-4">
-                  <span className="text-xs text-blue-400 bg-blue-950/40 border border-blue-800 rounded-md px-3 py-1 inline-block">
+                <td className="py-4 px-4 full-border">
+                  <span className="small-text  my-blue-box rounded-md px-3 py-1 inline-block">
                     {p.mode}
                   </span>
                 </td>
 
                 {/* Date Added */}
-                <td className="py-4 px-4 text-sm">
-                  <p className="text-gray-400 flex items-center gap-1">
-                    <Clock size={13} className="text-[#d4b25e]" />
+                <td className="py-4 px-4 text-sm full-border">
+                  <p className="gray-text flex items-center gap-1">
+                    <Clock size={13} className="font-themecolor" />
                     Registered
                   </p>
                   <p className="font-semibold text-gray-200">{p.date}</p>
-                  <p className="text-xs text-gray-500">{p.time}</p>
+                  <p className="small-text  text-gray-500">{p.time}</p>
                 </td>
 
                 {/* Actions */}
                 <td className="py-4 px-4 flex gap-2">
-                  <button className="flex items-center gap-1 px-3 py-1 bg-[#d4b25e]/20 border border-[#d4b25e]/40 text-[#d4b25e] text-xs rounded-lg hover:bg-[#d4b25e]/30 transition">
+                  <button onClick={() => openTransferModal(p)} className="flex items-center gap-1 px-3 py-1 my-gold-box font-themecolor small-text  rounded-lg  transition">
                     <Send size={14} /> Transfer
                   </button>
-                  <button className="p-2 bg-[#2b1515] border border-[#4a1a1a] text-red-500 rounded-lg hover:bg-[#401c1c] transition">
+                  <button className="p-2 my-red-box transition">
                     <Trash2 size={14} />
                   </button>
                 </td>
@@ -177,6 +203,20 @@ const PayeeDirectory = () => {
           </tbody>
         </table>
       </div>
+
+      {/* Modals */}
+      <TransferModal
+        isOpen={showTransferModal}
+        onClose={closeTransferModal}
+        payee={selectedPayee}
+        onSuccess={handleTransferSuccess}
+      />
+      <SuccessModal
+        isOpen={showSuccessModal}
+        onClose={closeSuccessModal}
+        payee={selectedPayee}
+        amount={transferAmount}
+      />
     </div>
   );
 };

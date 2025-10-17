@@ -22,14 +22,16 @@ const Login = () => {
       const authResponse = await axios.post(
        `${import.meta.env.VITE_AUTH_API_BASE_URL}/api/AuthService/mobile-login`,
         {
-          mobileNumber: phone,
-          password: pin,
+          mobileNumber: "9874585225",
+          password: "7575",
         }
       );
 
-      const { accessToken } = authResponse.data;
-      // Step 2️⃣: Save + authorize Swagger
-      saveAuthToken(accessToken);
+      // ✅ Extract both tokens
+    const { accessToken, refreshToken } = authResponse.data;
+
+    // ✅ Save both tokens and start auto-refresh (and Swagger auth)
+    saveAuthToken(accessToken, refreshToken);
       // const data = await loginToken(phone, pin);
       const res = await loginWithPin(phone, encodedPin);
       console.error("Login success:", res);

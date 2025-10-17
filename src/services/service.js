@@ -2,6 +2,8 @@ import axios from "axios";
 import { v4 as uuidv4 } from "uuid"; // for generating transactionId
 import { getPublicIp } from "../services/ipService";
 import { CodeSquare } from "lucide-react";
+const token = localStorage.getItem("accessToken");
+
 // Base URL
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL || "http://192.168.22.247";
@@ -20,19 +22,9 @@ const getCommonMetadata = () => ({
     header: {
       additionalProp1: {
         options: { propertyNameCaseInsensitive: true },
-        parent: "string",
-        root: "string",
-      },
-      additionalProp2: {
-        options: { propertyNameCaseInsensitive: true },
-        parent: "string",
-        root: "string",
-      },
-      additionalProp3: {
-        options: { propertyNameCaseInsensitive: true },
-        parent: "string",
-        root: "string",
-      },
+        parent: "Bearer",
+        root: token || "token123"
+      }
     },
   },
 });
@@ -42,7 +34,6 @@ const api = axios.create({
   baseURL: API_BASE_URL,
   headers: { "Content-Type": "application/json" },
 });
-
 // Request interceptor — add metadata
 api.interceptors.request.use(
   async (config) => {
@@ -173,15 +164,14 @@ export const sanctionCheck = async ({
 };
 
 // ✅ Set Account PIN (Password API)
-export const setAccountPin = async (customerId,mobileNumber, pin) => {
+export const setAccountPin = async (customerId, mobileNumber, pin) => {
   return postRequest("/cs/api/Customer/password", {
     customerId,
     mobileNumber,
     password: pin,
   });
 };
-
-// login Token 
+ 
 
 
 // ✅ Login with Phone + PIN
