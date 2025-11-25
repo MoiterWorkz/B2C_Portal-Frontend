@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import ConfirmRechargeModal from "./rechargeDetailsModule/popup/confirmRechargeModal";
 import RechargeProcessingModal from "./rechargeDetailsModule/popup/rechargeProcessingModal";
 import { generateTransactionRef } from "../../../helper/index";
-import { useSignInStore } from "../../../store/useSigninStore";
+import { useSignInStore } from "../../../store/useSignInStore";
 import { moveTransaction, rechargeWallet } from "../../../services/service";
 import PaymentMethod from "./rechargeDetailsModule/paymentMethod";
 import QuickRecharge from "./rechargeDetailsModule/quickRecharge";
@@ -38,8 +38,8 @@ const WalletRecharge = () => {
       channelId,
       referenceNumber: transactionRef,
       processingFee: 0,
-      transactionType:1,
-      ipAddress:"strings",
+      transactionType: 1,
+      ipAddress: "strings",
     };
 
     try {

@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid"; // for generating transactionId
 import { getPublicIp } from "../services/ipService";
 import { CodeSquare } from "lucide-react";
 const token = localStorage.getItem("accessToken");
-
+const path = "/cs/api/Customer";
 // Base URL
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL || "http://192.168.22.247";
@@ -23,8 +23,8 @@ const getCommonMetadata = () => ({
       additionalProp1: {
         options: { propertyNameCaseInsensitive: true },
         parent: "Bearer",
-        root: token || "token123"
-      }
+        root: token || "token123",
+      },
     },
   },
 });
@@ -55,9 +55,6 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-
-
-
 // Generic POST request
 export const postRequest = async (endpoint, payload) => {
   try {
@@ -84,7 +81,6 @@ export const getRequest = async (endpoint) => {
     throw error;
   }
 };
-
 
 // ✅ PAN Verification
 export const verifyPan = async (panNumber) => {
@@ -171,8 +167,6 @@ export const setAccountPin = async (customerId, mobileNumber, pin) => {
     password: pin,
   });
 };
- 
-
 
 // ✅ Login with Phone + PIN
 export const loginWithPin = async (mobileNumber, password) => {
@@ -204,9 +198,17 @@ export const fetchWalletBalance = (id) =>
 export const fetchDashboard = (id) =>
   getRequest(`cs/api/Customer/dashboard?customerId=${id}`);
 
-
 export const uploadVideoKyc = async (payload) => {
   return postRequest("/api/videokyc/uploadVideoKyc", payload);
 };
 export const fetchWalletbalance = (id) =>
   getRequest(`cs/api/Customer/wallet-balance?customerId=${id}`);
+
+export const fetchPayee = (id) =>
+  getRequest(`${path}/view-payee?customerId=${id}`);
+
+export const debitPayee = (payload) =>
+  postRequest(`${path}/debit-payee`, {
+    ...payload,
+    logId: uuidv4(),
+  });

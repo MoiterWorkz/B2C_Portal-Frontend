@@ -41,28 +41,42 @@
   --button-hover: color-mix(in oklab, var(--primary-color) 90%, transparent);
   --transparent-color: transparent;
   --smallbutton-inside-backgound: color-mix(in oklab, #fad489 10%, transparent);
-  --smallbutton-inside-hover-backgound: color-mix(in oklab,
-      #fad489 50%,
-      transparent);
-  --secondary-backgroundcolor: color-mix(in oklab,
-      var(--card-background-color) 30%,
-      transparent);
+  --smallbutton-inside-hover-backgound: color-mix(
+    in oklab,
+    #fad489 50%,
+    transparent
+  );
+  --secondary-backgroundcolor: color-mix(
+    in oklab,
+    var(--card-background-color) 30%,
+    transparent
+  );
   --third-backgroundcolor: color-mix(in oklab, #2a2a2a 80%, transparent);
-  --smallbutton-inside-backgound: color-mix(in oklab,
-      var(--primary-color) 10%,
-      transparent);
-  --smallbutton-inside-hover-backgound: color-mix(in oklab,
-      var(--primary-color) 50%,
-      transparent);
-  --secondary-backgroundcolor: color-mix(in oklab,
-      var(--card-background-color) 30%,
-      transparent);
-  --third-backgroundcolor: color-mix(in oklab,
-      var(--card-background-color) 80%,
-      transparent);
-  --alertcard-background-color: color-mix(in oklab,
-      var(--color-yellow-400) 5%,
-      transparent);
+  --smallbutton-inside-backgound: color-mix(
+    in oklab,
+    var(--primary-color) 10%,
+    transparent
+  );
+  --smallbutton-inside-hover-backgound: color-mix(
+    in oklab,
+    var(--primary-color) 50%,
+    transparent
+  );
+  --secondary-backgroundcolor: color-mix(
+    in oklab,
+    var(--card-background-color) 30%,
+    transparent
+  );
+  --third-backgroundcolor: color-mix(
+    in oklab,
+    var(--card-background-color) 80%,
+    transparent
+  );
+  --alertcard-background-color: color-mix(
+    in oklab,
+    var(--color-yellow-400) 5%,
+    transparent
+  );
   --payment-bg: color-mix(in oklab, #3a3a3a 50%, transparent);
 
   --smallbutton-inside-backgound: color-mix(
@@ -97,30 +111,44 @@
   --button-hover: color-mix(in oklab, var(--primary-color) 90%, transparent);
   --transparent-color: transparent;
   --smallbutton-inside-backgound: color-mix(in oklab, #fad489 10%, transparent);
-  --smallbutton-inside-hover-backgound: color-mix(in oklab,
-      #fad489 50%,
-      transparent);
-  --secondary-backgroundcolor: color-mix(in oklab,
-      var(--card-background-color) 30%,
-      transparent);
+  --smallbutton-inside-hover-backgound: color-mix(
+    in oklab,
+    #fad489 50%,
+    transparent
+  );
+  --secondary-backgroundcolor: color-mix(
+    in oklab,
+    var(--card-background-color) 30%,
+    transparent
+  );
   --third-backgroundcolor: color-mix(in oklab, #2a2a2a 80%, transparent);
-  --smallbutton-inside-backgound: color-mix(in oklab,
-      var(--primary-color) 10%,
-      transparent);
+  --smallbutton-inside-backgound: color-mix(
+    in oklab,
+    var(--primary-color) 10%,
+    transparent
+  );
   --card-settings-bg: color-mix(in oklab, var(--primary-color) 5%, transparent);
-  --smallbutton-inside-hover-backgound: color-mix(in oklab,
-      var(--primary-color) 50%,
-      transparent);
+  --smallbutton-inside-hover-backgound: color-mix(
+    in oklab,
+    var(--primary-color) 50%,
+    transparent
+  );
 
-  --third-backgroundcolor: color-mix(in oklab,
-      var(--card-background-color) 80%,
-      transparent);
-  --bigicon-background-color: color-mix(in oklab,
-      var(--color-yellow-400) 20%,
-      transparent);
-  --dark-primarybackground-color: color-mix(in oklab,
-      var(--primary-color) 5%,
-      transparent);
+  --third-backgroundcolor: color-mix(
+    in oklab,
+    var(--card-background-color) 80%,
+    transparent
+  );
+  --bigicon-background-color: color-mix(
+    in oklab,
+    var(--color-yellow-400) 20%,
+    transparent
+  );
+  --dark-primarybackground-color: color-mix(
+    in oklab,
+    var(--primary-color) 5%,
+    transparent
+  );
   --smallbutton-inside-hover-backgound: color-mix(
     in oklab,
     var(--primary-color) 50%,
@@ -168,7 +196,8 @@
 
   /* Shadows */
   --card-hover-shadow: 0 20px 40px #fad48926, 0 8px 16px #fad4891a;
-  --small-cards-shadow: 0px 0px 0px 1px color-mix(in srgb, var(--primary-color) 4%, transparent),
+  --small-cards-shadow: 0px 0px 0px 1px
+      color-mix(in srgb, var(--primary-color) 4%, transparent),
     0px 1px 1px -0.5px color-mix(in srgb, var(--primary-color) 4%, transparent),
     0px 3px 3px -1.5px color-mix(in srgb, var(--primary-color) 4%, transparent),
     0px 6px 6px -3px color-mix(in srgb, var(--primary-color) 4%, transparent),
@@ -177,11 +206,15 @@
 
   /* Border */
   --circle-border: 3.40282e38px;
-  --thin-border: 1px solid color-mix(in oklab, var(--primary-color) 20%, transparent);
+  --thin-border: 1px solid
+    color-mix(in oklab, var(--primary-color) 20%, transparent);
 
-  --thick-border: 2px solid color-mix(in oklab, var(--primary-color) 20%, transparent);
-  --thin-border: 1px solid color-mix(in oklab, var(--primary-color) 20%, transparent);
-  --white-border: 1px solid color-mix(in oklab, var(--primary-font-color) 20%, transparent);
+  --thick-border: 2px solid
+    color-mix(in oklab, var(--primary-color) 20%, transparent);
+  --thin-border: 1px solid
+    color-mix(in oklab, var(--primary-color) 20%, transparent);
+  --white-border: 1px solid
+    color-mix(in oklab, var(--primary-font-color) 20%, transparent);
 
   /* side bar */
   --sidebar-active-text: #1a1a1a;
@@ -262,8 +295,8 @@
 .my-gold-box:hover {
   background-color: var(--list-gold-hover-bg-color);
 }
-.green-border{
-    border: 2px solid var(--list-green-border-color);
+.green-border {
+  border: 2px solid var(--list-green-border-color);
 }
 .my-green-box {
   background-color: var(--list-green-bg-color);
@@ -299,7 +332,8 @@ body {
 
 .primary-input {
   background-color: #3a3a3a;
-  border: 2px solid color-mix(in oklab, var(--primary-border-color) 30%, transparent);
+  border: 2px solid
+    color-mix(in oklab, var(--primary-border-color) 30%, transparent);
 }
 
 .Small-Heading {
@@ -339,13 +373,15 @@ body {
 }
 
 .card-bg:hover {
-  border: 1px solid color-mix(in oklab, var(--primary-border-color) 30%, transparent);
+  border: 1px solid
+    color-mix(in oklab, var(--primary-border-color) 30%, transparent);
   box-shadow: var(--card-hover-shadow);
 }
 
 /* Border */
 .border-primary-bottom {
-  border-bottom: 1px solid color-mix(in oklab, var(--primary-border-color) 30%, transparent);
+  border-bottom: 1px solid
+    color-mix(in oklab, var(--primary-border-color) 30%, transparent);
 }
 
 .primary-border-color {
@@ -435,7 +471,8 @@ body {
 /* Small Cards */
 .small-cards {
   background-color: var(--card-background-color);
-  border: 2px solid color-mix(in oklab, var(--primary-border-color) 30%, transparent);
+  border: 2px solid
+    color-mix(in oklab, var(--primary-border-color) 30%, transparent);
   transition: all 0.3s ease;
   box-shadow: none;
 }
@@ -451,7 +488,8 @@ body {
 
 .small-cards-icon {
   background-color: var(--smallbutton-inside-backgound);
-  border: 1px solid color-mix(in oklab, var(--primary-border-color) 30%, transparent);
+  border: 1px solid
+    color-mix(in oklab, var(--primary-border-color) 30%, transparent);
   transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
@@ -495,9 +533,12 @@ body {
 
 /* Define a custom gradient using OKLab and color-mix */
 .my-gradient {
-  --tw-gradient-stops: color-mix(in oklab,
-      var(--primary-color) 20%,
-      transparent) 0%,
+  --tw-gradient-stops: color-mix(
+        in oklab,
+        var(--primary-color) 20%,
+        transparent
+      )
+      0%,
     color-mix(in oklab, var(--primary-color) 10%, transparent) 100%;
 
   background-image: linear-gradient(to bottom right, var(--tw-gradient-stops));
@@ -670,11 +711,12 @@ body {
   left: -75%;
   width: 50%;
   height: 100%;
-  background: linear-gradient(120deg,
-      rgba(255, 255, 255, 0) 0%,
-      rgba(250, 212, 137, 0.4) 50%,
-      /* golden light */
-      rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(250, 212, 137, 0.4) 50%,
+    /* golden light */ rgba(255, 255, 255, 0) 100%
+  );
   transform: skewX(-20deg);
   animation: sidebarSweep 0.7s forwards;
   pointer-events: none;
@@ -1019,10 +1061,12 @@ body {
   /* start outside from left */
   width: 50%;
   height: 100%;
-  background: linear-gradient(120deg,
-      rgba(255, 255, 255, 0) 0%,
-      rgba(250, 212, 137, 0.6) 50%,
-      rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(250, 212, 137, 0.6) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
   transform: skewX(-20deg);
   animation: sweep 0.7s forwards;
   pointer-events: none;
@@ -1052,11 +1096,12 @@ body {
   left: -75%;
   width: 50%;
   height: 100%;
-  background: linear-gradient(120deg,
-      rgba(255, 255, 255, 0) 0%,
-      rgba(255, 77, 79, 0.4) 50%,
-      /* match logout red tone */
-      rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 77, 79, 0.4) 50%,
+    /* match logout red tone */ rgba(255, 255, 255, 0) 100%
+  );
   transform: skewX(-20deg);
   animation: sweep 0.7s forwards;
   pointer-events: none;
@@ -1310,7 +1355,6 @@ body {
 }
 
 .bigcards {
-
   /* background-color: var(--primary-color); */
   .icon {
     background-color: var(--smallbutton-inside-backgound);
@@ -1446,7 +1490,6 @@ body {
 
 /* In your CSS file */
 @media (max-width: 320px) {
-
   .circle-number,
   .backbutton,
   .Big-icon,
@@ -1457,7 +1500,7 @@ body {
     text-align: center;
   }
 
-  .flex-col-sm-override>.group-3 {
+  .flex-col-sm-override > .group-3 {
     align-items: center !important;
   }
 }

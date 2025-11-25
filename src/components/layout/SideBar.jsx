@@ -48,7 +48,6 @@ const SideBar = ({ isOpen, onClose }) => {
         <nav className="p-4 space-y-2">
           {sidebarItems.map((item) => {
             const isActive = location.pathname === item.url;
-
             return (
               <div key={item.label}>
                 <button
@@ -89,7 +88,7 @@ const SideBar = ({ isOpen, onClose }) => {
                 {item.dropdown && openDropdown === item.label && (
                   <div className="sidebar-dropdown">
                     {item.dropdown.map((subItem) => {
-                      const isSubActive = location.pathname === item.url;
+                      const isSubActive = location.pathname === subItem.url;
                       return (
                         <button
                           key={subItem.label}

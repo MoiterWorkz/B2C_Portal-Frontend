@@ -74,8 +74,8 @@ const UseIconsData = () => {
       label: "Fund Transfer",
       icon: ArrowRightLeft,
       dropdown: [
-        { label: "Add Payee", icon: UserPlus, url: "fund-transfer/add-payee" },
-        { label: "Payee List", icon: Users, url: "fund-transfer/payee-list" },
+        { label: "Add Payee", icon: UserPlus, url: "/fund-transfer/add-payee" },
+        { label: "Payee List", icon: Users, url: "/fund-transfer/payee-list" },
       ],
     },
   ];

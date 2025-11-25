@@ -1,19 +1,23 @@
 import React from "react";
-import {
-  Users,
-  UserCheck,
-  Building2
-} from "lucide-react";
+import { Users, UserCheck, Building2 } from "lucide-react";
 import PayeeDirectory from "./PayeeDirectory";
+import { useZustandStore } from "../../../store/useSignInStore";
+import DashBoardHooks from "../../../hooks/dashBoardHooks";
 
 const PayeeManagement = () => {
+  const { payeeList } = useZustandStore();
+  const { dashBoardData } = DashBoardHooks();
+
   return (
     <div className="max-w-7xl mx-auto px-6 lg:px-8 py-6 lg:py-8 space-y-6 ">
       {/* Header */}
       <div className="rounded-lg border bg-card text-card-foreground shadow-sm card-hover-effect flex justify-between px-6 py-4 ">
         <div className="flex">
           <div className="flex items-center gap-3 text-xl font-semibold ">
-            <div className="p-3 icon-bg rounded-xl full-border">  <Users className="font-themecolor" size={22} /></div>
+            <div className="p-3 icon-bg rounded-xl full-border">
+              {" "}
+              <Users className="font-themecolor" size={22} />
+            </div>
             <div>
               <div className="flex flex-row items-center gap-2">
                 <h1 className="form-heading2 text-white"> Payee Management</h1>
@@ -25,17 +29,16 @@ const PayeeManagement = () => {
                 Manage your trusted payees securely
               </p>
             </div>
-
-
           </div>
-
         </div>
-        <div className="flex flex-col  items-center gap-1">
+        <div className="flex flex-col justify-center items-center gap-1">
           <div className="flex items-center gap-2 my-gold-box font-themecolor px-3 py-2 rounded-xl">
             <UserCheck className="font-themecolor" size={18} />
-            <span className="small-text font-medium ">Kavin A</span>
+            <span className="small-text font-medium ">
+              {dashBoardData?.customerName}
+            </span>
           </div>
-          <p className="small-text gray-text ">demo@moiterworkz.com</p>
+          {/* <p className="small-text gray-text ">demo@moiterworkz.com</p> */}
         </div>
       </div>
 
@@ -45,7 +48,9 @@ const PayeeManagement = () => {
         <div className="rounded-lg border bg-card text-card-foreground shadow-sm card-hover-effect p-5 flex justify-between items-center transition">
           <div>
             <p className="small-text  gray-text mb-1">Total Payees</p>
-            <h2 className="text-3xl font-bold font-themecolor">4</h2>
+            <h2 className="text-3xl font-bold font-themecolor">
+              {payeeList?.length}
+            </h2>
             <p className="small-text  font-themecolor mt-1">Active Accounts</p>
           </div>
           <div className="p-3 icon-bg rounded-xl">
@@ -57,7 +62,9 @@ const PayeeManagement = () => {
         <div className="rounded-lg border bg-card text-card-foreground shadow-sm card-hover-effect p-5 flex justify-between items-center  transition">
           <div>
             <p className="small-text  gray-text mb-1">IMPS (IFSC)</p>
-            <h2 className="text-3xl font-bold font-themecolor">4</h2>
+            <h2 className="text-3xl font-bold font-themecolor">
+              {payeeList?.length}
+            </h2>
             <p className="small-text font-themecolor mt-1">Bank Transfers</p>
           </div>
           <div className="p-3 icon-bg rounded-xl">
@@ -68,7 +75,9 @@ const PayeeManagement = () => {
       <PayeeDirectory />
 
       <div className="w-full flex  justify-center">
-        <p className="  px-3 py-2 rounded-md  small-text my-gold-box font-themecolor ">Powered by MW Banking Solutions</p>
+        <p className="  px-3 py-2 rounded-md  small-text my-gold-box font-themecolor ">
+          Powered by MW Banking Solutions
+        </p>
       </div>
     </div>
   );

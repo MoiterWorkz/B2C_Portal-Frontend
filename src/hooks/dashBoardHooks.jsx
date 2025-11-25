@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { fetchDashboard } from "../services/service";
-import { useSignInStore } from "../store/useSigninStore";
+import { useSignInStore } from "../store/useSignInStore";
 
 export const DashBoardHooks = () => {
   const { getCustomerId } = useSignInStore();

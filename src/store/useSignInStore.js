@@ -1,11 +1,10 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { fetchPayee } from "../services/service";
 
 export const useSignInStore = create(
   persist(
     (set, get) => ({
-      customerId: "",
-      
       // Save login session (encoded)
       setCustomerId: (id) => set({ customerId: btoa(id) }),
 
@@ -18,7 +17,7 @@ export const useSignInStore = create(
       // 🔹 Logout function (clear store + localStorage)
       logout: () => {
         localStorage.removeItem("customerId"); // remove persisted key
-        localStorage.removeItem("authToken");  // optional: clear token
+        localStorage.removeItem("authToken"); // optional: clear token
         set({ customerId: "" }); // reset store
       },
     }),
@@ -38,4 +37,13 @@ export const usePaymentStore = create((set) => ({
     set((prev) => ({
       paymentFormDataErr: { ...prev.paymentFormDataErr, ...data },
     })),
+}));
+
+export const useZustandStore = create((set) => ({
+  payeeList: [],
+  fetchPayeeList: async () => {
+    const customerId = useSignInStore.getState().getCustomerId();
+    const res = await fetchPayee(customerId);
+    set({ payeeList: res });
+  },
 }));
