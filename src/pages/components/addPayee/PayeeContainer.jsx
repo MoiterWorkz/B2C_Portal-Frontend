@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PayeeHeader from "./PayeeHeader";
-import AddEditPayee from "./addEditPayee";
+import AddEditPayee from "./AddEditPayee";
 import VerifyPayeeDetails from "./VerifyPayeeDetails";
 import PayeeAddedSuccessfully from "./PayeeAddedSuccessfully";
 import { addpayee } from "../../../services/service";
@@ -10,6 +10,7 @@ const PayeeContainer = () => {
   const { getCustomerId } = useSignInStore();
   const customerId = getCustomerId();
   const [activeStep, setActiveStep] = useState("addEdit"); // 'addEdit' | 'verify' | 'success'
+  const [selectedModes, setSelectedModes] = useState(["IMPS (IFSC)"]);
   const [payeeData, setPayeeData] = useState(null);
   const [formData, setFormData] = useState({
     payeeName: "",
@@ -17,7 +18,6 @@ const PayeeContainer = () => {
     accountNumber: "",
     retypeAccountNumber: "",
     payeeMobile: "",
-    payMode: "IMPS",
     knowIfsc: "yes",
     payeeCity: "",
     mobileNumber: "",
@@ -38,8 +38,8 @@ const PayeeContainer = () => {
     const payload = {
       customerId: customerId,
       payeeName: formData.payeeName,
-      payMode: formData.payMode, 
-      ifscCode: formData.ifscCode,
+      payMode: selectedModes.join(", "),
+      ifscCode: formData.ifscCode || "HDFC0000456",
       payeeBank: formData.bank,
       payeeBranch: formData.branch,
       payeeAccountNumber: formData.accountNumber,
@@ -47,14 +47,15 @@ const PayeeContainer = () => {
       payeeCity: formData.payeeCity,
       createdBy: "string",
     };
+    console.log(payload);
 
-    try {
-      const response = await addpayee(payload);
-      console.log("Payee Added Response:", response);
-      setActiveStep("success");
-    } catch (error) {
-      console.error("Error adding payee:", error);
-    }
+    // try {
+    //   const response = await addpayee(payload);
+    //   console.log("Payee Added Response:", response);
+    //   setActiveStep("success");
+    // } catch (error) {
+    //   console.error("Error adding payee:", error);
+    // }
   };
   const handleAddAnotherPayee = () => {
     setFormData({
@@ -90,6 +91,8 @@ const PayeeContainer = () => {
             onSubmit={handleAddEditSubmit}
             formData={formData}
             setFormData={setFormData}
+            setSelectedModes={setSelectedModes}
+            selectedModes={selectedModes}
           />
         )}
         {activeStep === "verify" && (
@@ -98,6 +101,7 @@ const PayeeContainer = () => {
             onBack={handleBackToEdit}
             onConfirm={handleConfirmAddPayee}
             formData={formData}
+            selectedModes={selectedModes}
           />
         )}
         {activeStep === "success" && (

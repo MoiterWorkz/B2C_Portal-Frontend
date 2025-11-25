@@ -1,7 +1,13 @@
 import React from "react";
 import { CircleCheck } from "lucide-react"; // make sure lucide-react is installed
 
-const VerifyPayeeDetails = ({ payeeData, onBack, onConfirm, formData }) => {
+const VerifyPayeeDetails = ({
+  payeeData,
+  onBack,
+  onConfirm,
+  formData,
+  selectedModes,
+}) => {
   // Show city section only if user selected "no" for IFSC
   const showCitySection =
     formData.knowIfsc === "no" && formData.payeeCity?.trim() !== "";
@@ -19,7 +25,7 @@ const VerifyPayeeDetails = ({ payeeData, onBack, onConfirm, formData }) => {
       <div className="p-6 pt-0 space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <Detail label="Payee Name" value={formData.payeeName} />
-          <Detail label="Pay Mode" value={formData.payMode} />
+          <Detail label="Pay Mode" value={selectedModes.join(", ")} />
           <Detail label="Bank" value={formData.bank} />
           <Detail label="Branch" value={formData.branch} />
 
@@ -30,7 +36,7 @@ const VerifyPayeeDetails = ({ payeeData, onBack, onConfirm, formData }) => {
                 ? "IFSC Code"
                 : "Auto-Generated IFSC Code"
             }
-            value={formData.ifscCode || "-"}
+            value={formData.ifscCode || "HDFC0000456"}
           />
 
           <Detail label="Account Number" value={formData.accountNumber} />

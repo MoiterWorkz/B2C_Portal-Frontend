@@ -9,7 +9,13 @@ import {
 } from "lucide-react";
 import CustomSelect from "../../../constants/Reusable/Customdropdown";
 
-const AddEditPayee = ({ onSubmit, formData, setFormData }) => {
+const AddEditPayee = ({
+  onSubmit,
+  formData,
+  setFormData,
+  selectedModes,
+  setSelectedModes,
+}) => {
   const payeeNameRef = useRef();
   const ifscCodeRef = useRef();
   const accountNumberRef = useRef();
@@ -18,7 +24,12 @@ const AddEditPayee = ({ onSubmit, formData, setFormData }) => {
   const payeeCityRef = useRef();
   const [selectedBank, setSelectedBank] = useState("");
   const [selectedBranch, setSelectedBranch] = useState("");
-  const [selectedModes, setSelectedModes] = useState(["IMPS (IFSC)"]); // IMPS default
+  const [touched, setTouched] = useState({
+    ifscCode: false,
+    accountNumber: false,
+    retypeAccountNumber: false,
+    payeeMobile: false,
+  });
 
   const handleCheckboxChange = (mode) => {
     setSelectedModes((prev) => {
@@ -111,15 +122,9 @@ const AddEditPayee = ({ onSubmit, formData, setFormData }) => {
 
     // If all validations pass
     console.log("Submitted Data:", formData);
-    alert("Payee details submitted successfully!");
+    // alert("Payee details submitted successfully!");
     onSubmit(formData);
   };
-  const [touched, setTouched] = useState({
-    ifscCode: false,
-    accountNumber: false,
-    retypeAccountNumber: false,
-    payeeMobile: false,
-  });
 
   // IFSC validation
   const errors = [];
