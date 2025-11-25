@@ -212,3 +212,6 @@ export const debitPayee = (payload) =>
     ...payload,
     logId: uuidv4(),
   });
+export const addpayee = async (payload) => {
+  return postRequest("/cs/api/Customer/add-payee", payload);
+};

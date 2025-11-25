@@ -3,8 +3,12 @@ import PayeeHeader from "./PayeeHeader";
 import AddEditPayee from "./addEditPayee";
 import VerifyPayeeDetails from "./VerifyPayeeDetails";
 import PayeeAddedSuccessfully from "./PayeeAddedSuccessfully";
+import { addpayee } from "../../../services/service";
+import { useSignInStore } from "../../../store/useSigninStore";
 
 const PayeeContainer = () => {
+  const { getCustomerId } = useSignInStore();
+  const customerId = getCustomerId();
   const [activeStep, setActiveStep] = useState("addEdit"); // 'addEdit' | 'verify' | 'success'
   const [payeeData, setPayeeData] = useState(null);
   const [formData, setFormData] = useState({
@@ -30,8 +34,27 @@ const PayeeContainer = () => {
     setActiveStep("addEdit");
   };
 
-  const handleConfirmAddPayee = () => {
-    setActiveStep("success");
+  const handleConfirmAddPayee = async () => {
+    const payload = {
+      customerId: customerId,
+      payeeName: formData.payeeName,
+      payMode: formData.payMode, 
+      ifscCode: formData.ifscCode,
+      payeeBank: formData.bank,
+      payeeBranch: formData.branch,
+      payeeAccountNumber: formData.accountNumber,
+      payeeMobile: formData.payeeMobile,
+      payeeCity: formData.payeeCity,
+      createdBy: "string",
+    };
+
+    try {
+      const response = await addpayee(payload);
+      console.log("Payee Added Response:", response);
+      setActiveStep("success");
+    } catch (error) {
+      console.error("Error adding payee:", error);
+    }
   };
   const handleAddAnotherPayee = () => {
     setFormData({
