@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginWithPin } from "../services/service"; // API service
-import { ArrowLeft, Phone, LogIn, Shield, Building2, User2Icon } from "lucide-react";
+import { ArrowLeft, Phone, LogIn, Shield, Loader2 } from "lucide-react";
 import LOGO from "../assets/logo.png";
 import { useSignInStore } from "../store/useSigninStore";
 import axios from "axios";
@@ -10,41 +10,62 @@ import { saveAuthToken } from "../utils/authManager";
 const Login = () => {
   const [phone, setPhone] = useState("");
   const [pin, setPin] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const { setCustomerId } = useSignInStore();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
+    if (isLoading) return; // extra guard
+    setIsLoading(true);
 
+    try {
       const encodedPin = btoa(pin); // encode if backend expects Base64
 
+      // Example: primary auth endpoint to obtain tokens (adjust URL/env as required)
       const authResponse = await axios.post(
-       `${import.meta.env.VITE_AUTH_API_BASE_URL}/api/AuthService/mobile-login`,
+        `${
+          import.meta.env.VITE_AUTH_API_BASE_URL
+        }/api/AuthService/mobile-login`,
         {
-          mobileNumber: "9874585225",
-          password: "7575",
+          mobileNumber: phone || "9874585225",
+          password: pin || "7575",
         }
       );
 
-      // ✅ Extract both tokens
-    const { accessToken, refreshToken } = authResponse.data;
+      // Extract tokens (adjust keys to match backend response)
+      const { accessToken, refreshToken } = authResponse.data || {};
 
-    // ✅ Save both tokens and start auto-refresh (and Swagger auth)
-    saveAuthToken(accessToken, refreshToken);
-      // const data = await loginToken(phone, pin);
+      if (accessToken) {
+        // Save tokens and enable auto-refresh if your util supports it
+        saveAuthToken(accessToken, refreshToken);
+      }
+
+      // Call your existing loginWithPin service (keeps original flow)
       const res = await loginWithPin(phone, encodedPin);
-      console.error("Login success:", res);
-      setCustomerId(res?.customerId);
-      const customerId = res?.customerId || "";
-      const dataToEncode = JSON.stringify({ mobileNumber: phone, ID: customerId });
+      console.info("Login success:", res);
 
-      // Encode the JSON as Base64
+      const customerId = res?.customerId || "";
+      setCustomerId(customerId);
+
+      const dataToEncode = JSON.stringify({
+        mobileNumber: phone,
+        ID: customerId,
+      });
       const encodedData = btoa(dataToEncode);
+
+      // Navigate to dashboard with encoded data
       navigate("/dashboard", { state: { encoded: encodedData, encodedPin } });
     } catch (err) {
-      console.error("Login failed:", err.response?.data || err.message);
-      alert("Login failed. Check your phone number and PIN.");
+      // Better logging for debugging
+      console.error(
+        "Login failed:",
+        err?.response?.data ?? err?.message ?? err
+      );
+      // User-facing error
+      alert("Login failed. Check your phone number and PIN and try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -61,6 +82,8 @@ const Login = () => {
         <button
           onClick={() => navigate("/")}
           className="flex items-center gap-2 small-text text-neutral-400 hover:text-white mb-4"
+          type="button"
+          disabled={isLoading}
         >
           <ArrowLeft size={16} /> Back to Home
         </button>
@@ -72,9 +95,12 @@ const Login = () => {
         </p>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form
+          onSubmit={handleSubmit}
+          className="space-y-4"
+          aria-busy={isLoading}
+        >
           {/* Phone Number */}
-
           <label className="small-text font-medium">Phone number</label>
           <div className="relative">
             <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-400">
@@ -88,6 +114,7 @@ const Login = () => {
               className="w-full pl-10 pr-[8px] py-[8px] rounded-[20px] bg-neutral-800 border small-text border-neutral-700 focus:outline-none focus:ring-1 focus:ring-yellow-200 full-border"
               maxLength={10}
               required
+              disabled={isLoading}
             />
           </div>
 
@@ -105,6 +132,7 @@ const Login = () => {
               className="w-full pl-10 pr-[8px] py-[8px] rounded-[20px] bg-neutral-800 border small-text border-neutral-700 focus:outline-none focus:ring-1 focus:ring-yellow-200 full-border"
               maxLength={4}
               required
+              disabled={isLoading}
             />
           </div>
 
@@ -116,10 +144,23 @@ const Login = () => {
           {/* Button */}
           <button
             type="submit"
-            className="w-full py-3 rounded-lg font-semibold flex items-center justify-center gap-2 sign-up-button  text-black hover:bg-yellow-300 transition"
+            className={`w-full py-3 rounded-lg font-semibold flex items-center justify-center gap-2 sign-up-button text-black hover:bg-yellow-300 transition ${
+              isLoading ? "opacity-70 pointer-events-none" : ""
+            }`}
+            disabled={isLoading}
+            aria-disabled={isLoading}
           >
-            <LogIn size={18} />
-            Sign In with PIN
+            {isLoading ? (
+              <>
+                <Loader2 className="animate-spin" size={18} />
+                Signing in...
+              </>
+            ) : (
+              <>
+                <LogIn size={18} />
+                Sign In with PIN
+              </>
+            )}
           </button>
         </form>
 
@@ -129,6 +170,8 @@ const Login = () => {
           <button
             onClick={() => navigate("/Sign-Up")}
             className="font-themecolor font-semibold hover:underline"
+            type="button"
+            disabled={isLoading}
           >
             Create Account
           </button>
