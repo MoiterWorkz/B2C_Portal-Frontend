@@ -68,106 +68,107 @@ const PayeeDirectory = () => {
         <p className="text-center text-red-500">No data Available</p>
       )}
       {payeeList.length > 0 && (
-        <div className="overflow-x-auto  full-border rounded-t-2xl">
-          <table className="w-full text-sm">
-            <thead className="font-themecolor  small-text  uppercase">
+        <div className="w-full overflow-x-auto rounded-t-2xl full-border">
+          <table className="w-full min-w-[900px] text-sm border-collapse">
+            <thead className="font-themecolor small-text uppercase ">
               <tr>
-                <th className="text-left py-3 px-4 full-border">
-                  Payee Information
-                </th>
-                <th className="text-left py-3 px-4 full-border">
-                  Banking Details
-                </th>
-                <th className="text-left py-3 px-4 full-border">
-                  Account Number
-                </th>
-                <th className="text-left py-3 px-4 full-border">Contact</th>
-                <th className="text-left py-3 px-4 full-border">
-                  Transfer Mode
-                </th>
-                <th className="text-left py-3 px-4 full-border">Date Added</th>
-                <th className="text-left py-3 px-4 full-border">Actions</th>
+                {[
+                  "Payee Information",
+                  "Banking Details",
+                  "Account Number",
+                  "Contact",
+                  "Transfer Mode",
+                  "Date Added",
+                  "Actions",
+                ].map((title) => (
+                  <th
+                    key={title}
+                    className="text-left py-3 px-4 full-border align-middle whitespace-nowrap"
+                  >
+                    {title}
+                  </th>
+                ))}
               </tr>
             </thead>
+
             <tbody>
-              {payeeList &&
-                payeeList.map((p, i) => {
-                  const [date, time] = p.createdAt.split("\n");
-                  const firstLetter = p.payeeName.charAt(0);
-                  return (
-                    <tr
-                      key={i}
-                      className="full-border hover:bg-[#232323] transition"
-                    >
-                      {/* Payee Info */}
-                      <td className="py-4 px-4 flex items-center gap-3 ">
+              {payeeList?.map((p, i) => {
+                const [date, time] = p.createdAt.split("\n");
+                const firstLetter = p.payeeName.charAt(0);
+
+                return (
+                  <tr
+                    key={i}
+                    className="full-border hover:bg-[#232323] transition"
+                  >
+                    {/* Payee Info */}
+                    <td className="py-4 px-4 full-border align-top whitespace-nowrap">
+                      <div className="flex items-center gap-3">
                         <div className="w-8 h-8 flex items-center justify-center rounded-full font-semibold font-themecolor icon-bg full-border">
                           {firstLetter}
                         </div>
-                        <div>
-                          <p className="font-medium text-gray-200">
-                            {p.payeeName}
-                          </p>
-                        </div>
-                      </td>
-
-                      {/* Bank Details */}
-                      <td className="py-4 px-4 full-border">
-                        <p className="font-medium text-gray-100 flex items-center gap-1">
-                          <Building2 size={14} className="font-themecolor" />{" "}
-                          {p.payeeBank}
+                        <p className="font-medium text-gray-200">
+                          {p.payeeName}
                         </p>
-                        <p className="small-text  gray-text">{p.payeeBranch}</p>
-                        <span className="inline-block mt-1 small-text  my-blue-box rounded-md px-2 py-0.5">
-                          {p.ifscCode}
-                        </span>
-                      </td>
+                      </div>
+                    </td>
 
-                      {/* Account Number */}
-                      <td className="py-4 px-4 full-border">
-                        <div className="icon-bg full-border rounded-md px-3 py-1 text-white small-text">
-                          {p.payeeAccountNumber}
-                        </div>
-                      </td>
+                    {/* Bank Details */}
+                    <td className="py-4 px-4 full-border align-top">
+                      <p className="font-medium text-gray-100 flex items-center gap-1 whitespace-nowrap">
+                        <Building2 size={14} className="font-themecolor" />
+                        {p.payeeBank}
+                      </p>
+                      <p className="small-text gray-text">{p.payeeBranch}</p>
+                      <span className="inline-block mt-1 small-text my-blue-box rounded-md px-2 py-0.5">
+                        {p.ifscCode}
+                      </span>
+                    </td>
 
-                      {/* Contact */}
-                      <td className="py-4 px-4 flex items-center gap-2  text-white">
+                    {/* Account Number */}
+                    <td className="py-4 px-4 full-border align-top">
+                      <div className="icon-bg full-border rounded-md px-3 py-1 text-white small-text whitespace-nowrap">
+                        {p.payeeAccountNumber}
+                      </div>
+                    </td>
+
+                    {/* Contact */}
+                    <td className="py-4 px-4 full-border align-top whitespace-nowrap">
+                      <div className="flex items-center gap-2 text-white">
                         <Phone size={14} className="font-themecolor" />
                         +91 {p.payeeMobile}
-                      </td>
+                      </div>
+                    </td>
 
-                      {/* Transfer Mode */}
-                      <td className="py-4 px-4 full-border">
-                        <span className="small-text  my-blue-box rounded-md px-3 py-1 inline-block">
-                          {p.payMode}
-                        </span>
-                      </td>
+                    {/* Transfer Mode */}
+                    <td className="py-4 px-4 full-border align-top whitespace-nowrap">
+                      <span className="small-text my-blue-box rounded-md px-3 py-1 inline-block">
+                        {p.payMode}
+                      </span>
+                    </td>
 
-                      {/* Date Added */}
-                      <td className="py-4 px-4 text-sm full-border">
-                        <p className="gray-text flex items-center gap-1">
-                          <Clock size={13} className="font-themecolor" />
-                          Registered
-                        </p>
-                        <p className="font-semibold text-gray-200">{date}</p>
-                        <p className="small-text  text-gray-500">{time}</p>
-                      </td>
+                    {/* Date Added */}
+                    <td className="py-4 px-4 full-border align-top whitespace-nowrap">
+                      <p className="gray-text flex items-center gap-1">
+                        <Clock size={13} className="font-themecolor" />
+                        Registered
+                      </p>
+                      <p className="font-semibold text-gray-200">{date}</p>
+                      <p className="small-text text-gray-500">{time}</p>
+                    </td>
 
-                      {/* Actions */}
-                      <td className="py-4 px-4 flex gap-2">
-                        <button
-                          onClick={() => openTransferModal(p)}
-                          className="flex items-center gap-1 px-3 py-1 my-gold-box font-themecolor small-text  rounded-lg  transition"
-                        >
-                          <Send size={14} /> Transfer
-                        </button>
-                        <button className="p-2 my-red-box transition">
-                          <Trash2 size={14} />
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                })}
+                    {/* Actions */}
+                    <td className="py-4 px-4 full-border align-top whitespace-nowrap">
+                      <button
+                        onClick={() => openTransferModal(p)}
+                        className="flex items-center gap-1 px-3 py-1 my-gold-box font-themecolor small-text rounded-lg transition"
+                      >
+                        <Send size={14} /> Transfer
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
